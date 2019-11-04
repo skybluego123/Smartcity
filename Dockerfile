@@ -1,19 +1,9 @@
-FROM node:carbon
-
-# Create app directory
-WORKDIR /app
-
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
+FROM node:10
+WORKDIR /usr/src/app
+RUN npm install webpack -g
 COPY package*.json ./
 
 RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
-# Bundle app source
-COPY src /app
-
+COPY . /usr/src/app/
 EXPOSE 8080
-CMD [ "node", "server.js" ]
+CMD [ "npm", "start" ]
