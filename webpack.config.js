@@ -70,6 +70,6 @@ module.exports = [{
         contentBase: path.join(__dirname, "dist"),
         port: 8080,
         host: process.env.HOST || '0.0.0.0',
-        disableHostCheck:true,
+        
     }
 }];
