@@ -1,4 +1,4 @@
-# Houston HeatMap using [Cesium](https://cesiumjs.org/) with [Webpack](https://webpack.js.org/concepts/)
+# SmartCity - Houston HeatMap using [Cesium](https://cesiumjs.org/) with [Webpack](https://webpack.js.org/concepts/)
 
 * Using webpack dev server for development deployment
 * Using Docker for containerization
@@ -38,5 +38,3 @@ Navigate to `localhost:8080`.
 * `eb deploy` - Always push the latest code to git before eb deploy
 	
 
-=======
-# SmartCity
