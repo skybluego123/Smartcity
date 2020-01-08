@@ -1,0 +1,34 @@
+
+{
+    "type": "FeatureCollection",
+    "features": [
+    {
+            "type": "Feature",
+            "id": "node/3433164738",
+            "properties": {
+                "Name": "Utility pole #1",
+                 "description": "null", 
+                 "Coordinate": "-95.37461388,29.7434166", 
+                 "Status": "leaning 26.5°", 
+                 "Potential_damage": "power outage - San Jacinto St (highlighted in red)",
+                "type": "node",
+                "id": "3433164738",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3540443,
+                    29.7513757
+                ]
+            }
+    }
+]
+}
+    
+        
+

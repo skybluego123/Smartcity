@@ -1,5 +1,5 @@
 const path = require('path');
-
+const express = require('express');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -71,5 +71,11 @@ module.exports = [{
         port: 8080,
         host: process.env.HOST || '0.0.0.0',
         public: 'smartcity-dev.us-west-2.elasticbeanstalk.com',
+        setup (app) {
+            app.use('/images',
+              express.static(path.join(__dirname, 'src', 'images')));
+              app.use('/geoMappings',
+              express.static(path.join(__dirname, 'src', 'geoMappings')));
+          }
     }
 }];

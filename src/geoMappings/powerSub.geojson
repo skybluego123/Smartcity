@@ -1,0 +1,1347 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "way/44509283",
+            "properties": {
+                "type": "way",
+                "id": 44509283,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Clinton Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "CL",
+                    "substation": "industrial",
+                    "voltage": "138000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3012956,
+                            29.7558084
+                        ],
+                        [
+                            -95.3015016,
+                            29.7555103
+                        ],
+                        [
+                            -95.3010381,
+                            29.7552719
+                        ],
+                        [
+                            -95.3008321,
+                            29.7555774
+                        ],
+                        [
+                            -95.3012956,
+                            29.7558084
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/44953001",
+            "properties": {
+                "type": "way",
+                "id": 44953001,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "University Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "UN",
+                    "substation": "distribution",
+                    "voltage": "138000;69000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3311368,
+                            29.7177632
+                        ],
+                        [
+                            -95.3314448,
+                            29.7169917
+                        ],
+                        [
+                            -95.3316054,
+                            29.7170426
+                        ],
+                        [
+                            -95.3316952,
+                            29.7169771
+                        ],
+                        [
+                            -95.3318334,
+                            29.7169958
+                        ],
+                        [
+                            -95.3319664,
+                            29.7170233
+                        ],
+                        [
+                            -95.3322799,
+                            29.7170426
+                        ],
+                        [
+                            -95.3323337,
+                            29.7170151
+                        ],
+                        [
+                            -95.3324667,
+                            29.7170206
+                        ],
+                        [
+                            -95.3324445,
+                            29.7171031
+                        ],
+                        [
+                            -95.332587,
+                            29.7171333
+                        ],
+                        [
+                            -95.3326313,
+                            29.7171086
+                        ],
+                        [
+                            -95.3326472,
+                            29.7170728
+                        ],
+                        [
+                            -95.332568,
+                            29.7170123
+                        ],
+                        [
+                            -95.3324698,
+                            29.7169601
+                        ],
+                        [
+                            -95.332454,
+                            29.7169271
+                        ],
+                        [
+                            -95.3324849,
+                            29.7168737
+                        ],
+                        [
+                            -95.3324849,
+                            29.7166277
+                        ],
+                        [
+                            -95.3326737,
+                            29.7160164
+                        ],
+                        [
+                            -95.3319629,
+                            29.7157812
+                        ],
+                        [
+                            -95.3316441,
+                            29.7156866
+                        ],
+                        [
+                            -95.3311762,
+                            29.716913
+                        ],
+                        [
+                            -95.3306126,
+                            29.7167411
+                        ],
+                        [
+                            -95.3301501,
+                            29.7178111
+                        ],
+                        [
+                            -95.3306232,
+                            29.7179574
+                        ],
+                        [
+                            -95.3306515,
+                            29.7178635
+                        ],
+                        [
+                            -95.3307547,
+                            29.7176533
+                        ],
+                        [
+                            -95.3311368,
+                            29.7177632
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/51823152",
+            "properties": {
+                "type": "way",
+                "id": 51823152,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Garrott Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "GT",
+                    "substation": "distribution",
+                    "voltage": "138000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3864514,
+                            29.732565
+                        ],
+                        [
+                            -95.3854783,
+                            29.7325877
+                        ],
+                        [
+                            -95.3855024,
+                            29.733216
+                        ],
+                        [
+                            -95.3858933,
+                            29.7332114
+                        ],
+                        [
+                            -95.3864859,
+                            29.7325908
+                        ],
+                        [
+                            -95.3864514,
+                            29.732565
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/53848614",
+            "properties": {
+                "type": "way",
+                "id": 53848614,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "East Side Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "ES",
+                    "substation": "distribution",
+                    "voltage": "138000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3532279,
+                            29.7475358
+                        ],
+                        [
+                            -95.3532513,
+                            29.7475049
+                        ],
+                        [
+                            -95.3533273,
+                            29.7474079
+                        ],
+                        [
+                            -95.3536113,
+                            29.7470536
+                        ],
+                        [
+                            -95.3536671,
+                            29.7469826
+                        ],
+                        [
+                            -95.3536896,
+                            29.746954
+                        ],
+                        [
+                            -95.353012,
+                            29.7465487
+                        ],
+                        [
+                            -95.3525503,
+                            29.7471305
+                        ],
+                        [
+                            -95.3532279,
+                            29.7475358
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/54047738",
+            "properties": {
+                "type": "way",
+                "id": 54047738,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Gable Street Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "GS",
+                    "substation": "distribution",
+                    "voltage": "138000;69000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3530987,
+                            29.7652328
+                        ],
+                        [
+                            -95.35311,
+                            29.7640725
+                        ],
+                        [
+                            -95.3529228,
+                            29.764001
+                        ],
+                        [
+                            -95.35229,
+                            29.7639393
+                        ],
+                        [
+                            -95.3523125,
+                            29.76521
+                        ],
+                        [
+                            -95.3530987,
+                            29.7652328
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/54048109",
+            "properties": {
+                "type": "way",
+                "id": 54048109,
+                "tags": {
+                    "power": "substation"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3524097,
+                            29.7635692
+                        ],
+                        [
+                            -95.3526529,
+                            29.7625539
+                        ],
+                        [
+                            -95.3523865,
+                            29.7625505
+                        ],
+                        [
+                            -95.3521356,
+                            29.7627516
+                        ],
+                        [
+                            -95.3521163,
+                            29.7634151
+                        ],
+                        [
+                            -95.3524097,
+                            29.7635692
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/54358105",
+            "properties": {
+                "type": "way",
+                "id": 54358105,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Magnolia Park Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "MP",
+                    "substation": "distribution",
+                    "voltage": "138000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3111986,
+                            29.7441251
+                        ],
+                        [
+                            -95.3114422,
+                            29.7435395
+                        ],
+                        [
+                            -95.3106809,
+                            29.7433007
+                        ],
+                        [
+                            -95.3104373,
+                            29.7438864
+                        ],
+                        [
+                            -95.3111986,
+                            29.7441251
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/54370017",
+            "properties": {
+                "type": "way",
+                "id": 54370017,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Downtown Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "DT",
+                    "substation": "distribution",
+                    "voltage": "138000;69000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3741831,
+                            29.7557368
+                        ],
+                        [
+                            -95.3741979,
+                            29.7557156
+                        ],
+                        [
+                            -95.3741793,
+                            29.7555959
+                        ],
+                        [
+                            -95.3741474,
+                            29.7554589
+                        ],
+                        [
+                            -95.3740999,
+                            29.7553239
+                        ],
+                        [
+                            -95.3740475,
+                            29.7551963
+                        ],
+                        [
+                            -95.3739762,
+                            29.7550776
+                        ],
+                        [
+                            -95.3738946,
+                            29.7549529
+                        ],
+                        [
+                            -95.3738144,
+                            29.7548547
+                        ],
+                        [
+                            -95.3737212,
+                            29.7547582
+                        ],
+                        [
+                            -95.3737225,
+                            29.7547783
+                        ],
+                        [
+                            -95.3736167,
+                            29.7547768
+                        ],
+                        [
+                            -95.3736004,
+                            29.7546345
+                        ],
+                        [
+                            -95.3734026,
+                            29.7544988
+                        ],
+                        [
+                            -95.3733897,
+                            29.7545109
+                        ],
+                        [
+                            -95.3734228,
+                            29.7557411
+                        ],
+                        [
+                            -95.3741831,
+                            29.7557368
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/128290610",
+            "properties": {
+                "type": "way",
+                "id": 128290610,
+                "tags": {
+                    "barrier": "fence",
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "North Side Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "NS",
+                    "substation": "distribution",
+                    "voltage": "138000;12500"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.350199,
+                            29.78356
+                        ],
+                        [
+                            -95.3490905,
+                            29.7835757
+                        ],
+                        [
+                            -95.3491261,
+                            29.783677
+                        ],
+                        [
+                            -95.3490711,
+                            29.7836933
+                        ],
+                        [
+                            -95.3491415,
+                            29.7841822
+                        ],
+                        [
+                            -95.3491542,
+                            29.7845343
+                        ],
+                        [
+                            -95.3491985,
+                            29.7847147
+                        ],
+                        [
+                            -95.3502057,
+                            29.784696
+                        ],
+                        [
+                            -95.350199,
+                            29.78356
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/206525426",
+            "properties": {
+                "type": "way",
+                "id": 206525426,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Clinton Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "CL",
+                    "substation": "distribution",
+                    "voltage": "69000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.2997002,
+                            29.7614289
+                        ],
+                        [
+                            -95.3001991,
+                            29.7606966
+                        ],
+                        [
+                            -95.2996935,
+                            29.7604346
+                        ],
+                        [
+                            -95.2991275,
+                            29.7612717
+                        ],
+                        [
+                            -95.2997002,
+                            29.7614289
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/233643085",
+            "properties": {
+                "type": "way",
+                "id": 233643085,
+                "tags": {
+                    "area": "yes",
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Dunlavy Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "DN",
+                    "substation": "distribution",
+                    "voltage": "69000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.4015398,
+                            29.7524951
+                        ],
+                        [
+                            -95.401544,
+                            29.752794
+                        ],
+                        [
+                            -95.4021766,
+                            29.7527873
+                        ],
+                        [
+                            -95.4021731,
+                            29.7525366
+                        ],
+                        [
+                            -95.4021297,
+                            29.7525371
+                        ],
+                        [
+                            -95.402129,
+                            29.7524888
+                        ],
+                        [
+                            -95.4015398,
+                            29.7524951
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/260998169",
+            "properties": {
+                "type": "way",
+                "id": 260998169,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Blodgett Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "BG",
+                    "substation": "distribution",
+                    "voltage": "138000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3654346,
+                            29.7209628
+                        ],
+                        [
+                            -95.3646413,
+                            29.7204903
+                        ],
+                        [
+                            -95.3640106,
+                            29.7201091
+                        ],
+                        [
+                            -95.3638912,
+                            29.7204058
+                        ],
+                        [
+                            -95.3637602,
+                            29.7207312
+                        ],
+                        [
+                            -95.3636239,
+                            29.7210804
+                        ],
+                        [
+                            -95.3636134,
+                            29.7211076
+                        ],
+                        [
+                            -95.3647767,
+                            29.7218088
+                        ],
+                        [
+                            -95.3654346,
+                            29.7209628
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/282078353",
+            "properties": {
+                "type": "way",
+                "id": 282078353,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Crockett Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "CR",
+                    "substation": "distribution",
+                    "voltage": "138000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3803732,
+                            29.7768119
+                        ],
+                        [
+                            -95.3803624,
+                            29.7765046
+                        ],
+                        [
+                            -95.3797214,
+                            29.7764976
+                        ],
+                        [
+                            -95.3796785,
+                            29.7765441
+                        ],
+                        [
+                            -95.3795658,
+                            29.7765441
+                        ],
+                        [
+                            -95.3795497,
+                            29.776458
+                        ],
+                        [
+                            -95.3792976,
+                            29.7764627
+                        ],
+                        [
+                            -95.3793137,
+                            29.7768864
+                        ],
+                        [
+                            -95.3795953,
+                            29.776891
+                        ],
+                        [
+                            -95.3796302,
+                            29.77721
+                        ],
+                        [
+                            -95.3797212,
+                            29.7772076
+                        ],
+                        [
+                            -95.3801613,
+                            29.777196
+                        ],
+                        [
+                            -95.3804348,
+                            29.7771657
+                        ],
+                        [
+                            -95.3804268,
+                            29.7770191
+                        ],
+                        [
+                            -95.3803624,
+                            29.7768957
+                        ],
+                        [
+                            -95.3803732,
+                            29.7768119
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/295157156",
+            "properties": {
+                "type": "way",
+                "id": 295157156,
+                "tags": {
+                    "barrier": "fence",
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Heights Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "HE",
+                    "substation": "distribution",
+                    "voltage": "69000;12500"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3987305,
+                            29.7828748
+                        ],
+                        [
+                            -95.398719,
+                            29.7822452
+                        ],
+                        [
+                            -95.3986649,
+                            29.782246
+                        ],
+                        [
+                            -95.3986607,
+                            29.7820168
+                        ],
+                        [
+                            -95.3985956,
+                            29.7820177
+                        ],
+                        [
+                            -95.3985925,
+                            29.781844
+                        ],
+                        [
+                            -95.3982986,
+                            29.7818481
+                        ],
+                        [
+                            -95.3983175,
+                            29.7828805
+                        ],
+                        [
+                            -95.3987305,
+                            29.7828748
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/297776274",
+            "properties": {
+                "type": "way",
+                "id": 297776274,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Franklin Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "FRK",
+                    "substation": "distribution",
+                    "voltage": "138000;69000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3680989,
+                            29.7664267
+                        ],
+                        [
+                            -95.3681403,
+                            29.7662651
+                        ],
+                        [
+                            -95.3681123,
+                            29.7662597
+                        ],
+                        [
+                            -95.3681541,
+                            29.7660968
+                        ],
+                        [
+                            -95.3681981,
+                            29.7661053
+                        ],
+                        [
+                            -95.368225,
+                            29.7660006
+                        ],
+                        [
+                            -95.3681928,
+                            29.765954
+                        ],
+                        [
+                            -95.3676349,
+                            29.7657561
+                        ],
+                        [
+                            -95.3674954,
+                            29.7657282
+                        ],
+                        [
+                            -95.3674793,
+                            29.7657421
+                        ],
+                        [
+                            -95.3673264,
+                            29.7662497
+                        ],
+                        [
+                            -95.3673479,
+                            29.76628
+                        ],
+                        [
+                            -95.3680399,
+                            29.7664453
+                        ],
+                        [
+                            -95.3680989,
+                            29.7664267
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/313966497",
+            "properties": {
+                "type": "way",
+                "id": 313966497,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Midtown Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "MID",
+                    "substation": "distribution",
+                    "voltage": "138000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3716168,
+                            29.7418925
+                        ],
+                        [
+                            -95.3719492,
+                            29.7414763
+                        ],
+                        [
+                            -95.371313,
+                            29.7410933
+                        ],
+                        [
+                            -95.3709806,
+                            29.7415095
+                        ],
+                        [
+                            -95.3716168,
+                            29.7418925
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/336263504",
+            "properties": {
+                "type": "way",
+                "id": 336263504,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Polk Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "PK",
+                    "substation": "distribution",
+                    "voltage": "138000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3617839,
+                            29.7527105
+                        ],
+                        [
+                            -95.3622208,
+                            29.7521461
+                        ],
+                        [
+                            -95.3615686,
+                            29.7517656
+                        ],
+                        [
+                            -95.3611317,
+                            29.75233
+                        ],
+                        [
+                            -95.3617839,
+                            29.7527105
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/336565806",
+            "properties": {
+                "type": "way",
+                "id": 336565806,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Hyde Park Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "HP",
+                    "substation": "distribution",
+                    "voltage": "69000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3847558,
+                            29.7481711
+                        ],
+                        [
+                            -95.3847446,
+                            29.7476222
+                        ],
+                        [
+                            -95.3840758,
+                            29.7476325
+                        ],
+                        [
+                            -95.384087,
+                            29.7481814
+                        ],
+                        [
+                            -95.3847558,
+                            29.7481711
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/338537034",
+            "properties": {
+                "type": "way",
+                "id": 338537034,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "substation": "distribution",
+                    "voltage": "69000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3413566,
+                            29.7459083
+                        ],
+                        [
+                            -95.3411996,
+                            29.7460971
+                        ],
+                        [
+                            -95.341577,
+                            29.7463182
+                        ],
+                        [
+                            -95.3417869,
+                            29.7460497
+                        ],
+                        [
+                            -95.3413566,
+                            29.7459083
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/338537037",
+            "properties": {
+                "type": "way",
+                "id": 338537037,
+                "tags": {
+                    "frequency": "60",
+                    "location": "outdoor",
+                    "name": "Bringhurst Substation",
+                    "operator": "CenterPoint Energy",
+                    "power": "substation",
+                    "ref": "BH",
+                    "substation": "distribution",
+                    "voltage": "69000;12000"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3331113,
+                            29.7629491
+                        ],
+                        [
+                            -95.3336034,
+                            29.7629073
+                        ],
+                        [
+                            -95.3335726,
+                            29.7626342
+                        ],
+                        [
+                            -95.3330805,
+                            29.7626761
+                        ],
+                        [
+                            -95.3331113,
+                            29.7629491
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/378382826",
+            "properties": {
+                "type": "way",
+                "id": 378382826,
+                "tags": {
+                    "power": "substation"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3191126,
+                            29.7303791
+                        ],
+                        [
+                            -95.3191843,
+                            29.7303037
+                        ],
+                        [
+                            -95.3191961,
+                            29.73027
+                        ],
+                        [
+                            -95.3191894,
+                            29.7302557
+                        ],
+                        [
+                            -95.3191792,
+                            29.7302319
+                        ],
+                        [
+                            -95.3190763,
+                            29.7301982
+                        ],
+                        [
+                            -95.3187003,
+                            29.7300745
+                        ],
+                        [
+                            -95.3186033,
+                            29.7302919
+                        ],
+                        [
+                            -95.3187129,
+                            29.7303337
+                        ],
+                        [
+                            -95.3187483,
+                            29.7302605
+                        ],
+                        [
+                            -95.3191126,
+                            29.7303791
+                        ]
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/592382820",
+            "properties": {
+                "type": "way",
+                "id": 592382820,
+                "tags": {
+                    "power": "substation"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -95.3342883,
+                            29.7679844
+                        ],
+                        [
+                            -95.3342832,
+                            29.7674302
+                        ],
+                        [
+                            -95.3338714,
+                            29.7674331
+                        ],
+                        [
+                            -95.3338765,
+                            29.7679873
+                        ],
+                        [
+                            -95.3342883,
+                            29.7679844
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}

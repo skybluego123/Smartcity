@@ -1,11 +1,156 @@
+
 <html>
-	<head>
-		<meta charset="utf-8">
-	  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-		<title>Cesium + Webpack</title>
-	</head>
-	<body>
-		<div id="cesiumContainer"></div>
-	</body>
+<style>
+@import url(https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css);
+
+    /*@import url(../templates/bucket.css);*/
+      .toolbar-left {
+            display: block;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            color: white;
+        }
+  .checkboxes label {
+  display: block;
+  padding-right: 10px;
+  padding-left: 22px;
+  text-indent: -22px;
+  color: white;
+}
+.checkboxes input {
+  vertical-align: middle;
+  transform: scale(2);
+}
+.checkboxes label span {
+  vertical-align: middle;
+}
+</style>
+
+<head>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+
+     <meta charset="UTF-8">
+   <script type="text/javascript">
+
+    function populate(slct1, slct2) {
+        var s1 = document.getElementById(slct1);
+        var s2 = document.getElementById(slct2);
+        s2.innerHTML = "";
+        if (s1.value == "Power") {
+            var optionArray = ["Utility pole", "Substation", "Wire"];
+        } else if (s1.value == "Water") {
+            var optionArray = ["Waterline", "Manhole", "Inlet"];
+        } else if (s1.value == "Other") {
+            var optionArray = ["Dead animal", "Subcat3.1", "Subcat3.3"];
+    }
+    var i = 0;
+    for (var option in optionArray) {
+        if (optionArray.hasOwnProperty(option)) {
+            var pair = optionArray[option];
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id=option;
+            checkbox.name = pair;
+            checkbox.value = pair;
+            s2.appendChild(checkbox);
+    
+            var label = document.createElement('label')
+            label.htmlFor = pair;
+            label.appendChild(document.createTextNode(pair));
+            s2.appendChild(label);
+            s2.appendChild(document.createElement("br"));    
+        }
+    }
+}
+          // onchange="populate(this.id, 'slct2')
+</script>
+    
+
+    
+    
+</head>
+<body>
+<div id="cesiumContainer" class="fullSize"></div>
+<div id="loadingOverlay"><h1>Loading...</h1></div>
+<div id="toolbar">
+    </div>
+
+
+<div class="toolbar-left">
+<script type="text/javascript">
+function jsFunction(value)
+{
+    alert(value);
+}
+</script>
+
+
+<hr/>
+Choose a Category of Infrastructure:
+<select id="slct1" name="slct1" onchange="populate(this.id, 'slct2')">
+   <option value=""></option>
+   <option value="Power">Power</option>
+   <option value="Water">Water</option>
+   <option value="Other">Other</option>
+</select>
+<hr/>
+   Choose Subcategory:
+<div id="slct2"></div>
+<hr />
+        
+
+
+  <div class="checkboxes">
+    <label for="x">
+       <div class="pretty p-svg p-curve p-bigger">
+        <input type="checkbox" id="Power"> 
+        <div class="state p-success">
+            <!-- svg path -->
+            <svg class="svg svg-icon" viewBox="0 0 20 20">
+                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+            </svg>
+            <label>Power<br> </label>
+        </div>
+    </div>
+    </label>
+   
+    <label for="y">
+            <div class="pretty p-svg p-curve p-bigger">
+        <input type="checkbox" id="Waterline" />
+        <div class="state p-success">
+          
+            <svg class="svg svg-icon" viewBox="0 0 20 20">
+                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+            </svg>
+            <label>Water</label>
+        </div>
+    </div>
+
+    </label>
+    <label for="z">
+              <div class="pretty p-svg p-curve p-bigger">
+        <input type="checkbox" id="Manhole">
+        <div class="state p-success">
+           
+            <svg class="svg svg-icon" viewBox="0 0 20 20">
+                <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+            </svg>
+            <label>Other</label>
+        </div>
+    </div>
+
+    </label>
+  </div>
+
+    </div>
+
+</body>
 </html>
+

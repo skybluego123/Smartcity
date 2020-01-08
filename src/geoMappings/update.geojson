@@ -1,0 +1,663 @@
+
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "node/3433053667",
+            "properties": {
+                "type": "node",
+                "id": "3433053667",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3533639,
+                    29.7474506
+                ]
+            }
+        },
+
+  {
+            "type": "Feature",
+            "id": "node/3433165431",
+            "properties": {
+                "type": "node",
+                "id": "3433165431",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3534019,
+                    29.7476961
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/3433165335",
+            "properties": {
+                "type": "node",
+                "id": "3433165335",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3529973,
+                    29.7481954
+                ]
+            }
+        },
+ {
+            "type": "Feature",
+            "id": "node/3433165432",
+            "properties": {
+                "type": "node",
+                "id": "3433165432",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3528091,
+                    29.7484262
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/3433165433",
+            "properties": {
+                "type": "node",
+                "id": "3433165433",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3503992,
+                    29.7559432
+                ]
+            }
+        },
+  {
+            "type": "Feature",
+            "id": "node/3433164736",
+            "properties": {
+                "type": "node",
+                "id": "3433164736",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.35256,
+                    29.7487368
+                ]
+            }
+        }, {
+            "type": "Feature",
+            "id": "node/3433053668",
+            "properties": {
+                "type": "node",
+                "id": "3433053668",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3523012,
+                    29.7490873
+                ]
+            }
+        },   {
+            "type": "Feature",
+            "id": "node/3433053669",
+            "properties": {
+                "type": "node",
+                "id": "3433053669",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3516272,
+                    29.7499126
+                ]
+            }
+        }, {
+            "type": "Feature",
+            "id": "node/3433164737",
+            "properties": {
+                "type": "node",
+                "id": "3433164737",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.352522,
+                    29.7504445
+                ]
+            }
+        },   {
+            "type": "Feature",
+            "id": "node/3433053670",
+            "properties": {
+                "type": "node",
+                "id": "3433053670",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.353461,
+                    29.7521142
+                ]
+            }
+        },   {
+            "type": "Feature",
+            "id": "node/3433165336",
+            "properties": {
+                "type": "node",
+                "id": "3433165336",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3531211,
+                    29.7525462
+                ]
+            }
+        },  {
+            "type": "Feature",
+            "id": "node/3433165337",
+            "properties": {
+                "type": "node",
+                "id": "3433165337",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.352714,
+                    29.7530658
+                ]
+            }
+        },    {
+            "type": "Feature",
+            "id": "node/3433164740",
+            "properties": {
+                "type": "node",
+                "id": "3433164740",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3523846,
+                    29.7534726
+                ]
+            }
+        },
+  {
+            "type": "Feature",
+            "id": "node/3433164741",
+            "properties": {
+                "type": "node",
+                "id": "3433164741",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3519331,
+                    29.7540424
+                ]
+            }
+        },   {
+            "type": "Feature",
+            "id": "node/3433165339",
+            "properties": {
+                "type": "node",
+                "id": "3433165339",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3508926,
+                    29.7553011
+                ]
+            }
+        },  {
+            "type": "Feature",
+            "id": "node/3433053671",
+            "properties": {
+                "type": "node",
+                "id": "3433053671",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3514355,
+                    29.7565469
+                ]
+            }
+        },
+   {
+            "type": "Feature",
+            "id": "node/3433165340",
+            "properties": {
+                "type": "node",
+                "id": "3433165340",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3511057,
+                    29.7569484
+                ]
+            }
+        },   {
+            "type": "Feature",
+            "id": "node/3433053672",
+            "properties": {
+                "type": "node",
+                "id": "3433053672",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3506914,
+                    29.7574721
+                ]
+            }
+        }, {
+            "type": "Feature",
+            "id": "node/3433164742",
+            "properties": {
+                "type": "node",
+                "id": "3433164742",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3502351,
+                    29.7580336
+                ]
+            }
+        },
+ {
+            "type": "Feature",
+            "id": "node/3433053673",
+            "properties": {
+                "type": "node",
+                "id": "3433053673",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3509215,
+                    29.7584446
+                ]
+            }
+        },    {
+            "type": "Feature",
+            "id": "node/3433053674",
+            "properties": {
+                "type": "node",
+                "id": "3433053674",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3515441,
+                    29.7588112
+                ]
+            }
+        },   {
+            "type": "Feature",
+            "id": "node/3433053675",
+            "properties": {
+                "type": "node",
+                "id": "3433053675",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3526527,
+                    29.759471
+                ]
+            }
+        },   {
+            "type": "Feature",
+            "id": "node/3433165339",
+            "properties": {
+                "type": "node",
+                "id": "3433165339",
+                "tags": {
+                    "power": "pole"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3508926,
+                    29.7553011
+                ]
+            }
+        }, {
+            "type": "Feature",
+            "id": "node/1418094748",
+            "properties": {
+                "type": "node",
+                "id": "1418094748",
+                "tags": {
+                    "power": "tower"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3518332,
+                    29.760531
+                ]
+            }
+        },    {
+            "type": "Feature",
+            "id": "node/1418094720",
+            "properties": {
+                "type": "node",
+                "id": "1418094720",
+                "tags": {
+                    "power": "tower"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3519485,
+                    29.7612784
+                ]
+            }
+        },   {
+            "type": "Feature",
+            "id": "node/1418094693",
+            "properties": {
+                "type": "node",
+                "id": "1418094693",
+                "tags": {
+                    "power": "tower"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.3521068,
+                    29.7622354
+                ]
+            }
+        },{
+
+         "type": "Feature",
+            "id": "node/1418094573",
+            "properties": {
+                "type": "node",
+                "id": "1418094573",
+                "tags": {
+                    "power": "tower"
+                },
+                "relations": [],
+                "meta": {}
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.352147,
+                    29.7628014
+                ]
+            }
+        
+}, {
+            "type": "Feature",
+            "id": "way/128290609",
+            "properties": {
+                "cables": "3",
+                "circuits": "1",
+                "frequency": "60",
+                "operator": "CenterPoint Energy",
+                "power": "line",
+                "voltage": "69000",
+                "id": "way/128290609"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -95.3533639,
+                        29.7474506
+                    ],
+                    [
+                        -95.3534019,
+                        29.7476961
+                    ],
+                    [
+                        -95.3529973,
+                        29.7481954
+                    ],
+                    [
+                        -95.3528091,
+                        29.7484262
+                    ],
+                    [
+                        -95.35256,
+                        29.7487368
+                    ],
+                    [
+                        -95.3523012,
+                        29.7490873
+                    ],
+                    [
+                        -95.3516272,
+                        29.7499126
+                    ],
+                    [
+                        -95.352522,
+                        29.7504445
+                    ],
+                    [
+                        -95.3540443,
+                        29.7513757
+                    ],
+                    [
+                        -95.353461,
+                        29.7521142
+                    ],
+                    [
+                        -95.3531211,
+                        29.7525462
+                    ],
+                    [
+                        -95.352714,
+                        29.7530658
+                    ],
+                    [
+                        -95.3523846,
+                        29.7534726
+                    ],
+                    [
+                        -95.3519331,
+                        29.7540424
+                    ],
+                    [
+                        -95.3508926,
+                        29.7553011
+                    ],
+                    [
+                        -95.3503992,
+                        29.7559432
+                    ],
+                    [
+                        -95.3514355,
+                        29.7565469
+                    ],
+                    [
+                        -95.3511057,
+                        29.7569484
+                    ],
+                    [
+                        -95.3506914,
+                        29.7574721
+                    ],
+                    [
+                        -95.3502351,
+                        29.7580336
+                    ],
+                    [
+                        -95.3509215,
+                        29.7584446
+                    ],
+                    [
+                        -95.3515441,
+                        29.7588112
+                    ],
+                    [
+                        -95.3526527,
+                        29.759471
+                    ],
+                    [
+                        -95.3518332,
+                        29.760531
+                    ],
+                    [
+                        -95.3519485,
+                        29.7612784
+                    ],
+                    [
+                        -95.3521068,
+                        29.7622354
+                    ],
+                    [
+                        -95.352147,
+                        29.7628014
+                    ],
+                    [
+                        -95.3523696,
+                        29.7629807
+                    ]
+                ]
+            }
+        }
+]
+}
+    
+        
+
