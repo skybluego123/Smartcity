@@ -1,7 +1,231 @@
-html, body, #cesiumContainer {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
+
+.dummy
+{
+    width: 25%;
+    height: 25%;
+    background: white;
+    border: 2px solid #1f1209;
 }
+.backdrop {
+    display: inline-block;
+    background: rgba(42, 42, 42, 0.7);
+    border-radius: 5px;
+    border: 1px solid #444;
+    padding: 5px 10px;
+    color: #fff;
+    line-height: 150%;
+    font-size: small;
+}
+
+#heightSliderLabel, #heightValue {
+    vertical-align: top;
+}
+
+.backdrop a:link, .backdrop a:visited, .backdrop a:hover {
+    color: #fff
+}
+
+.loadingIndicator {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -33px;
+    margin-left: -33px;
+    width: 66px;
+    height: 66px;
+}
+
+.cover {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.75);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#menu {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+html, body, #cesiumContainer {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: "Times New Roman", Times, serif;
+    background: #000;
+}
+
+button.cesium-infoBox-camera {
+    display: none;
+}
+
+
+fieldset.scheduler-border {
+    width:100%;
+    height:200px;
+    border: 3px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+    legend.scheduler-border {
+        color: white;
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+
+
+
+.foo {
+
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.blue {
+
+  background: #13b4ff;
+}
+
+.purple {
+     
+  background: #ab3fdd;
+}
+
+.wine {
+  
+  background: #ae163e;
+}
+
+.multiselect {
+  width: 200px;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes label {
+  display: block;
+  color: white;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+.groupcheck label {
+  display: block;
+  padding-right: 10px;
+  padding-left: 22px;
+  text-indent: -22px;
+}
+.groupcheck input {
+  vertical-align: middle;
+}
+.groupcheck label span {
+  vertical-align: middle;
+}
+select{
+  width: 150px;
+  height: 30px;
+  padding: 5px;
+  color: green;
+}
+select option { color: black; }
+select option:first-child{
+  color: green;
+}
+
+    #toolbar {
+        background: rgba(42, 42, 42, 0.8);
+        padding: 4px;
+        border-radius: 4px;
+    }
+    #toolbar input {
+        vertical-align: middle;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+    #toolbar table tr {
+        transform: translateY(0);
+        transition: transform 0.4s ease-out;
+    }
+
+#checkboxess {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxess label {
+  display: block;
+  color: white;
+}
+
+.dropdown-submenu {
+  position: relative;
+  background:rgba(179, 179, 179, 1.0);
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+   color: #000000;
+}
+
+.dropdown-menu .dropdown-submenu li {
+   background: #cce5ff;
+   color: #000000;
+}
+
+ul li li{
+  background: #cce5ff;
+  margin: 5px;
+}
+
+.cesium-infoBox{ font-family: "Times New Roman", Times, serif;display:block;top:30px;position: absolute;right:0;width:40%;height:80%;max-width:480px;max-height:500px;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
+.cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
+.cesium-infoBox-title{ font-family: "Times New Roman", Times, serif;display:block;height:20px;padding:5px 30px 5px 25px;background:rgba(84,84,84,1);border-top-left-radius:7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;box-sizing:content-box}
+.cesium-infoBox-bodyless .cesium-infoBox-title{border-bottom-left-radius:7px}
+button.cesium-infoBox-camera{display:block;position:absolute;top:4px;left:4px;width:22px;height:22px;background:0 0;border-color:transparent;border-radius:3px;padding:0 5px;margin:0}
+button.cesium-infoBox-close{display:block;position:absolute;top:5px;right:5px;height:20px;background:0 0;border:none;border-radius:2px;font-weight:700;font-size:16px;padding:0 5px;margin:0;color:#edffff}
+button.cesium-infoBox-close:focus{background:rgba(238,136,0,.44);outline:0}
+button.cesium-infoBox-close:hover{background:#888;color:#000}button.cesium-infoBox-close:active{background:#a00;color:#000}.cesium-infoBox-bodyless .cesium-infoBox-iframe{display:none}.cesium-infoBox-iframe{border:2px;width:100%;width:calc(100% - 2px);height:200px;}
