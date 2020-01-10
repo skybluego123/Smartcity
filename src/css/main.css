@@ -1,4 +1,3 @@
-
 .dummy
 {
     width: 25%;
@@ -106,15 +105,27 @@ fieldset.scheduler-border {
 
   background: #13b4ff;
 }
+.link-right {
+  width: 50px;
+  height: 20%;
+  border-right: solid #FFFF00 5px;
+}
 
 .purple {
      
-  background: #ab3fdd;
+  background: #FFFF00;
 }
 
 .wine {
   
   background: #ae163e;
+}
+.white{
+ background: #FFFFFF;
+}
+
+.green{
+ background: #228B22;
 }
 
 .multiselect {
@@ -212,20 +223,20 @@ select option:first-child{
 }
 
 .dropdown-menu .dropdown-submenu li {
-   background: #cce5ff;
+   background: rgba(179, 179, 179, 1.0);
    color: #000000;
 }
 
 ul li li{
-  background: #cce5ff;
+  background: rgba(179, 179, 179, 1.0);
   margin: 5px;
 }
 
-.cesium-infoBox{ font-family: "Times New Roman", Times, serif;display:block;top:30px;position: absolute;right:0;width:40%;height:80%;max-width:480px;max-height:500px;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
+.cesium-infoBox{ font-family: "Times New Roman", Times, serif;display:block;top:30px;position: absolute;right:0;width:40%;height:100%;max-width:480px;max-height:500px;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
 .cesium-infoBox-title{ font-family: "Times New Roman", Times, serif;display:block;height:20px;padding:5px 30px 5px 25px;background:rgba(84,84,84,1);border-top-left-radius:7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;box-sizing:content-box}
 .cesium-infoBox-bodyless .cesium-infoBox-title{border-bottom-left-radius:7px}
 button.cesium-infoBox-camera{display:block;position:absolute;top:4px;left:4px;width:22px;height:22px;background:0 0;border-color:transparent;border-radius:3px;padding:0 5px;margin:0}
 button.cesium-infoBox-close{display:block;position:absolute;top:5px;right:5px;height:20px;background:0 0;border:none;border-radius:2px;font-weight:700;font-size:16px;padding:0 5px;margin:0;color:#edffff}
 button.cesium-infoBox-close:focus{background:rgba(238,136,0,.44);outline:0}
-button.cesium-infoBox-close:hover{background:#888;color:#000}button.cesium-infoBox-close:active{background:#a00;color:#000}.cesium-infoBox-bodyless .cesium-infoBox-iframe{display:none}.cesium-infoBox-iframe{border:2px;width:100%;width:calc(100% - 2px);height:200px;}
+button.cesium-infoBox-close:hover{background:#888;color:#000}button.cesium-infoBox-close:active{background:#a00;color:#000}.cesium-infoBox-bodyless .cesium-infoBox-iframe{display:none}.cesium-infoBox-iframe{border:2px;width:100%;width:calc(100% - 2px);height:100% !important;max-height:100% !important; }

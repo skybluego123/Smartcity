@@ -1,0 +1,59 @@
+[
+	{
+		"cluster_id": 0,
+		"cluster_center": [
+			272232.9053104482,
+			3294407.60503361
+		],
+		"cluster_images": [
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg"
+		]
+	},
+	{
+		"cluster_id": 1,
+		"cluster_center": [
+			272177.6811921671,
+			3293465.9034112073
+		],
+		"cluster_images": [
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg"
+		]
+	},
+	{
+		"cluster_id": 2,
+		"cluster_center": [
+			272222.2383281696,
+			3294531.916151693
+		],
+		"cluster_images": [
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg",
+			"random.jpeg"
+		]
+	}
+]

@@ -6,18 +6,22 @@ var Cesium = require('cesium/Cesium');
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzYyNDZmZi1lYTdhLTQwMDgtOGRhZC03ZDE5YTlkYmVkMGMiLCJpZCI6NDAxOSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTYzODc1OX0.Kb7k51vZGYR5F7btrBIAuSan3ZNyKY_AWrFv1cLFUFk';
 
 var viewer = new Cesium.Viewer('cesiumContainer', {
-    sceneMode: Cesium.SceneMode.SCENE2D,
     timeline: true,
     animation: true,
     shadows: true
 });
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(41753)
+    })
+);
 viewer.scene.globe.depthTestAgainstTerrain = true;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.381735, 29.749122, 753);
 var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 viewer.clock.shouldAnimate = true; 
 viewer.infoBox.frame.removeAttribute('sandbox');
 var frame = viewer.infoBox.frame;
-
+/*
 frame.addEventListener('load', function () {
     var cssLink = frame.contentDocument.createElement('link');
     cssLink.href = Cesium.buildModuleUrl('test.css');
@@ -25,7 +29,7 @@ frame.addEventListener('load', function () {
     cssLink.type = 'text/css';
     frame.contentDocument.head.appendChild(cssLink);
 }, false);
-
+*/
 viewer.scene.camera.setView({
     destination: initialPosition,
     orientation: initialOrientation,
@@ -43,6 +47,7 @@ var checkbox3 = document.getElementById('one1');
 var checkbox4 = document.getElementById('two1');
 var checkbox5 = document.getElementById('three1');
 
+var CheckFloodI = document.getElementById('x'); 
 var CheckPowerI = document.getElementById('y');  //updateobj
 var updateP = document.getElementById('updateobj');
 
@@ -51,7 +56,22 @@ var power2 = Cesium.GeoJsonDataSource.load('./geoMappings/update.geojson');
 var power3 = Cesium.GeoJsonDataSource.load('./geoMappings/power.geojson');
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
+var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
 
+
+fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
+  .then(response => response.json())
+  .then(json => console.log(json))
+
+
+var sample = Cesium.Resource.fetchJsonp('./geoMappings/sample.json');
+
+sample.then(function(dataSource) {
+      console.log("This is a very loooong message");
+      console.log(dataSource);
+         });
+
+console.log(sample)
 power1.then(function(dataSource) {
     var entities = dataSource.entities.values;
         var name="";
@@ -140,7 +160,6 @@ power1.then(function(dataSource) {
         <td>'+'1'+'</td>\
       </tr>\
     </table>\
-    <hr/>\
     <img width="100% style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
     <p>\
       Source: \
@@ -222,7 +241,7 @@ power3.then(function(dataSource) {
         var entity = entities[i];
         entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.WHITE,
+            color: Cesium.Color.GREEN,
             pixelSize: 13
         });
      //    if (entity.properties.hasProperty('id')) {
@@ -254,10 +273,8 @@ power3.then(function(dataSource) {
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
         entity.billboard = undefined; 
-        entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.WHITE,
-            pixelSize: 13
-        });
+        entity.polyline.material=Cesium.Color.Red;
+       
      //    if (entity.properties.hasProperty('id')) {
       //    entity.point = new Cesium.PointGraphics({
        //     color: Cesium.Color.YELLOW,
@@ -313,6 +330,39 @@ power3.then(function(dataSource) {
         });
     
     });
+
+       flood1.then(function(dataSource) {
+    var entities = dataSource.entities.values;
+    for (var i = 0; i < entities.length; i++) {
+        var entity = entities[i];
+        entity.billboard = undefined; 
+        entity.point = new Cesium.PointGraphics({
+            color: Cesium.Color.WHITE,
+            pixelSize: 13
+        });
+     //    if (entity.properties.hasProperty('id')) {
+      //    entity.point = new Cesium.PointGraphics({
+       //     color: Cesium.Color.YELLOW,
+       //     pixelSize: 10
+       // });
+         }
+      
+    });
+    
+    
+    Cesium.when(flood1,function(dataSource){
+        CheckFloodI.addEventListener('change', function() {
+            if (CheckFloodI.checked) {
+            viewer.dataSources.add(dataSource);
+            }
+            else{
+            viewer.dataSources.remove(dataSource);
+            
+            }
+        });
+    
+    });
+    
 
 function colorByDistance() {
     tileset.style = new Cesium.Cesium3DTileStyle({

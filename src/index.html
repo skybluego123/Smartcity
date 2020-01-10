@@ -62,6 +62,9 @@
             margin-top: 10px;
             text-align: center;
         }
+        .scheduler-border .u1 hr{
+            width:10%;
+        }
     </style>
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -76,8 +79,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <!-- Style our app. -->
-    <!-- <link rel="stylesheet" href="./css/index.css" media="screen"> -->
 
     <script>
         var expanded = false;
@@ -128,9 +129,11 @@
     <div class="showme hide">
 
         <h4>Flood Infrastructure</h4>
+        <label for="x"><input type="checkbox" id="updateobj1" />update using reported objects</label>
+        <!--
         <form>
             <div class="multiselect">
-                <label for="x"><input type="checkbox" id="updateobj1" />update using reported objects</label>
+                
                 <div class="selectBox" onclick="showCheckboxes()">
                     <select>
                         <option style="color:white">Flood Infrastructure</option>
@@ -146,10 +149,45 @@
                 </div>
             </div>
         </form>
+-->
 
-
-        <div id="showme1">Part2
-
+        <div id="showme1">
+              <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Weather Condition
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li class="dropdown-submenu">
+        <a class="test" tabindex="-1" href="#">Forecast <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#">present</a></li>
+          <li><a tabindex="-1" href="#">4hr later</a></li>
+          <li><a tabindex="-1" href="#">5hr later</a></li>
+          <li class="dropdown-submenu">
+            <a class="test" href="#">.. <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">...</a></li>
+              <li><a href="#">...</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu">
+        <a class="test" tabindex="-1" href="#">Previous <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#">Harvey</a></li>
+          <li><a tabindex="-1" href="#">...</a></li>
+          <li class="dropdown-submenu">
+            <a class="test" href="#">... <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">...</a></li>
+              <li><a href="#">...</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+<!--
             <form>
                 <div class="multiselect">
                     <div class="selectBox" onclick="showCheckboxes1()">
@@ -168,6 +206,7 @@
                     </div>
                 </div>
             </form>
+-->
         </div>
 
     </div>
@@ -177,8 +216,42 @@
         <label for="x"><input type="checkbox" id="updateobj" checked="checked" />update using reported objects</label>
 
         <div id="PowerC1">
-
             <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>
+                         <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Weather Condition
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li class="dropdown-submenu">
+        <a class="test" tabindex="-1" href="#">Wind <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#">present</a></li>
+          <li><a tabindex="-1" href="#">4hr later</a></li>
+          <li><a tabindex="-1" href="#">5hr later</a></li>
+          <li class="dropdown-submenu">
+            <a class="test" href="#">.. <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">...</a></li>
+              <li><a href="#">...</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu">
+        <a class="test" tabindex="-1" href="#">... <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#">..</a></li>
+          <li><a tabindex="-1" href="#">...</a></li>
+          <li class="dropdown-submenu">
+            <a class="test" href="#">... <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">...</a></li>
+              <li><a href="#">...</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
         </div>
 
 
@@ -196,23 +269,17 @@
     <hr />
     <legend class="scheduler-border">Map legend</legend>
     <ul>
-        <li>
-
+            
             <div class="foo blue"></div>
             <div><label for="myid1">reported object</label></div>
-        </li>
-        <li>
             <div class="foo purple"></div>
             <div><label for="myid2">Substation</label></div>
-        </li>
-        <li>
-            <div class="foo wine"></div>
-            <div><label for="myid2">Wire</label></div>
-        </li>
-        <li>
             <div class="foo purple"></div>
+            <div><label for="myid2">Wire</label></div>
+            <div class="foo green"></div>
+            <div><label for="myid2">Utility pole</label></div>
+            <div class="foo white"></div>
             <div><label for="myid2">Inlet</label></div>
-        </li>
     </ul>
     <hr />
 </div>
