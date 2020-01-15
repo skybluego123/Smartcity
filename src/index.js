@@ -61,7 +61,23 @@ var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3
 
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
-  .then(json => console.log(json))
+  .then(function(json){
+      let objects = json['objects'];
+      for(let object of objects){
+        console.log("Object is ", object['cluster_center_latitude'])
+        console.log("Object is ", object['cluster_center_longitude'])
+        viewer.entities.add({
+  position : Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0),
+  name : object['cluster_id'],
+  point : {
+    color : Cesium.Color.YELLOW,
+    pixelSize : 15,
+  }
+});
+
+      }
+      console.log(json);
+  } )
 
 
 var sample = Cesium.Resource.fetchJsonp('./geoMappings/sample.json');
@@ -244,6 +260,7 @@ power3.then(function(dataSource) {
             color: Cesium.Color.GREEN,
             pixelSize: 13
         });
+
      //    if (entity.properties.hasProperty('id')) {
       //    entity.point = new Cesium.PointGraphics({
        //     color: Cesium.Color.YELLOW,
