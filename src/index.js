@@ -4,7 +4,8 @@ require('./css/main.css');
 var Cesium = require('cesium/Cesium');
 
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzYyNDZmZi1lYTdhLTQwMDgtOGRhZC03ZDE5YTlkYmVkMGMiLCJpZCI6NDAxOSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTYzODc1OX0.Kb7k51vZGYR5F7btrBIAuSan3ZNyKY_AWrFv1cLFUFk';
-
+var numClicks = 0;
+var toolbar = document.getElementById('toolbar');
 var viewer = new Cesium.Viewer('cesiumContainer', {
     timeline: true,
     animation: true,
@@ -15,21 +16,24 @@ var tileset = viewer.scene.primitives.add(
         url: Cesium.IonResource.fromAssetId(41753)
     })
 );
+
+
 viewer.scene.globe.depthTestAgainstTerrain = true;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.381735, 29.749122, 753);
 var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 viewer.clock.shouldAnimate = true; 
 viewer.infoBox.frame.removeAttribute('sandbox');
 var frame = viewer.infoBox.frame;
-/*
+
 frame.addEventListener('load', function () {
+  console.log("ddd");
     var cssLink = frame.contentDocument.createElement('link');
-    cssLink.href = Cesium.buildModuleUrl('test.css');
+    cssLink.href = Cesium.buildModuleUrl('./css/main.css');
     cssLink.rel = 'stylesheet';
-    cssLink.type = 'text/css';
+    cssLink.type = 'test/css';
     frame.contentDocument.head.appendChild(cssLink);
 }, false);
-*/
+
 viewer.scene.camera.setView({
     destination: initialPosition,
     orientation: initialOrientation,
@@ -37,9 +41,6 @@ viewer.scene.camera.setView({
 });
 
 
-
-//var checkbox1 = document.getElementById('Power');
-//var checkbox2 = document.getElementById('Waterline');
 
 var checkbox1 = document.getElementById('one');
 var checkbox2 = document.getElementById('two');
@@ -58,36 +59,143 @@ var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
 
+var vulnerable_objects;
 
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
       let objects = json['objects'];
+      vulnerable_objects = objects;
       for(let object of objects){
-        console.log("Object is ", object['cluster_center_latitude'])
-        console.log("Object is ", object['cluster_center_longitude'])
-        viewer.entities.add({
-  position : Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0),
-  name : object['cluster_id'],
-  point : {
+        // console.log("Object is ", object['cluster_center_latitude'])
+        // console.log("Object is ", object['cluster_center_longitude'])
+        var entity = new Cesium.Entity();
+        entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0);
+        entity.name = object['cluster_id'];
+        entity.description = '\
+     <style>\
+    .cesium-infoBox-description {\
+        font-family: "Times New Roman", Times, serif;\
+        font-size: 6px;\
+        padding: 4px 10px;\
+        margin-right: 4px;\
+        color: #edffff;\
+    }\
+    .cesium-infoBox-defaultTable tr:nth-child(odd) {\
+        background-color: rgba(38, 38, 38, 1.0);\
+        font-size:small;\
+    }\
+    .cesium-infoBox-defaultTable tr:nth-child(even) {\
+        background-color: rgba(38, 38, 38, 1.0);\
+        font-size:small;\
+    }\
+    .cesium-infoBox-defaultTable th {\
+        font-weight: normal;\
+        padding: 4px;\
+        vertical-align: middle;\
+        text-align: center;\
+        font-size:small;\
+    }\
+    .cesium-infoBox-defaultTable td {\
+        padding: 4px;\
+        vertical-align: middle;\
+        text-align: center;\
+        font-size:small;\
+    }\
+    .cesium-infoBox-visible {\
+        transform: translate(0, 0);\
+        visibility: visible;\
+        opacity: 0;\
+        transition: opacity 0.2s ease-out, transform 0.2s ease-out;\
+    }\
+    \
+    </style>\
+    <table class="cesium-infoBox-defaultTable">\
+      <tr>\
+        <th>Type</th>\
+        <th>Power</th>\
+      </tr>\
+      <tr>\
+        <td>Name</td>\
+      </tr>\
+      <tr>\
+        <td>Coordinate</td>\
+      </tr>\
+      <tr>\
+        <td>Status</td>\
+      </tr>\
+      <tr>\
+        <td>Potential demage</td>\
+      </tr>\
+    <tr>\
+        <td>Severity</td>\
+        <td>'+'1'+'</td>\
+      </tr>\
+    </table>\
+     <img data-object-id='+entity.name+' class="object-image" width="100% style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
+     ';
+     entity.point = {
     color : Cesium.Color.YELLOW,
     pixelSize : 15,
-  }
-});
+  };
+    viewer.entities.add(entity);
+//     viewer.entities.add({
+//   position : Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0),
+//   name : object['cluster_id'],
+//   point : {
+//     color : Cesium.Color.YELLOW,
+//     pixelSize : 15,
+//   }
+//   description : 
+// });
 
       }
-      console.log(json);
+      // console.log(json);
   } )
 
 
-var sample = Cesium.Resource.fetchJsonp('./geoMappings/sample.json');
+  $(function(){
+$('#img').click(function(){
 
-sample.then(function(dataSource) {
-      console.log("This is a very loooong message");
-      console.log(dataSource);
-         });
+$(this).toggleClass('min');
+$(this).toggleClass('max');
+});
+});
 
-console.log(sample)
+viewer.infoBox.frame.addEventListener('load', function() {
+    //
+    // Now that the description is loaded, register a click listener inside
+    // the document of the iframe.
+    //
+    console.log("Frame loaded")
+    viewer.infoBox.frame.contentDocument.body.addEventListener('click', function(e) {
+        //
+        // The document body will be rewritten when the selectedEntity changes,
+        // but this body listener will survive.  Now it must determine if it was
+        // one of the clickable buttons.
+        //
+        console.log("frame clicked")
+        console.log(e.target.className)
+        console.log(e.target.className == "object-image")
+        if (e.target && e.target.className === 'object-image') {
+
+            console.log("Im entering in this if");
+            // console.log($("#dialog"))
+            let element = e.target;
+            let object_id = element.getAttribute("data-object-id");
+            let object_images = vulnerable_objects[object_id]['cluster_images'];
+            for(let object_image of object_images){
+              let ima = new Image();
+              ima.src = "//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg";
+              ima.height = 30;
+              ima.width = 30;
+              document.getElementById("dialog").appendChild(ima);
+            }
+           $( "#dialog" ).dialog();
+        }
+    }, false);
+}, false);
+
 power1.then(function(dataSource) {
     var entities = dataSource.entities.values;
         var name="";
@@ -117,30 +225,34 @@ power1.then(function(dataSource) {
         
     //table id="t01" <table class="cesium-infoBox-defaultTable cesium-infoBox-defaultTable-lighter">
     var descriptions = '\
-    <style>\
+     <style>\
     .cesium-infoBox-description {\
         font-family: "Times New Roman", Times, serif;\
-        font-size: 8px;\
+        font-size: 6px;\
         padding: 4px 10px;\
         margin-right: 4px;\
         color: #edffff;\
     }\
     .cesium-infoBox-defaultTable tr:nth-child(odd) {\
         background-color: rgba(38, 38, 38, 1.0);\
+        font-size:small;\
     }\
     .cesium-infoBox-defaultTable tr:nth-child(even) {\
         background-color: rgba(38, 38, 38, 1.0);\
+        font-size:small;\
     }\
     .cesium-infoBox-defaultTable th {\
         font-weight: normal;\
         padding: 4px;\
         vertical-align: middle;\
         text-align: center;\
+        font-size:small;\
     }\
     .cesium-infoBox-defaultTable td {\
         padding: 4px;\
         vertical-align: middle;\
         text-align: center;\
+        font-size:small;\
     }\
     .cesium-infoBox-visible {\
         transform: translate(0, 0);\
@@ -176,14 +288,8 @@ power1.then(function(dataSource) {
         <td>'+'1'+'</td>\
       </tr>\
     </table>\
-    <img width="100% style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
-    <p>\
-      Source: \
-      <a style="color: WHITE"\
-        target="_blank"\
-        href="http://en.wikipedia.org/wiki/Wyoming">Openstreet</a>\
-    </p>\
-     <button onclick="parent.myFunction()">Click me</button>';
+     <img class="object-image" width="100% style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
+     ';
       entity.description = descriptions;
         }
     

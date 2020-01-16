@@ -4,78 +4,22 @@
 
     <meta charset="UTF-8">
     <style>
-        .showme {
-            width: 20%;
-            padding: 50px 0;
-            text-align: center;
-            margin-top: 0px;
-            left: 279px;
-            position: fixed;
-            border: 2px solid #1f1209;
-        }
 
-        .PowerC {
-            width: 20%;
-            padding: 50px 0;
-            text-align: center;
-            margin-top: 0px;
-            left: 279px;
-            position: fixed;
-            border: 2px solid #1f1209;
-        }
-
-        #showme1 {
-            width: 20%;
-            padding: 50px 0;
-            text-align: center;
-            margin-top: 30px;
-            left: 279px;
-            position: fixed;
-            border: 2px solid #1f1209;
-        }
-
-        #PowerC1 {
-            width: 20%;
-            padding: 50px 0;
-            text-align: center;
-            margin-top: 30px;
-            left: 279px;
-            position: fixed;
-            border: 2px solid #1f1209;
-        }
-
-
-        .hide {
-            display: none;
-        }
-
-        .hide1 {
-            display: none;
-        }
-
-        .showme h4 {
-            font-size: 15px;
-            margin-top: 10px;
-            text-align: center;
-        }
-        .scheduler-border .u1 hr{
-            width:10%;
-        }
     </style>
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <!-- Make the app on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>New York City</title>
+    <title>Smart City</title>
     <!-- The Cesium library. -->
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.63/Build/Cesium/Cesium.js"></script>
     <!-- <link href="./css/test.css" rel="stylesheet" type="text/css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         var expanded = false;
 
@@ -111,6 +55,45 @@
             });
         });
 
+// For the thumbnail demo! :]
+
+var count = 1
+setTimeout(demo, 500)
+setTimeout(demo, 700)
+setTimeout(demo, 900)
+setTimeout(reset, 2000)
+
+setTimeout(demo, 2500)
+setTimeout(demo, 2750)
+setTimeout(demo, 3050)
+
+
+var mousein = false
+function demo() {
+   if(mousein) return
+   document.getElementById('demo' + count++)
+      .classList.toggle('hover')
+   
+}
+
+function demo2() {
+   if(mousein) return
+   document.getElementById('demo2')
+      .classList.toggle('hover')
+}
+
+function reset() {
+   count = 1
+   var hovers = document.querySelectorAll('.hover')
+   for(var i = 0; i < hovers.length; i++ ) {
+      hovers[i].classList.remove('hover')
+   }
+}
+
+document.addEventListener('mouseover', function() {
+   mousein = true
+   reset()
+})
     </script>
 
 
@@ -122,95 +105,38 @@
     <div id="cesiumContainer" class="fullSize"></div>
 
     <div class="backdrop" id="menu">
-    <div class="showme hide">
-        <h4>Flood Infrastructure</h4>
-        <label for="x"><input type="checkbox" id="updateobj1" />update using reported objects</label>
-        <!--
-        <form>
-            <div class="multiselect">
-                
-                <div class="selectBox" onclick="showCheckboxes()">
-                    <select>
-                        <option style="color:white">Flood Infrastructure</option>
-                    </select>
-                    <div class="overSelect"></div>
-                </div>
 
-                <div id="checkboxes">
-                    <label for="one">
-                        <input type="checkbox" id="one" />Power</label>
-                    <label for="two">
-                        <input type="checkbox" id="two" />potential</label>
-                </div>
-            </div>
-        </form>
--->
+   
+    <h4>Disaster management</h4>
 
-        <div id="showme1">
-              <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Weather Condition
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        <li class="dropdown-submenu">
-        <a class="test" tabindex="-1" href="#">Forecast <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a tabindex="-1" href="#">present</a></li>
-          <li><a tabindex="-1" href="#">4hr later</a></li>
-          <li><a tabindex="-1" href="#">5hr later</a></li>
-          <li class="dropdown-submenu">
-            <a class="test" href="#">.. <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">...</a></li>
-              <li><a href="#">...</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li class="dropdown-submenu">
-        <a class="test" tabindex="-1" href="#">Previous <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a tabindex="-1" href="#">Harvey</a></li>
-          <li><a tabindex="-1" href="#">...</a></li>
-          <li class="dropdown-submenu">
-            <a class="test" href="#">... <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">...</a></li>
-              <li><a href="#">...</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
+    <label for="x"><input type="checkbox" name="c1" id="x" />flood</label>
+    <label for="y"><input type="checkbox" name="c2" id="y" /> <span>blackout(power network)</span></label>
+
+
+    <hr />
+    <legend class="scheduler-border">Map legend</legend>
+    <ul>
+            
+            <div class="foo blue"></div>
+            <div><label for="myid1">reported object</label></div>
+            <div class="foo purple"></div>
+            <div><label for="myid2">Substation</label></div>
+            <div class="foo purple"></div>
+            <div><label for="myid2">Wire</label></div>
+            <div class="foo green"></div>
+            <div><label for="myid2">Utility pole</label></div>
+            <div class="foo white"></div>
+            <div><label for="myid2">Inlet</label></div>
     </ul>
-  </div>
-<!--
-            <form>
-                <div class="multiselect">
-                    <div class="selectBox" onclick="showCheckboxes1()">
-                        <select>
-                            <option style="color:white">Power Infrastructure</option>
-                        </select>
-                        <div class="overSelect"></div>
-                    </div>
-                    <div id="checkboxess">
-                        <label for="one">
-                            <input type="checkbox" id="one1" />Power</label>
-                        <label for="two">
-                            <input type="checkbox" id="two1" />Substation</label>
-                        <label for="three">
-                            <input type="checkbox" id="three1" />Wire</label>
-                    </div>
-                </div>
-            </form>
--->
-        </div>
-
-    </div>
-    <div class="PowerC hide1">
+    <hr />
+</div>
+    <div class="PowerC hide1" >
 <div class ="back" id="back1">
         <h4>Power Infrastructure</h4>
         <label for="x"><input type="checkbox" id="updateobj" checked="checked" />update using reported objects</label>
-
+</div>
         <div id="PowerC1">
+            <div class ="back" id="back2">
             <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>
         <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Weather Condition
@@ -251,36 +177,134 @@
 
 </div>
     </div>
+   <div class="showme hide">
+        <div class ="back" id="back1">
+        <h4>Flood Infrastructure</h4>
+        <label for="x"><input type="checkbox" id="updateobj1" />update using reported objects</label>
+        <!--
+        <form>
+            <div class="multiselect">
+                
+                <div class="selectBox" onclick="showCheckboxes()">
+                    <select>
+                        <option style="color:white">Flood Infrastructure</option>
+                    </select>
+                    <div class="overSelect"></div>
+                </div>
 
-
-   
-    <h2>Diaster management</h2>
-
-    <label for="x"><input type="checkbox" name="c1" id="x" />flood</label>
-    <label for="y"><input type="checkbox" name="c2" id="y" /> <span>blackout(power network)</span></label>
-
-
-    <hr />
-    <legend class="scheduler-border">Map legend</legend>
-    <ul>
-            
-            <div class="foo blue"></div>
-            <div><label for="myid1">reported object</label></div>
-            <div class="foo purple"></div>
-            <div><label for="myid2">Substation</label></div>
-            <div class="foo purple"></div>
-            <div><label for="myid2">Wire</label></div>
-            <div class="foo green"></div>
-            <div><label for="myid2">Utility pole</label></div>
-            <div class="foo white"></div>
-            <div><label for="myid2">Inlet</label></div>
-    </ul>
-    <hr />
+                <div id="checkboxes">
+                    <label for="one">
+                        <input type="checkbox" id="one" />Power</label>
+                    <label for="two">
+                        <input type="checkbox" id="two" />potential</label>
+                </div>
+            </div>
+        </form>
+-->
 </div>
-    <div id="cesiumContainer" class="fullSize"></div>
+        <div id="showme1">
+            <div class ="back" id="back2">
+    <h4>Weather Condition</h4>
+<nav>
+        <menu style="padding: 0px">
+            <menuitem id="demo1">
+                <a>drop</a>
+                <menu>
+                    <menuitem><a>about</a></menuitem>
+               <menuitem>
+                  <a>settings</a>
+                  <menu>
+                     <menuitem><a>Test 1</a></menuitem>
+                     <menuitem><a>Test 2</a></menuitem>
+                     <menuitem><a>Test 3</a></menuitem>
+                     <menuitem><a>Test 4</a></menuitem>
+                  </menu>  
+               </menuitem>
+                    <menuitem><a>help</a></menuitem>
+                    <menuitem id="demo2">
+                        <a>more</a>
+                        <menu>
+                            <menuitem id="demo3">
+                                <a>deeper</a>
+                                <menu>
+                                    <menuitem><a>deep 1</a></menuitem>
+                                    <menuitem><a>deep 2</a></menuitem>
+                                    <menuitem><a>deep 3</a></menuitem>
+                                </menu>
+                            </menuitem>
+                            <menuitem><a>test</a></menuitem>
+                        </menu>
+                    </menuitem>
+                </menu>
+            </menuitem>
+        </menu>
+    </nav>
+<!--    
+              <div class="dropdown my-very-special-dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Weather Condition
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li class="dropdown-submenu">
+        <a class="test" tabindex="-1" href="#">Forecast <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#">present</a></li>
+          <li><a tabindex="-1" href="#">4hr later</a></li>
+          <li><a tabindex="-1" href="#">5hr later</a></li>
+          <li class="dropdown-submenu">
+            <a class="test" href="#">.. <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">...</a></li>
+              <li><a href="#">...</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu">
+        <a class="test" tabindex="-1" href="#">Previous <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#">Harvey</a></li>
+          <li><a tabindex="-1" href="#">...</a></li>
+          <li class="dropdown-submenu">
+            <a class="test" href="#">... <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">...</a></li>
+              <li><a href="#">...</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+-->
+</div>
 
+<!--
+            <form>
+                <div class="multiselect">
+                    <div class="selectBox" onclick="showCheckboxes1()">
+                        <select>
+                            <option style="color:white">Power Infrastructure</option>
+                        </select>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="checkboxess">
+                        <label for="one">
+                            <input type="checkbox" id="one1" />Power</label>
+                        <label for="two">
+                            <input type="checkbox" id="two1" />Substation</label>
+                        <label for="three">
+                            <input type="checkbox" id="three1" />Wire</label>
+                    </div>
+                </div>
+            </form>
+-->
+        </div>
 
-    <div id="toolbar">
+    </div>
+    
+    <div id="dialog" title="Basic dialog">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
 
 </body>
 
