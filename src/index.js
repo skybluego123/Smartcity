@@ -59,8 +59,10 @@ var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
 
-var vulnerable_objects;
+var vulnerable_objects;//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg
+var url =Cesium.buildModuleUrl("./images/power.png");
 
+//./images/power.png
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
@@ -72,6 +74,14 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         var entity = new Cesium.Entity();
         entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0);
         entity.name = object['cluster_id'];
+        var lat =object['cluster_center_latitude'];
+        var lon =object['cluster_center_longitude'];
+        var name=object['cluster_id'];
+
+
+    var pinBuilder = new Cesium.PinBuilder();
+  //  entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.GREEN, 48);
+    
         entity.description = '\
      <style>\
     .cesium-infoBox-description {\
@@ -116,10 +126,12 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         <th>Power</th>\
       </tr>\
       <tr>\
-        <td>Name</td>\
+        <td>Cluster id</td>\
+        <td>'+name+'</td>\
       </tr>\
       <tr>\
         <td>Coordinate</td>\
+        <th>'+lat+'   '+lon+'</th>\
       </tr>\
       <tr>\
         <td>Status</td>\
@@ -127,18 +139,18 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       <tr>\
         <td>Potential demage</td>\
       </tr>\
-    <tr>\
-        <td>Severity</td>\
-        <td>'+'1'+'</td>\
-      </tr>\
     </table>\
      <img data-object-id='+entity.name+' class="object-image" width="100% style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
      ';
      entity.point = {
-    color : Cesium.Color.YELLOW,
+    color : Cesium.Color.BLUE,
     pixelSize : 15,
   };
-    viewer.entities.add(entity);
+ // if(updateP.checked)
+  //{
+ var updated=viewer.entities.add(entity);
+  //}
+  // viewer.entities.add(entity);
 //     viewer.entities.add({
 //   position : Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0),
 //   name : object['cluster_id'],
@@ -150,37 +162,20 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
 // });
 
       }
-      // console.log(json);
   } )
 
 
-  $(function(){
-$('#img').click(function(){
-
-$(this).toggleClass('min');
-$(this).toggleClass('max');
-});
-});
-
 viewer.infoBox.frame.addEventListener('load', function() {
-    //
-    // Now that the description is loaded, register a click listener inside
-    // the document of the iframe.
-    //
+
     console.log("Frame loaded")
     viewer.infoBox.frame.contentDocument.body.addEventListener('click', function(e) {
-        //
-        // The document body will be rewritten when the selectedEntity changes,
-        // but this body listener will survive.  Now it must determine if it was
-        // one of the clickable buttons.
-        //
+ 
         console.log("frame clicked")
         console.log(e.target.className)
         console.log(e.target.className == "object-image")
         if (e.target && e.target.className === 'object-image') {
-
+          $("#dialog").html("");
             console.log("Im entering in this if");
-            // console.log($("#dialog"))
             let element = e.target;
             let object_id = element.getAttribute("data-object-id");
             let object_images = vulnerable_objects[object_id]['cluster_images'];
@@ -313,18 +308,16 @@ power1.then(function(dataSource) {
     }
     });
 
-Cesium.when(power1, function (dataSource) {
+
     updateP.addEventListener('change', function () {
         if (updateP.checked) {
-            viewer.dataSources.add(dataSource);
+            viewer.dataSources.add(updated);
         }
         else {
-            viewer.dataSources.remove(dataSource);
-
+           viewer.entities.remove(updated); 
         }
     });
 
-});
 
 
 power2.then(function (dataSource) {
@@ -503,3 +496,4 @@ function colorByDistance() {
         }
     });
 }
+colorByDistance();

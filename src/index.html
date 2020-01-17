@@ -1,3 +1,4 @@
+
 <html>
 
 <head>
@@ -15,6 +16,7 @@
     <!-- The Cesium library. -->
     <!-- <link href="./css/test.css" rel="stylesheet" type="text/css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -57,43 +59,7 @@
 
 // For the thumbnail demo! :]
 
-var count = 1
-setTimeout(demo, 500)
-setTimeout(demo, 700)
-setTimeout(demo, 900)
-setTimeout(reset, 2000)
 
-setTimeout(demo, 2500)
-setTimeout(demo, 2750)
-setTimeout(demo, 3050)
-
-
-var mousein = false
-function demo() {
-   if(mousein) return
-   document.getElementById('demo' + count++)
-      .classList.toggle('hover')
-   
-}
-
-function demo2() {
-   if(mousein) return
-   document.getElementById('demo2')
-      .classList.toggle('hover')
-}
-
-function reset() {
-   count = 1
-   var hovers = document.querySelectorAll('.hover')
-   for(var i = 0; i < hovers.length; i++ ) {
-      hovers[i].classList.remove('hover')
-   }
-}
-
-document.addEventListener('mouseover', function() {
-   mousein = true
-   reset()
-})
     </script>
 
 
@@ -102,6 +68,7 @@ document.addEventListener('mouseover', function() {
 </head>
 
 <body>
+
     <div id="cesiumContainer" class="fullSize"></div>
 
     <div class="backdrop" id="menu">
@@ -113,19 +80,21 @@ document.addEventListener('mouseover', function() {
     <label for="y"><input type="checkbox" name="c2" id="y" /> <span>blackout(power network)</span></label>
 
 
+
+
     <hr />
     <legend class="scheduler-border">Map legend</legend>
     <ul>
-            
-            <div class="foo blue"></div>
+           
+            <div class="dot blue"></div>
             <div><label for="myid1">reported object</label></div>
             <div class="foo purple"></div>
             <div><label for="myid2">Substation</label></div>
             <div class="foo purple"></div>
             <div><label for="myid2">Wire</label></div>
-            <div class="foo green"></div>
+            <div class="dot green"></div>
             <div><label for="myid2">Utility pole</label></div>
-            <div class="foo white"></div>
+            <div class="dot white"></div>
             <div><label for="myid2">Inlet</label></div>
     </ul>
     <hr />
@@ -133,16 +102,17 @@ document.addEventListener('mouseover', function() {
     <div class="PowerC hide1" >
 <div class ="back" id="back1">
         <h4>Power Infrastructure</h4>
-        <label for="x"><input type="checkbox" id="updateobj" checked="checked" />update using reported objects</label>
+        <label for="x"><input type="checkbox" id="updateobj" />update using reported objects</label>
 </div>
         <div id="PowerC1">
             <div class ="back" id="back2">
             <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>
+       <!--
         <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Weather Condition
+    <button class="btn btn-primary dropdown-toggle special-dropdown" type="button" data-toggle="dropdown">Weather Condition
     <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        <li class="dropdown-submenu">
+    <ul class="dropdown-menu special">
+        <li class="dropdown-submenu special_menu">
         <a class="test" tabindex="-1" href="#">Wind <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a tabindex="-1" href="#">present</a></li>
@@ -173,6 +143,7 @@ document.addEventListener('mouseover', function() {
       </li>
     </ul>
   </div>
+  <-->
         </div>
 
 </div>
@@ -205,40 +176,23 @@ document.addEventListener('mouseover', function() {
         <div id="showme1">
             <div class ="back" id="back2">
     <h4>Weather Condition</h4>
-<nav>
-        <menu style="padding: 0px">
-            <menuitem id="demo1">
-                <a>drop</a>
-                <menu>
-                    <menuitem><a>about</a></menuitem>
-               <menuitem>
-                  <a>settings</a>
-                  <menu>
-                     <menuitem><a>Test 1</a></menuitem>
-                     <menuitem><a>Test 2</a></menuitem>
-                     <menuitem><a>Test 3</a></menuitem>
-                     <menuitem><a>Test 4</a></menuitem>
-                  </menu>  
-               </menuitem>
-                    <menuitem><a>help</a></menuitem>
-                    <menuitem id="demo2">
-                        <a>more</a>
-                        <menu>
-                            <menuitem id="demo3">
-                                <a>deeper</a>
-                                <menu>
-                                    <menuitem><a>deep 1</a></menuitem>
-                                    <menuitem><a>deep 2</a></menuitem>
-                                    <menuitem><a>deep 3</a></menuitem>
-                                </menu>
-                            </menuitem>
-                            <menuitem><a>test</a></menuitem>
-                        </menu>
-                    </menuitem>
-                </menu>
-            </menuitem>
-        </menu>
-    </nav>
+
+<ul class="toolgroup">
+    <li><a href="">Rainfall</a>
+        <ul>
+            <li><a href="">2020</a></li>
+            <li><a href="">2019</a></li>
+        </ul>
+    </li>
+    <li><a href="">Historical event</a>
+        <ul>
+            <li><a href="">harvey</a></li>
+            <li><a href="">...</a></li>
+            <li><a href="">...</a></li>
+        </ul>
+    </li>
+    </ul>
+
 <!--    
               <div class="dropdown my-very-special-dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Weather Condition
@@ -278,32 +232,14 @@ document.addEventListener('mouseover', function() {
 -->
 </div>
 
-<!--
-            <form>
-                <div class="multiselect">
-                    <div class="selectBox" onclick="showCheckboxes1()">
-                        <select>
-                            <option style="color:white">Power Infrastructure</option>
-                        </select>
-                        <div class="overSelect"></div>
-                    </div>
-                    <div id="checkboxess">
-                        <label for="one">
-                            <input type="checkbox" id="one1" />Power</label>
-                        <label for="two">
-                            <input type="checkbox" id="two1" />Substation</label>
-                        <label for="three">
-                            <input type="checkbox" id="three1" />Wire</label>
-                    </div>
-                </div>
-            </form>
--->
+
         </div>
 
     </div>
-    
+
     <div id="dialog" title="Basic dialog">
-  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+  
+
 </div>
 
 </body>

@@ -94,17 +94,23 @@ fieldset.scheduler-border {
 
 
 .foo {
-
   float: left;
   width: 10px;
   height: 10px;
   margin: 5px;
   border: 1px solid rgba(0, 0, 0, .2);
 }
-
+.dot{
+float: left;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 50%;
+}
 .blue {
 
-  background: #13b4ff;
+  background: #0000CD;
 }
 .link-right {
   width: 50px;
@@ -228,10 +234,7 @@ select option:first-child{
    color: #000000;
 }
 
-ul li li{
-  background: rgba(179, 179, 179, 1.0);
-  margin: 5px;
-}
+
 
 .back {
     display: inline-block;
@@ -260,13 +263,7 @@ ul li li{
     margin-top:10px;
 }
 
-.parent{
 
-}
-
-.child{
-
-}
     .cesium-infoBox-description {
         font-family: "Times New Roman", Times, serif !important; 
         font-size: 8px !important;
@@ -392,78 +389,42 @@ nav > menu > menuitem menuitem menu {
 /* User Styles Below Not Required */
 /* User Styles Below Not Required */
 
-nav { 
-   margin-top: -10px;
-   margin-left: -10px;
+
+.toolgroup,.toolgroup li ul { padding:0px; list-style:none; width:80%; background:rgba(38,38,38,0.7); }
+.toolgroup li,.toolgroup li ul li { width:90%; position:relative; }
+.toolgroup li a,.toolgroup li ul li a { padding:7px 10px; display:block;color:#fff; }
+.toolgroup li ul { display:none; position:absolute; left:150px; top:0px; }
+.toolgroup li:hover ul { display:block; }
+ul li li
+{
+margin:0px;
+ background:rgba(38,38,38,0.7); 
+}
+a
+{color:#fff;}
+.special
+{
+text-align: center;
+}
+.special-dropdown
+{
+
+border: none;
+font-weight:200;
+font-size: 1.1em;
+color:rgba(38,38,38,.95);
+text-align: right;
+margin-top:4.8%;
+margin-right:2%;
 }
 
-nav a {
-   margin:10px;
-   background:#75F;
-   color:#FFF;
-   /*min-width:160px;*/
-   transition: background 0.5s, color 0.5s, transform 0.5s;
-   padding:10px 20px;
-   box-sizing:border-box;
-   border-radius:3px;
-   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-   position:relative;
-}
-
-nav a:hover:before {
-   content: '';
-   top:0;left:0;
-   position:absolute;
-   background:rgba(0, 0, 0, 0.2);
-   width:100%;
-   height:100%;
-   /*min-width: 0px !important;*/
-}
-
-nav > menu > menuitem > a + menu:after{
-   content: '';
-   position:absolute;
-   border:10px solid transparent;
-   border-top: 10px solid white;
-   left:12px;
-   top: -40px;  
-}
-nav menuitem > menu > menuitem > a + menu:after{ 
-   content: '';
-   position:absolute;
-   border:10px solid transparent;
-   border-left: 10px solid white;
-   top: 20px;
-   /*left:-180px;*/
-   transition: opacity 0.6, transform 0s;
-}
-
-nav > menu > menuitem > menu > menuitem{
-   transition: transform 0.6s, opacity 0.6s;
-   transform:translateY(80%);
-   opacity:0;
-}
-nav > menu > menuitem:hover > menu > menuitem,
-nav > menu > menuitem.hover > menu > menuitem{
-   transform:translateY(0%);
-   opacity: 1;
-}
-
-menuitem > menu > menuitem > menu > menuitem{
-   transition: transform 0.6s, opacity 0.6s;
-   transform:translateX(195px) translateY(0%);
-   opacity: 0;
-} 
-menuitem > menu > menuitem:hover > menu > menuitem,  
-menuitem > menu > menuitem.hover > menu > menuitem{  
-   transform:translateX(0) translateY(0%);
-   opacity: 1;
-}
-
-.my-very-special-dropdown .btn-default {
-  color: red;
+.cesium-viewer-bottom {
+display:none;
 
 }
+
+
+
 .cesium-infoBox{ font-family: "Times New Roman", Times, serif;display:block;top:30px;position: absolute;right:0;width:30%;height:100%;max-width:480px;max-height:500px;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
 .cesium-infoBox-title{ font-family: "Times New Roman", Times, serif;display:block;height:20px;padding:5px 30px 5px 25px;background:rgba(84,84,84,1);border-top-left-radius:7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;box-sizing:content-box}
