@@ -5,6 +5,13 @@
     background: white;
     border: 2px solid #1f1209;
 }
+#canvasMap {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px
+}
+
 .backdrop {
     display: inline-block;
     background: rgba(42, 42, 42, 0.7);

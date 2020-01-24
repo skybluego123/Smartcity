@@ -77,9 +77,10 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         var lat =object['cluster_center_latitude'];
         var lon =object['cluster_center_longitude'];
         var name=object['cluster_id'];
+        var image_url = "http://54.70.46.85:8081/"+object['cluster_images'][0];
 
 
-    var pinBuilder = new Cesium.PinBuilder();
+   // var pinBuilder = new Cesium.PinBuilder();
   //  entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.GREEN, 48);
     
         entity.description = '\
@@ -140,13 +141,13 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         <td>Potential demage</td>\
       </tr>\
     </table>\
-     <img data-object-id='+entity.name+' class="object-image" width="100% style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
-     ';
+     <img data-object-id='+entity.name+' class="object-image" width="100% style="float:center; margin: 0 1em 1em 0;" src='+image_url+' >\
+  <button id="viewButton">Click me</button>';
      entity.point = {
     color : Cesium.Color.BLUE,
     pixelSize : 15,
   };
- // if(updateP.checked)
+
   //{
  var updated=viewer.entities.add(entity);
   //}
@@ -173,21 +174,123 @@ viewer.infoBox.frame.addEventListener('load', function() {
         console.log("frame clicked")
         console.log(e.target.className)
         console.log(e.target.className == "object-image")
+
         if (e.target && e.target.className === 'object-image') {
-          $("#dialog").html("");
+            let myNode = document.getElementById("dialog1");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+        
             console.log("Im entering in this if");
             let element = e.target;
             let object_id = element.getAttribute("data-object-id");
             let object_images = vulnerable_objects[object_id]['cluster_images'];
+            var tmp=1;
             for(let object_image of object_images){
               let ima = new Image();
-              ima.src = "//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg";
-              ima.height = 30;
-              ima.width = 30;
-              document.getElementById("dialog").appendChild(ima);
+              console.log(object_image);
+              ima.src = "http://54.70.46.85:8081/"+object_image;
+              ima.height = 70;
+              ima.width = 70;
+              var node = document.createElement("LI");
+              var textnode = document.createTextNode("Picture"+tmp.toString());
+              document.getElementById("dialog1").appendChild(node);
+              document.getElementById("dialog1").appendChild(ima);
+              document.getElementById("dialog1").appendChild(textnode);
+              tmp=tmp+1;
             }
-           $( "#dialog" ).dialog();
+          $(function(){
+           $( "#dialog1" ).dialog({
+
+              width: 290,
+              height: 290
+
+           });
+          });
         }
+
+        else if(e.target && e.target.id === 'viewButton'){
+            console.log("Button clicked")
+         
+ $("#dialog2").dialog({
+   width: 290,
+    height: 290,
+      buttons: {
+        Close: function() {
+          $(this).dialog('close');
+        }
+      },
+      open: function() {
+        //debugger;
+        var mapOptions = {
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          center: baltimore,
+          zoom: 14
+          }
+   
+         // debugger;
+
+        var baltimore = new google.maps.LatLng(39.283024, -76.601765);
+        var baltimore1 = new google.maps.LatLng(39.283223, -76.601851);
+
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('pano'),
+            {
+              position: baltimore,
+              pov: {heading: 4, pitch: 10},
+              zoom: 2
+            });
+      
+        var map = new google.maps.Map(
+              document.getElementById('canvasMap'),
+              {
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: baltimore,
+                zoom: 14
+              });
+
+        var cafeMarker2 = new google.maps.Marker({
+        position: baltimore,
+        map: map,
+        icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
+        title: 'Cafe'
+    });
+        var cafeMarker1 = new google.maps.Marker({
+        position: baltimore1,
+        map: panorama,
+        icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
+        title: 'Cafe'
+    });
+        map.setStreetView(panorama);
+/*
+        var address = $("#lblOfficeAddress").text();
+        var geocoder = new google.maps.Geocoder();
+        map.setStreetView(panorama);
+        geocoder.geocode({
+          address: address
+        }, function(results, status) {
+          if (status == "OK") {
+            if (results[0].geometry.viewport) {
+              console.log("viewport=" + results[0].geometry.viewport.toUrlValue(6));
+              map.fitBounds(results[0].geometry.viewport);
+            } else if (results[0].geometry.bounds) {
+              console.log("bounds=" + results[0].geometry.bounds.toUrlValue(6));
+              map.fitBounds(results[0].geometry.bounds);
+            } else {
+              console.log("location=" + results[0].geometry.location.toUrlValue(6));
+
+              map.setCenter(results[0].geometry.location);
+              map.setZoom(18);
+            }
+          } else alert("Geocode failed, status=" + status);
+        })
+        */
+      }
+         
+});
+
+        }
+
     }, false);
 }, false);
 
@@ -283,7 +386,7 @@ power1.then(function(dataSource) {
         <td>'+'1'+'</td>\
       </tr>\
     </table>\
-     <img class="object-image" width="100% style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
+     <img class="object-image" width="50% height="50%" style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
      ';
       entity.description = descriptions;
         }
@@ -359,12 +462,6 @@ power3.then(function(dataSource) {
             color: Cesium.Color.GREEN,
             pixelSize: 13
         });
-
-     //    if (entity.properties.hasProperty('id')) {
-      //    entity.point = new Cesium.PointGraphics({
-       //     color: Cesium.Color.YELLOW,
-       //     pixelSize: 10
-       // });
          }
       
     });
@@ -420,15 +517,6 @@ power3.then(function(dataSource) {
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
         entity.billboard = undefined; 
-     //   entity.point = new Cesium.PointGraphics({
-     //       color: Cesium.Color.WHITE,
-     //       pixelSize: 13
-     //   });
-     //    if (entity.properties.hasProperty('id')) {
-      //    entity.point = new Cesium.PointGraphics({
-       //     color: Cesium.Color.YELLOW,
-       //     pixelSize: 10
-       // });
          }
       
     });

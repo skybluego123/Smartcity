@@ -22,6 +22,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAykBBxucwUKbwJkXtToreK3iQVHj8quHE&libraries=StreetViewPanorama">
+</script>
     <script>
         var expanded = false;
 
@@ -229,23 +232,29 @@
       </li>
     </ul>
   </div>
--->
-</div>
 
+</div>
+-->
 
         </div>
 
     </div>
 
-    <div id="dialog" title="Basic dialog">
-  
-
+    <div id="lblOfficeAddress">
+  13560 Morris Rd, Alpharetta, GA 30004, USA
 </div>
+
+    <div class="dialog" id="dialog1" title="Display all the pictures"></div>
+    <div class="dialog" id="dialog2" title="Google street view">
+        <div id="canvasMap" style="width: 45%; height: 100%;float:left"></div>
+        <div id="pano" style="width: 45%; height: 100%;float:left"></div>
+    </div>
 
 </body>
 
 </html>
 <script>
+ 
     document.getElementById('x').onchange = function () {
         var cart = document.getElementsByClassName('showme')[0];
         if (this.checked) cart.classList.remove('hide');
