@@ -16,12 +16,16 @@
     <!-- The Cesium library. -->
     <!-- <link href="./css/test.css" rel="stylesheet" type="text/css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script type="text/javascript"
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAykBBxucwUKbwJkXtToreK3iQVHj8quHE&libraries=StreetViewPanorama">
 </script>
@@ -60,9 +64,6 @@
             });
         });
 
-// For the thumbnail demo! :]
-
-
     </script>
 
 
@@ -74,21 +75,22 @@
 
     <div id="cesiumContainer" class="fullSize"></div>
 
+
+  
+
     <div class="backdrop" id="menu">
+    <h3>Disaster management</h3>
 
-   
-    <h4>Disaster management</h4>
+<label class="container_t">flood<input type="checkbox" name="c1" id="x"/><span class="checkmark"></span>
+</label>
 
-    <label for="x"><input type="checkbox" name="c1" id="x" />flood</label>
-    <label for="y"><input type="checkbox" name="c2" id="y" /> <span>blackout(power network)</span></label>
-
-
+<label class="container_t">blackout<input type="checkbox" name="c2" id="y"/><span class="checkmark"></span>
+</label>
 
 
     <hr />
     <legend class="scheduler-border">Map legend</legend>
-    <ul>
-           
+    <ul>           
             <div class="dot blue"></div>
             <div><label for="myid1">reported object</label></div>
             <div class="foo purple"></div>
@@ -100,8 +102,8 @@
             <div class="dot white"></div>
             <div><label for="myid2">Inlet</label></div>
     </ul>
-    <hr />
 </div>
+
     <div class="PowerC hide1" >
 <div class ="back" id="back1">
         <h4>Power Infrastructure</h4>
@@ -109,140 +111,46 @@
 </div>
         <div id="PowerC1">
             <div class ="back" id="back2">
-            <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>
-       <!--
-        <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle special-dropdown" type="button" data-toggle="dropdown">Weather Condition
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu special">
-        <li class="dropdown-submenu special_menu">
-        <a class="test" tabindex="-1" href="#">Wind <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a tabindex="-1" href="#">present</a></li>
-          <li><a tabindex="-1" href="#">4hr later</a></li>
-          <li><a tabindex="-1" href="#">5hr later</a></li>
-          <li class="dropdown-submenu">
-            <a class="test" href="#">.. <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">...</a></li>
-              <li><a href="#">...</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li class="dropdown-submenu">
-        <a class="test" tabindex="-1" href="#">... <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a tabindex="-1" href="#">..</a></li>
-          <li><a tabindex="-1" href="#">...</a></li>
-          <li class="dropdown-submenu">
-            <a class="test" href="#">... <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">...</a></li>
-              <li><a href="#">...</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <-->
+            <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>  
         </div>
 
 </div>
     </div>
+
    <div class="showme hide">
         <div class ="back" id="back1">
         <h4>Flood Infrastructure</h4>
         <label for="x"><input type="checkbox" id="updateobj1" />update using reported objects</label>
-        <!--
-        <form>
-            <div class="multiselect">
-                
-                <div class="selectBox" onclick="showCheckboxes()">
-                    <select>
-                        <option style="color:white">Flood Infrastructure</option>
-                    </select>
-                    <div class="overSelect"></div>
-                </div>
-
-                <div id="checkboxes">
-                    <label for="one">
-                        <input type="checkbox" id="one" />Power</label>
-                    <label for="two">
-                        <input type="checkbox" id="two" />potential</label>
-                </div>
-            </div>
-        </form>
--->
 </div>
         <div id="showme1">
             <div class ="back" id="back2">
     <h4>Weather Condition</h4>
 
 <ul class="toolgroup">
-    <li><a href="">Rainfall</a>
+    <li>Rainfall
         <ul>
-            <li><a href="">2020</a></li>
-            <li><a href="">2019</a></li>
+            <li>2020</li>
+            <li>2019</li>
         </ul>
     </li>
     <li><a href="">Historical event</a>
         <ul>
-            <li><a href="">harvey</a></li>
-            <li><a href="">...</a></li>
-            <li><a href="">...</a></li>
+            <li>harvey</li>
+            <li>...</li>
+            <li>...</li>
         </ul>
     </li>
     </ul>
 
-<!--    
-              <div class="dropdown my-very-special-dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Weather Condition
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        <li class="dropdown-submenu">
-        <a class="test" tabindex="-1" href="#">Forecast <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a tabindex="-1" href="#">present</a></li>
-          <li><a tabindex="-1" href="#">4hr later</a></li>
-          <li><a tabindex="-1" href="#">5hr later</a></li>
-          <li class="dropdown-submenu">
-            <a class="test" href="#">.. <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">...</a></li>
-              <li><a href="#">...</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li class="dropdown-submenu">
-        <a class="test" tabindex="-1" href="#">Previous <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a tabindex="-1" href="#">Harvey</a></li>
-          <li><a tabindex="-1" href="#">...</a></li>
-          <li class="dropdown-submenu">
-            <a class="test" href="#">... <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">...</a></li>
-              <li><a href="#">...</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-
-</div>
--->
-
         </div>
 
     </div>
-
-    <div id="lblOfficeAddress">
-  13560 Morris Rd, Alpharetta, GA 30004, USA
 </div>
+
+
+
+
+ 
 
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
     <div class="dialog" id="dialog2" title="Google street view">

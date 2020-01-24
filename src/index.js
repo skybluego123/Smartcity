@@ -60,6 +60,7 @@ var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
 
 var vulnerable_objects;//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg
+var object_indicator;
 var url =Cesium.buildModuleUrl("./images/power.png");
 
 //./images/power.png
@@ -74,6 +75,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         var entity = new Cesium.Entity();
         entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0);
         entity.name = object['cluster_id'];
+      //  object_indicator=object['cluster_id'];
         var lat =object['cluster_center_latitude'];
         var lon =object['cluster_center_longitude'];
         var name=object['cluster_id'];
@@ -119,8 +121,32 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         opacity: 0;\
         transition: opacity 0.2s ease-out, transform 0.2s ease-out;\
     }\
-    \
-    </style>\
+    .myButton {\
+  box-shadow: 3px 4px 0px 0px #899599;\
+  background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);\
+  background-color:#ededed;\
+  border-radius:15px;\
+  border:1px solid #cccccc;\
+  display:inline-block;\
+  cursor:pointer;\
+  color:#000000;\
+  font-family:Arial;\
+  font-size:15px;\
+  padding:14px 80px;\
+  text-decoration:none;\
+  text-shadow:0px 1px 0px #e1e2ed;\
+}\
+.myButton:hover {\
+  background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);\
+  background-color:#bab1ba;\
+}\
+.myButton:active {\
+  position:relative;\
+  top:1px;\
+}\
+\
+   </style>\
+    <br style = "line-height:6;"><br>\
     <table class="cesium-infoBox-defaultTable">\
       <tr>\
         <th>Type</th>\
@@ -141,8 +167,10 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         <td>Potential demage</td>\
       </tr>\
     </table>\
+    <br style = "line-height:3;"><br>\
      <img data-object-id='+entity.name+' class="object-image" width="100% style="float:center; margin: 0 1em 1em 0;" src='+image_url+' >\
-  <button id="viewButton">Click me</button>';
+      <br style = "line-height:5;"><br>\
+  <button class="myButton" id="viewButton">To Google Map</button>';
      entity.point = {
     color : Cesium.Color.BLUE,
     pixelSize : 15,
@@ -165,6 +193,19 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       }
   } )
 
+   var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+        handler.setInputAction(function(click) {
+           // mouse handler
+           // Get current mouth position
+            var pick = viewer.scene.pick(click.position);
+            //pick current entity
+            if(pick && pick.id){
+              console.log("werwer")
+              console.log(pick.id._name)
+              object_indicator=pick.id._name;
+            }
+
+         }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
 
 viewer.infoBox.frame.addEventListener('load', function() {
 
@@ -184,14 +225,15 @@ viewer.infoBox.frame.addEventListener('load', function() {
             console.log("Im entering in this if");
             let element = e.target;
             let object_id = element.getAttribute("data-object-id");
-            let object_images = vulnerable_objects[object_id]['cluster_images'];
+            let object_images = vulnerable_objects[object_indicator]['cluster_images'];
+
             var tmp=1;
             for(let object_image of object_images){
               let ima = new Image();
               console.log(object_image);
               ima.src = "http://54.70.46.85:8081/"+object_image;
-              ima.height = 70;
-              ima.width = 70;
+              ima.height = 150;
+              ima.width = 150;
               var node = document.createElement("LI");
               var textnode = document.createTextNode("Picture"+tmp.toString());
               document.getElementById("dialog1").appendChild(node);
@@ -202,8 +244,8 @@ viewer.infoBox.frame.addEventListener('load', function() {
           $(function(){
            $( "#dialog1" ).dialog({
 
-              width: 290,
-              height: 290
+              width: 500,
+              height: 500
 
            });
           });
@@ -213,8 +255,8 @@ viewer.infoBox.frame.addEventListener('load', function() {
             console.log("Button clicked")
          
  $("#dialog2").dialog({
-   width: 290,
-    height: 290,
+   width: 500,
+    height: 500,
       buttons: {
         Close: function() {
           $(this).dialog('close');
@@ -227,16 +269,17 @@ viewer.infoBox.frame.addEventListener('load', function() {
           center: baltimore,
           zoom: 14
           }
-   
-         // debugger;
-
-        var baltimore = new google.maps.LatLng(39.283024, -76.601765);
-        var baltimore1 = new google.maps.LatLng(39.283223, -76.601851);
+        let object_lat = vulnerable_objects[object_indicator]['cluster_center_latitude'];
+        let object_lon = vulnerable_objects[object_indicator]['cluster_center_longitude'];
+        var baltimore = new google.maps.LatLng(object_lat, object_lon);
+        console.log(object_lat)
+        console.log(object_lon)
+        var baltimore1 = new google.maps.LatLng(object_lat+0.00014, object_lon);
 
         var panorama = new google.maps.StreetViewPanorama(
             document.getElementById('pano'),
             {
-              position: baltimore,
+              position: baltimore1,
               pov: {heading: 4, pitch: 10},
               zoom: 2
             });
@@ -245,21 +288,21 @@ viewer.infoBox.frame.addEventListener('load', function() {
               document.getElementById('canvasMap'),
               {
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                center: baltimore,
+                center: baltimore1,
                 zoom: 14
               });
 
         var cafeMarker2 = new google.maps.Marker({
         position: baltimore,
         map: map,
-        icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
-        title: 'Cafe'
+        icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
+        title: 'utility pole'
     });
         var cafeMarker1 = new google.maps.Marker({
-        position: baltimore1,
+        position: baltimore,
         map: panorama,
-        icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00',
-        title: 'Cafe'
+        icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
+        title: 'utility pole'
     });
         map.setStreetView(panorama);
 /*
@@ -293,6 +336,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
 
     }, false);
 }, false);
+
 
 power1.then(function(dataSource) {
     var entities = dataSource.entities.values;

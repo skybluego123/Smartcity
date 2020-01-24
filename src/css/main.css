@@ -11,7 +11,77 @@
   margin: 0px;
   padding: 0px
 }
+.container_t {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
+/* Hide the browser's default checkbox */
+.container_t input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 1;
+  left: 1;
+  height: 17px;
+  width: 17px;
+  background-color: #eee;
+}
+.jumbotron
+{
+height:50% !important;
+width:50% !important;
+}
+
+/* On mouse-over, add a grey background color */
+.container_t:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container_t input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container_t input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container_t .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 .backdrop {
     display: inline-block;
     background: rgba(42, 42, 42, 0.7);
@@ -21,8 +91,21 @@
     color: #fff;
     line-height: 150%;
     font-size: small;
-    width:25%;
+    width:16%;
 }
+
+.test{
+    background:transparent;
+    border-radius: 5px;
+    border: 1px solid #444;
+    padding: 5px 10px;
+    color: #fff;
+    line-height: 150%;
+    font-size: small;
+    width:40%;
+}
+
+
 
 #heightSliderLabel, #heightValue {
     vertical-align: top;
@@ -59,6 +142,14 @@
     top: 10px;
 }
 
+#menu1 {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width:30%;
+    height:30%;
+    background-color: transparent;
+}
 .nowrap {
     white-space: nowrap;
 }
@@ -256,16 +347,16 @@ select option:first-child{
 #back1 {
     position: fixed;
     top: 10px;
-    left:25%;
-    width: 20%;
-    height:25%;
+    left:16%;
+    width: 16%;
+    height:16%;
     margin-left: 10px; 
 }
 #back2 {
     position: fixed;
-    top: 25%;
-    left:25%;
-    width: 20%;
+    top: 16%;
+    left:16%;
+    width: 16%;
     margin-left: 10px; 
     margin-top:10px;
 }
@@ -432,7 +523,7 @@ display:none;
 
 
 
-.cesium-infoBox{ font-family: "Times New Roman", Times, serif;display:block;top:30px;position: absolute;right:0;width:30%;height:100%;max-width:480px;max-height:500px;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
+.cesium-infoBox{ font-family: "Times New Roman", Times, serif;display:block;top:30px;position: absolute;right:0;width:20%;height:100%;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
 .cesium-infoBox-title{ font-family: "Times New Roman", Times, serif;display:block;height:20px;padding:5px 30px 5px 25px;background:rgba(84,84,84,1);border-top-left-radius:7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;box-sizing:content-box}
 .cesium-infoBox-bodyless .cesium-infoBox-title{border-bottom-left-radius:7px}
