@@ -74,7 +74,7 @@ let objects = json['objects'];
           if (status === google.maps.GeocoderStatus.OK) {
             if (results[0]) {
               object_loc=results[0]['formatted_address'];
-              console.log(object_loc);
+              //console.log(object_loc);
             } 
           } else {
             alert('Geocoder failed due to: ' + status);
@@ -179,7 +179,6 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   float:center;\
   position:absolute;\
   left:45;\
-  top:55%;\
 }\
 .myButton:hover {\
   background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);\
