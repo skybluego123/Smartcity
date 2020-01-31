@@ -11,12 +11,13 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     animation: true,
     shadows: true
 });
+/*
 var tileset = viewer.scene.primitives.add(
     new Cesium.Cesium3DTileset({
         url: Cesium.IonResource.fromAssetId(41753)
     })
 );
-
+*/
 
 viewer.scene.globe.depthTestAgainstTerrain = true;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.381735, 29.749122, 753);
@@ -41,13 +42,6 @@ viewer.scene.camera.setView({
 });
 
 
-
-var checkbox1 = document.getElementById('one');
-var checkbox2 = document.getElementById('two');
-var checkbox3 = document.getElementById('one1');
-var checkbox4 = document.getElementById('two1');
-var checkbox5 = document.getElementById('three1');
-
 var CheckFloodI = document.getElementById('x'); 
 var CheckPowerI = document.getElementById('y');  //updateobj
 var updateP = document.getElementById('updateobj');
@@ -70,23 +64,29 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       let objects = json['objects'];
       vulnerable_objects = objects;
       for(let object of objects){
-        // console.log("Object is ", object['cluster_center_latitude'])
-        // console.log("Object is ", object['cluster_center_longitude'])
+         console.log("Object is ", object['cluster_latitude'])
+         console.log("Object is ", object['cluster_longitude'])
         var entity = new Cesium.Entity();
-        entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0);
+        entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'],object['cluster_latitude'], 0);
         entity.name = object['cluster_id'];
       //  object_indicator=object['cluster_id'];
-        var lat =object['cluster_center_latitude'];
-        var lon =object['cluster_center_longitude'];
+        var lat =object['cluster_latitude'];
+        var lon =object['cluster_longitude'];
         var name=object['cluster_id'];
-        var image_url = "http://54.70.46.85:8081/"+object['cluster_images'][0];
-
-
+        var cluster_obj=object['cluster_objects'];
+        var image_url = cluster_obj[0]['image'];
    // var pinBuilder = new Cesium.PinBuilder();
   //  entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.GREEN, 48);
     
         entity.description = '\
      <style>\
+     .rotate90 {\
+    -webkit-transform: rotate(90deg);\
+    -moz-transform: rotate(90deg);\
+    -o-transform: rotate(90deg);\
+    -ms-transform: rotate(90deg);\
+    transform: rotate(90deg);\
+}\
     .cesium-infoBox-description {\
         font-family: "Times New Roman", Times, serif;\
         font-size: 6px;\
@@ -146,7 +146,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
 }\
 \
    </style>\
-    <br style = "line-height:6;"><br>\
+    <br style = "line-height:1;"><br>\
     <table class="cesium-infoBox-defaultTable">\
       <tr>\
         <th>Type</th>\
@@ -161,14 +161,14 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         <th>'+lat+'   '+lon+'</th>\
       </tr>\
       <tr>\
-        <td>Status</td>\
+        <td>Receive Date</td>\
       </tr>\
       <tr>\
-        <td>Potential demage</td>\
+        <td>Analysis Results</td>\
       </tr>\
     </table>\
     <br style = "line-height:3;"><br>\
-     <img data-object-id='+entity.name+' class="object-image" width="100% style="float:center; margin: 0 1em 1em 0;" src='+image_url+' >\
+     <img data-object-id='+entity.name+' class="object-image rotate90" width="100% style="float:center; margin: 0 1em 1em 0;" src='+image_url+' >\
       <br style = "line-height:5;"><br>\
   <button class="myButton" id="viewButton">To Google Map</button>';
      entity.point = {
@@ -192,8 +192,8 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
 
       }
   } )
-
-   var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+var current_id="xx";
+var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
         handler.setInputAction(function(click) {
            // mouse handler
            // Get current mouth position
@@ -209,14 +209,15 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
 
 viewer.infoBox.frame.addEventListener('load', function() {
 
-    console.log("Frame loaded")
-    viewer.infoBox.frame.contentDocument.body.addEventListener('click', function(e) {
+        console.log("Frame loaded")
+        viewer.infoBox.frame.contentDocument.body.addEventListener('click', function(e) {
  
         console.log("frame clicked")
         console.log(e.target.className)
-        console.log(e.target.className == "object-image")
+        console.log(e.target.className == "object-image rotate90")
 
-        if (e.target && e.target.className === 'object-image') {
+        if (e.target && e.target.className === 'object-image rotate90') 
+        {
             let myNode = document.getElementById("dialog1");
             while (myNode.firstChild) {
                 myNode.removeChild(myNode.firstChild);
@@ -225,40 +226,51 @@ viewer.infoBox.frame.addEventListener('load', function() {
             console.log("Im entering in this if");
             let element = e.target;
             let object_id = element.getAttribute("data-object-id");
-            let object_images = vulnerable_objects[object_indicator]['cluster_images'];
-
+            //cluster_obj[0]['image'];
+            let object_clusters = vulnerable_objects[object_indicator]['cluster_objects'];
+           // console.log(object_clusters[0]);
             var tmp=1;
-            for(let object_image of object_images){
+            for(let object_image of object_clusters){
+
               let ima = new Image();
-              console.log(object_image);
-              ima.src = "http://54.70.46.85:8081/"+object_image;
+              //console.log();
+              ima.src = object_image['image'];
               ima.height = 150;
               ima.width = 150;
-              var node = document.createElement("LI");
-              var textnode = document.createTextNode("Picture"+tmp.toString());
-              document.getElementById("dialog1").appendChild(node);
+              ima.id='i'+object_id+'-'+tmp.toString();
+              ima.className="test";
+            //  var node = document.createElement("LI");
+            //  var textnode = document.createTextNode("Picture"+tmp.toString());
+            //  document.getElementById("dialog1").appendChild(node);
               document.getElementById("dialog1").appendChild(ima);
-              document.getElementById("dialog1").appendChild(textnode);
               tmp=tmp+1;
+            //  document.getElementById("dialog1").appendChild(textnode);
             }
-          $(function(){
-           $( "#dialog1" ).dialog({
+            $(function(){
+              $( "#dialog1" ).dialog({
+                width: 500,
+                height: 500,
+                open: function()
+                {
+                  $(".test").on('click', function () {
+                //    alert($(this).attr('id'));
+                    current_id=$(this).attr('id');
+                    console.log("curr id"+current_id);
+                });
 
-              width: 500,
-              height: 500
-
-           });
-          });
+                }
+             });
+            });
         }
-
         else if(e.target && e.target.id === 'viewButton'){
             console.log("Button clicked")
          
  $("#dialog2").dialog({
-   width: 500,
-    height: 500,
+      width: 500,
+      resizable: false,
+      height: 500,
       buttons: {
-        Close: function() {
+      Close: function() {
           $(this).dialog('close');
         }
       },
@@ -269,12 +281,28 @@ viewer.infoBox.frame.addEventListener('load', function() {
           center: baltimore,
           zoom: 14
           }
-        let object_lat = vulnerable_objects[object_indicator]['cluster_center_latitude'];
-        let object_lon = vulnerable_objects[object_indicator]['cluster_center_longitude'];
+        var cur=current_id;
+        console.log("cur"+cur);
+        if(cur!="xx")
+        {
+          var res_obj = cur.substring(1, 2);
+          var res_img = cur.substring(3, 4);
+          console.log("changed");
+          console.log(res_img);
+        }
+        else
+        {
+          var res_img = 0;
+        }
+        let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
+        let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
+        let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
+        let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];
+        
         var baltimore = new google.maps.LatLng(object_lat, object_lon);
-        console.log(object_lat)
+        console.log(observer_lat)
         console.log(object_lon)
-        var baltimore1 = new google.maps.LatLng(object_lat+0.00014, object_lon);
+        var baltimore1 = new google.maps.LatLng(observer_lat, observer_lon);
 
         var panorama = new google.maps.StreetViewPanorama(
             document.getElementById('pano'),
@@ -283,6 +311,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
               pov: {heading: 4, pitch: 10},
               zoom: 2
             });
+
       
         var map = new google.maps.Map(
               document.getElementById('canvasMap'),
@@ -291,7 +320,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
                 center: baltimore1,
                 zoom: 14
               });
-
+ 
         var cafeMarker2 = new google.maps.Marker({
         position: baltimore,
         map: map,
@@ -304,7 +333,17 @@ viewer.infoBox.frame.addEventListener('load', function() {
         icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
         title: 'utility pole'
     });
+
+        google.maps.event.addListener(panorama, 'position_changed', function () {
+        var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), cafeMarker2.getPosition());
+        panorama.setPov({
+            heading: heading,
+            pitch: 0
+        }); 
+
+    });
         map.setStreetView(panorama);
+
 /*
         var address = $("#lblOfficeAddress").text();
         var geocoder = new google.maps.Geocoder();
@@ -610,7 +649,6 @@ power3.then(function(dataSource) {
         });
     
     });
-    
 
 function colorByDistance() {
     tileset.style = new Cesium.Cesium3DTileStyle({
@@ -628,4 +666,4 @@ function colorByDistance() {
         }
     });
 }
-colorByDistance();
+//colorByDistance();

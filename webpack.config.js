@@ -68,9 +68,10 @@ module.exports = [{
     // development server options
     devServer: {
         contentBase: path.join(__dirname, "dist"),
-        port: 8080,
+        port: 80,
         host: process.env.HOST || '0.0.0.0',
-        public: 'smartcity-dev.us-west-2.elasticbeanstalk.com',
+        disableHostCheck: true,
+       // public: 'smartcity-dev.us-west-2.elasticbeanstalk.com',
         setup (app) {
             app.use('/images',
               express.static(path.join(__dirname, 'src', 'images')));

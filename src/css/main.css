@@ -40,12 +40,23 @@
   left: 1;
   height: 17px;
   width: 17px;
-  background-color: #eee;
+  background-color: #40403f;
+  border: 1px solid #212529;
 }
 .jumbotron
 {
-height:50% !important;
-width:50% !important;
+ display: inline-block;
+    background: rgba(42, 42, 42, 0.7);
+    border-radius: 5px;
+    border: 1px solid #444;
+    padding: 5px 10px;
+    color: #fff;
+    line-height: 150%;
+    font-size: small;
+    width:16%;
+    position:absolute;
+    z-index : 1;
+
 }
 
 /* On mouse-over, add a grey background color */
@@ -55,7 +66,7 @@ width:50% !important;
 
 /* When the checkbox is checked, add a blue background */
 .container_t input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: #ffffff;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -72,16 +83,17 @@ width:50% !important;
 
 /* Style the checkmark/indicator */
 .container_t .checkmark:after {
-  left: 9px;
-  top: 5px;
+  left: 6px;
+  top: 3px;
   width: 5px;
   height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
+  border: solid black;
+  border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
 .backdrop {
     display: inline-block;
     background: rgba(42, 42, 42, 0.7);
@@ -97,12 +109,16 @@ width:50% !important;
 .test{
     background:transparent;
     border-radius: 5px;
-    border: 1px solid #444;
-    padding: 5px 10px;
+    padding: 20px 20px;
     color: #fff;
     line-height: 150%;
     font-size: small;
     width:40%;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
 
@@ -160,7 +176,7 @@ html, body, #cesiumContainer {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Lato", sans-serif;
     background: #000;
 }
 
@@ -363,7 +379,7 @@ select option:first-child{
 
 
     .cesium-infoBox-description {
-        font-family: "Times New Roman", Times, serif !important; 
+        font-family: "Lato", sans-serif !important; 
         font-size: 8px !important;
         padding: 4px 10px !important;
         margin-right: 4px !important;
@@ -522,10 +538,9 @@ display:none;
 }
 
 
-
-.cesium-infoBox{ font-family: "Times New Roman", Times, serif;display:block;top:30px;position: absolute;right:0;width:20%;height:100%;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
+.cesium-infoBox{ font-family: "Lato", sans-serif;display:block;top:30px;position: absolute;right:0;width:20%;height:100%;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
-.cesium-infoBox-title{ font-family: "Times New Roman", Times, serif;display:block;height:20px;padding:5px 30px 5px 25px;background:rgba(84,84,84,1);border-top-left-radius:7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;box-sizing:content-box}
+.cesium-infoBox-title{ font-family: "Lato", sans-serif;display:block;height:20px;padding:5px 30px 5px 25px;background:rgba(84,84,84,1);border-top-left-radius:7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;box-sizing:content-box}
 .cesium-infoBox-bodyless .cesium-infoBox-title{border-bottom-left-radius:7px}
 button.cesium-infoBox-camera{display:block;position:absolute;top:4px;left:4px;width:22px;height:22px;background:0 0;border-color:transparent;border-radius:3px;padding:0 5px;margin:0}
 button.cesium-infoBox-close{display:block;position:absolute;top:5px;right:5px;height:20px;background:0 0;border:none;border-radius:2px;font-weight:700;font-size:16px;padding:0 5px;margin:0;color:#edffff}

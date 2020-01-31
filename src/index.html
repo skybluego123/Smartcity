@@ -16,20 +16,20 @@
     <!-- The Cesium library. -->
     <!-- <link href="./css/test.css" rel="stylesheet" type="text/css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script type="text/javascript"
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAykBBxucwUKbwJkXtToreK3iQVHj8quHE&libraries=StreetViewPanorama">
-</script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAykBBxucwUKbwJkXtToreK3iQVHj8quHE&libraries=StreetViewPanorama"></script>
     <script>
+    /*    
         var expanded = false;
 
         function showCheckboxes() {
@@ -63,7 +63,7 @@
                 e.preventDefault();
             });
         });
-
+*/
     </script>
 
 
@@ -73,22 +73,31 @@
 
 <body>
 
-    <div id="cesiumContainer" class="fullSize"></div>
-
-
+    
   
+  <div class="jumbotron">
+    <h3>Disaster management</h3>
+    <label class="container_t">flood<input type="checkbox" name="c1" id="x"/><span class="checkmark"></span>
+</label>
 
+<label class="container_t">blackout<input type="checkbox" name="c2" id="y"/><span class="checkmark"></span>
+</label>
+  </div>
+
+
+<div id="cesiumContainer"></div>   
+<!--
     <div class="backdrop" id="menu">
     <h3>Disaster management</h3>
-
 <label class="container_t">flood<input type="checkbox" name="c1" id="x"/><span class="checkmark"></span>
 </label>
 
 <label class="container_t">blackout<input type="checkbox" name="c2" id="y"/><span class="checkmark"></span>
 </label>
-
-
+-->
+<!--
     <hr />
+    
     <legend class="scheduler-border">Map legend</legend>
     <ul>           
             <div class="dot blue"></div>
@@ -102,7 +111,9 @@
             <div class="dot white"></div>
             <div><label for="myid2">Inlet</label></div>
     </ul>
+
 </div>
+-->
 
     <div class="PowerC hide1" >
 <div class ="back" id="back1">
@@ -154,8 +165,8 @@
 
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
     <div class="dialog" id="dialog2" title="Google street view">
-        <div id="canvasMap" style="width: 45%; height: 100%;float:left"></div>
-        <div id="pano" style="width: 45%; height: 100%;float:left"></div>
+        <div id="pano" style="width: 50%; height: 100%;float:left"></div>
+        <div id="canvasMap" style="width: 50%; height: 100%;float:right"></div>
     </div>
 
 </body>
@@ -178,4 +189,5 @@
 
         }
     }
+    
 </script>
