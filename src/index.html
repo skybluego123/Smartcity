@@ -82,6 +82,20 @@
 
 <label class="container_t">blackout<input type="checkbox" name="c2" id="y"/><span class="checkmark"></span>
 </label>
+<hr />
+<legend class="scheduler-border">Map legend</legend>
+    <ul>           
+            <div class="dot blue"></div>
+            <div><label for="myid1">reported object</label></div>
+            <div class="foo purple"></div>
+            <div><label for="myid2">Substation</label></div>
+            <div class="foo purple"></div>
+            <div><label for="myid2">Wire</label></div>
+            <div class="dot green"></div>
+            <div><label for="myid2">Utility pole</label></div>
+            <div class="dot white"></div>
+            <div><label for="myid2">Inlet</label></div>
+    </ul>
   </div>
 
 
@@ -158,11 +172,6 @@
     </div>
 </div>
 
-
-
-
- 
-
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
     <div class="dialog" id="dialog2" title="Google street view">
         <div id="pano" style="width: 50%; height: 100%;float:left"></div>
@@ -173,7 +182,14 @@
 
 </html>
 <script>
- 
+    $(function(){
+    $('.container_t input:checkbox').on('change',function() {
+           var hide = this.name;
+           console.log("f");
+           $("#myList [data-width-type!='"+hide+"']").toggle();
+    });
+});
+/*
     document.getElementById('x').onchange = function () {
         var cart = document.getElementsByClassName('showme')[0];
         if (this.checked) cart.classList.remove('hide');
@@ -184,6 +200,7 @@
         if (this.checked) cart1.classList.remove('hide1');
         else cart1.classList.add('hide1');
     }
+    */
     function checkAddress(checkbox) {
         if (checkbox.checked) {
 

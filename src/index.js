@@ -58,14 +58,43 @@ var object_indicator;
 var url =Cesium.buildModuleUrl("./images/power.png");
 
 //./images/power.png
+var object_loc;
+fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
+  .then(response => response.json())
+  .then(function(json){
+let objects = json['objects'];
+      vulnerable_objects = objects;
+      for(let object of objects){
+
+    var input = object['cluster_latitude']+','+object['cluster_longitude'];
+        geocoder = new google.maps.Geocoder();
+        var latlngStr = input.split(',', 2);
+        var latlng = new google.maps.LatLng(parseFloat(latlngStr[0]), parseFloat(latlngStr[1]));
+        geocoder.geocode({'location': latlng}, function (results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            if (results[0]) {
+              object_loc=results[0]['formatted_address'];
+              console.log(object_loc);
+            } 
+          } else {
+            alert('Geocoder failed due to: ' + status);
+          }
+        });
+
+
+      }
+
+
+    console.log("another")
+  })
+
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
       let objects = json['objects'];
       vulnerable_objects = objects;
       for(let object of objects){
-         console.log("Object is ", object['cluster_latitude'])
-         console.log("Object is ", object['cluster_longitude'])
+        
         var entity = new Cesium.Entity();
         entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'],object['cluster_latitude'], 0);
         entity.name = object['cluster_id'];
@@ -75,9 +104,12 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         var name=object['cluster_id'];
         var cluster_obj=object['cluster_objects'];
         var image_url = cluster_obj[0]['image'];
+        var image_date= cluster_obj[0]['createdDate'];
+        var object_type=cluster_obj[0]['classification'];
+    //    var object_loc;
+       
    // var pinBuilder = new Cesium.PinBuilder();
   //  entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.GREEN, 48);
-    
         entity.description = '\
      <style>\
      .rotate90 {\
@@ -86,6 +118,15 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
     -o-transform: rotate(90deg);\
     -ms-transform: rotate(90deg);\
     transform: rotate(90deg);\
+    float: center;\
+    text-align: center;\
+    font-style: italic;\
+    text-indent: 0;\
+    border: thin silver solid;\
+    margin: 0.5em;\
+    padding: 0.5em;\
+    width:100%;\
+    min-width: 150px;\
 }\
     .cesium-infoBox-description {\
         font-family: "Times New Roman", Times, serif;\
@@ -135,6 +176,10 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   padding:14px 80px;\
   text-decoration:none;\
   text-shadow:0px 1px 0px #e1e2ed;\
+  float:center;\
+  position:absolute;\
+  left:45;\
+  top:55%;\
 }\
 .myButton:hover {\
   background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);\
@@ -149,11 +194,11 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
     <br style = "line-height:1;"><br>\
     <table class="cesium-infoBox-defaultTable">\
       <tr>\
-        <th>Type</th>\
-        <th>Power</th>\
+        <th>classification</th>\
+        <th>'+object_type+'</th>\
       </tr>\
       <tr>\
-        <td>Cluster id</td>\
+        <td>Object id</td>\
         <td>'+name+'</td>\
       </tr>\
       <tr>\
@@ -162,14 +207,19 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       </tr>\
       <tr>\
         <td>Receive Date</td>\
+        <th>'+image_date.substring(0,10)+'</th>\
+      </tr>\
+      <tr>\
+        <td>Address</td>\
+        <th>'+object_loc+'</th>\
       </tr>\
       <tr>\
         <td>Analysis Results</td>\
       </tr>\
     </table>\
-    <br style = "line-height:3;"><br>\
-     <img data-object-id='+entity.name+' class="object-image rotate90" width="100% style="float:center; margin: 0 1em 1em 0;" src='+image_url+' >\
-      <br style = "line-height:5;"><br>\
+    <br style = "line-height:8;"><br>\
+     <img data-object-id='+entity.name+' class="rotate90" src='+image_url+' >\
+      <br style = "line-height:10;"><br>\
   <button class="myButton" id="viewButton">To Google Map</button>';
      entity.point = {
     color : Cesium.Color.BLUE,
@@ -177,22 +227,13 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   };
 
   //{
- var updated=viewer.entities.add(entity);
-  //}
-  // viewer.entities.add(entity);
-//     viewer.entities.add({
-//   position : Cesium.Cartesian3.fromDegrees(object['cluster_center_longitude'],object['cluster_center_latitude'], 0),
-//   name : object['cluster_id'],
-//   point : {
-//     color : Cesium.Color.YELLOW,
-//     pixelSize : 15,
-//   }
-//   description : 
-// });
+    var updated=viewer.entities.add(entity);
 
       }
   } )
 var current_id="xx";
+
+  
 var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
         handler.setInputAction(function(click) {
            // mouse handler
@@ -209,14 +250,14 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
 viewer.infoBox.frame.addEventListener('load', function() {
 
-        console.log("Frame loaded")
+        
         viewer.infoBox.frame.contentDocument.body.addEventListener('click', function(e) {
  
         console.log("frame clicked")
         console.log(e.target.className)
-        console.log(e.target.className == "object-image rotate90")
+        console.log(e.target.className == "rotate90")
 
-        if (e.target && e.target.className === 'object-image rotate90') 
+        if (e.target && e.target.className === 'rotate90') 
         {
             let myNode = document.getElementById("dialog1");
             while (myNode.firstChild) {
@@ -235,21 +276,18 @@ viewer.infoBox.frame.addEventListener('load', function() {
               let ima = new Image();
               //console.log();
               ima.src = object_image['image'];
-              ima.height = 150;
-              ima.width = 150;
+              ima.height = 250;
+              ima.width = 250;
               ima.id='i'+object_id+'-'+tmp.toString();
               ima.className="test";
-            //  var node = document.createElement("LI");
-            //  var textnode = document.createTextNode("Picture"+tmp.toString());
-            //  document.getElementById("dialog1").appendChild(node);
               document.getElementById("dialog1").appendChild(ima);
               tmp=tmp+1;
             //  document.getElementById("dialog1").appendChild(textnode);
             }
             $(function(){
               $( "#dialog1" ).dialog({
-                width: 500,
-                height: 500,
+                width: 600,
+                height: 600,
                 open: function()
                 {
                   $(".test").on('click', function () {
@@ -263,12 +301,16 @@ viewer.infoBox.frame.addEventListener('load', function() {
             });
         }
         else if(e.target && e.target.id === 'viewButton'){
-            console.log("Button clicked")
-         
+            
+  //var cur; 
+  //var res_obj;
+  //var res_img;
+
  $("#dialog2").dialog({
-      width: 500,
+      width: 700,
       resizable: false,
-      height: 500,
+      draggable: true,
+      height: 600,
       buttons: {
       Close: function() {
           $(this).dialog('close');
@@ -283,16 +325,18 @@ viewer.infoBox.frame.addEventListener('load', function() {
           }
         var cur=current_id;
         console.log("cur"+cur);
+        var res_obj;
+        var res_img;
         if(cur!="xx")
         {
-          var res_obj = cur.substring(1, 2);
-          var res_img = cur.substring(3, 4);
+          res_obj = cur.substring(1, 2);
+          res_img = cur.substring(3, 4);
           console.log("changed");
           console.log(res_img);
         }
         else
         {
-          var res_img = 0;
+          res_img = 0;
         }
         let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
         let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
@@ -344,29 +388,6 @@ viewer.infoBox.frame.addEventListener('load', function() {
     });
         map.setStreetView(panorama);
 
-/*
-        var address = $("#lblOfficeAddress").text();
-        var geocoder = new google.maps.Geocoder();
-        map.setStreetView(panorama);
-        geocoder.geocode({
-          address: address
-        }, function(results, status) {
-          if (status == "OK") {
-            if (results[0].geometry.viewport) {
-              console.log("viewport=" + results[0].geometry.viewport.toUrlValue(6));
-              map.fitBounds(results[0].geometry.viewport);
-            } else if (results[0].geometry.bounds) {
-              console.log("bounds=" + results[0].geometry.bounds.toUrlValue(6));
-              map.fitBounds(results[0].geometry.bounds);
-            } else {
-              console.log("location=" + results[0].geometry.location.toUrlValue(6));
-
-              map.setCenter(results[0].geometry.location);
-              map.setZoom(18);
-            }
-          } else alert("Geocode failed, status=" + status);
-        })
-        */
       }
          
 });

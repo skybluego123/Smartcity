@@ -503,7 +503,10 @@ nav > menu > menuitem menuitem menu {
 /* User Styles Below Not Required */
 /* User Styles Below Not Required */
 
+.scheduler-border ul li{
 
+  list-style-type: none;
+}
 .toolgroup,.toolgroup li ul { padding:0px; list-style:none; width:80%; background:rgba(38,38,38,0.7); }
 .toolgroup li,.toolgroup li ul li { width:90%; position:relative; }
 .toolgroup li a,.toolgroup li ul li a { padding:7px 10px; display:block;color:#fff; }
