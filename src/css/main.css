@@ -45,20 +45,34 @@
 }
 .jumbotron
 {
- display: inline-block;
+    top: 13%;
     background: rgba(42, 42, 42, 0.7);
-    border-radius: 5px;
     border: 1px solid #444;
     padding: 5px 10px;
     color: #fff;
     line-height: 150%;
     font-size: small;
-    width:16%;
+    width:19.5%;
     position:absolute;
     z-index : 1;
 
 }
 
+.t_button {
+  border: 1px solid #444;
+  z-index : 1;
+  position:fixed;
+  background:rgba(42, 42, 42, 0.7);
+  background-color:rgba(42, 42, 42, 0.7);
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:27px;
+  font-weight:bold;
+  padding:28px 54px;
+  text-decoration:none;
+}
 /* On mouse-over, add a grey background color */
 .container_t:hover input ~ .checkmark {
   background-color: #ccc;
@@ -93,9 +107,11 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.btn btn-info{
 
+
+}
 .backdrop {
-    display: inline-block;
     background: rgba(42, 42, 42, 0.7);
     border-radius: 5px;
     border: 1px solid #444;
@@ -104,6 +120,7 @@
     line-height: 150%;
     font-size: small;
     width:16%;
+    z-index : 1;
 }
 
 .test{
@@ -171,6 +188,7 @@
 }
 
 html, body, #cesiumContainer {
+    display: inline-block;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -187,15 +205,13 @@ button.cesium-infoBox-camera {
 
 fieldset.scheduler-border {
     width:100%;
-    height:200px;
-    border: 3px groove #ddd !important;
-    padding: 0 1.4em 1.4em 1.4em !important;
-    margin: 0 0 1.5em 0 !important;
-    -webkit-box-shadow:  0px 0px 0px 0px #000;
-            box-shadow:  0px 0px 0px 0px #000;
+    height:100%;
+    border: 1px groove #ddd !important;
+    padding: 0 1.0em 1.0em 1.0em !important;
+    margin: 0 0 1.0em 0 !important;
 }
 
-    legend.scheduler-border {
+legend.scheduler-border {
         color: white;
         font-size: 1.2em !important;
         font-weight: bold !important;
@@ -203,7 +219,7 @@ fieldset.scheduler-border {
         width:auto;
         padding:0 10px;
         border-bottom:none;
-    }
+}
 
 
 
@@ -362,55 +378,55 @@ select option:first-child{
 }
 #back1 {
     position: fixed;
-    top: 10px;
-    left:16%;
-    width: 16%;
+    top: 0px;
+    left:18.8%;
+    width: 20.5%;
     height:16%;
     margin-left: 10px; 
 }
 #back2 {
     position: fixed;
-    top: 16%;
-    left:16%;
-    width: 16%;
+    top: 14.7%;
+    left:18.7%;
+    width: 20.5%;
     margin-left: 10px; 
     margin-top:10px;
 }
+.slidecontainer {
+  width: 100%;
+}
 
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
 
-    .cesium-infoBox-description {
-        font-family: "Lato", sans-serif !important; 
-        font-size: 8px !important;
-        padding: 4px 10px !important;
-        margin-right: 4px !important;
-        color: #edffff !important;
-    }
-    .cesium-infoBox-defaultTable tr:nth-child(odd) {
-        background-color: rgba(38, 38, 38, 1.0) !important;
-    }
-    .cesium-infoBox-defaultTable tr:nth-child(even) {
-        background-color: rgba(38, 38, 38, 1.0) !important;
-    }
-    .cesium-infoBox-defaultTable th {
-        font-weight: normal !important;
-        padding: 4px !important;
-        vertical-align: middle !important; 
-        text-align: center !important;
-    }
-    .cesium-infoBox-defaultTable td {
-        padding: 4px;
-        vertical-align: middle;
-        text-align: center;
-    }
-    .cesium-infoBox-visible {
-        transform: translate(0, 0);
-        visibility: visible;
-        opacity: 0;
-        transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-    }
+.slider:hover {
+  opacity: 1;
+}
 
-        .max{width:70%;height:auto;}
-.min{width:100px;height:auto;}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
         .showme {
             width: 20%;
             padding: 50px 0;
@@ -499,14 +515,15 @@ nav > menu > menuitem menuitem menu {
    transform:translateX(100%);
    top:0; right:0;
 }
-/* User Styles Below Not Required */
-/* User Styles Below Not Required */
-/* User Styles Below Not Required */
 
-.scheduler-border ul li{
 
-  list-style-type: none;
+.title_bar {
+    background: red;
+    height: 25px;
+    width: auto;
+    border-bottom: 1px solid #DCDCDC;
 }
+
 .toolgroup,.toolgroup li ul { padding:0px; list-style:none; width:80%; background:rgba(38,38,38,0.7); }
 .toolgroup li,.toolgroup li ul li { width:90%; position:relative; }
 .toolgroup li a,.toolgroup li ul li a { padding:7px 10px; display:block;color:#fff; }
@@ -539,7 +556,35 @@ margin-right:2%;
 display:none;
 
 }
+.column {
+  float: left;
+  width: 100%;
+  padding: 0 10px;
+}
 
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
+.cesium-viewer-timelineContainer{
+
+  top:680px;
+}
 
 .cesium-infoBox{ font-family: "Lato", sans-serif;display:block;top:30px;position: absolute;right:0;width:20%;height:100%;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}

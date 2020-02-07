@@ -18,6 +18,96 @@ var tileset = viewer.scene.primitives.add(
     })
 );
 */
+function img_dialog(img_id)
+{
+        $("#dialog2").dialog({
+      width: 700,
+      resizable: false,
+      draggable: true,
+      height: 600,
+      buttons: {
+      Close: function() {
+          $(this).dialog('close');
+        }
+      },
+      open: function() {
+        //debugger;
+        var mapOptions = {
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          center: baltimore,
+          zoom: 14
+          }
+        var cur=img_id;
+        console.log("cur"+cur);
+        var res_obj;
+        var res_img;
+    //    if(cur!="xx")
+    //    {
+          res_obj = cur.substring(1, 2);
+          res_img = cur.substring(3, 4);
+          console.log("changed");
+          console.log(res_img);
+     //   }
+    //    else
+    //    {
+      //    res_img = 0;
+    //    }
+        let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
+        let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
+        let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
+        let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];
+        
+        var baltimore = new google.maps.LatLng(object_lat, object_lon);
+        console.log(observer_lat)
+        console.log(object_lon)
+        var baltimore1 = new google.maps.LatLng(observer_lat, observer_lon);
+
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('pano'),
+            {
+              position: baltimore1,
+              pov: {heading: 4, pitch: 10},
+              zoom: 2
+            });
+
+      
+        var map = new google.maps.Map(
+              document.getElementById('canvasMap'),
+              {
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                center: baltimore1,
+                zoom: 14
+              });
+ 
+        var cafeMarker2 = new google.maps.Marker({
+        position: baltimore,
+        map: map,
+        icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
+        title: 'utility pole'
+    });
+        var cafeMarker1 = new google.maps.Marker({
+        position: baltimore,
+        map: panorama,
+        icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
+        title: 'utility pole'
+    });
+
+        google.maps.event.addListener(panorama, 'position_changed', function () {
+        var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), cafeMarker2.getPosition());
+        panorama.setPov({
+            heading: heading,
+            pitch: 0
+        }); 
+
+    });
+        map.setStreetView(panorama);
+
+      }
+         
+}
+);
+}
+
 
 viewer.scene.globe.depthTestAgainstTerrain = true;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.381735, 29.749122, 753);
@@ -59,42 +149,28 @@ var url =Cesium.buildModuleUrl("./images/power.png");
 
 //./images/power.png
 var object_loc;
-fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
-  .then(response => response.json())
-  .then(function(json){
-let objects = json['objects'];
-      vulnerable_objects = objects;
-      for(let object of objects){
 
-    var input = object['cluster_latitude']+','+object['cluster_longitude'];
-        geocoder = new google.maps.Geocoder();
-        var latlngStr = input.split(',', 2);
-        var latlng = new google.maps.LatLng(parseFloat(latlngStr[0]), parseFloat(latlngStr[1]));
-        geocoder.geocode({'location': latlng}, function (results, status) {
-          if (status === google.maps.GeocoderStatus.OK) {
-            if (results[0]) {
-              object_loc=results[0]['formatted_address'];
-              //console.log(object_loc);
-            } 
-          } else {
-            alert('Geocoder failed due to: ' + status);
-          }
-        });
-
-
-      }
-
-
-    console.log("another")
-  })
-
+geocoder = new google.maps.Geocoder();
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
       let objects = json['objects'];
       vulnerable_objects = objects;
       for(let object of objects){
-        
+        var input = object['cluster_latitude']+','+object['cluster_longitude'];
+        var latlngStr = input.split(',', 2);
+        var latlng = new google.maps.LatLng(parseFloat(latlngStr[0]), parseFloat(latlngStr[1]));
+        geocoder.geocode({'location': latlng}, function (results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            if (results[0]) {
+              object_loc=results[0]['formatted_address'];
+              console.log(object_loc);
+            } 
+          } else {
+            alert('Geocoder failed due to: ' + status);
+          }
+        });
+
         var entity = new Cesium.Entity();
         entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'],object['cluster_latitude'], 0);
         entity.name = object['cluster_id'];
@@ -107,7 +183,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         var image_date= cluster_obj[0]['createdDate'];
         var object_type=cluster_obj[0]['classification'];
     //    var object_loc;
-       
+       console.log(object_loc);
    // var pinBuilder = new Cesium.PinBuilder();
   //  entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.GREEN, 48);
         entity.description = '\
@@ -231,7 +307,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       }
   } )
 var current_id="xx";
-
+var current_c="0";
   
 var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
         handler.setInputAction(function(click) {
@@ -268,6 +344,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
             let object_id = element.getAttribute("data-object-id");
             //cluster_obj[0]['image'];
             let object_clusters = vulnerable_objects[object_indicator]['cluster_objects'];
+            current_c=object_clusters;
            // console.log(object_clusters[0]);
             var tmp=1;
             for(let object_image of object_clusters){
@@ -290,9 +367,10 @@ viewer.infoBox.frame.addEventListener('load', function() {
                 open: function()
                 {
                   $(".test").on('click', function () {
-                //    alert($(this).attr('id'));
                     current_id=$(this).attr('id');
                     console.log("curr id"+current_id);
+                    img_dialog(current_id);
+
                 });
 
                 }
@@ -300,97 +378,8 @@ viewer.infoBox.frame.addEventListener('load', function() {
             });
         }
         else if(e.target && e.target.id === 'viewButton'){
-            
-  //var cur; 
-  //var res_obj;
-  //var res_img;
-
- $("#dialog2").dialog({
-      width: 700,
-      resizable: false,
-      draggable: true,
-      height: 600,
-      buttons: {
-      Close: function() {
-          $(this).dialog('close');
-        }
-      },
-      open: function() {
-        //debugger;
-        var mapOptions = {
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          center: baltimore,
-          zoom: 14
-          }
-        var cur=current_id;
-        console.log("cur"+cur);
-        var res_obj;
-        var res_img;
-        if(cur!="xx")
-        {
-          res_obj = cur.substring(1, 2);
-          res_img = cur.substring(3, 4);
-          console.log("changed");
-          console.log(res_img);
-        }
-        else
-        {
-          res_img = 0;
-        }
-        let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
-        let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
-        let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
-        let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];
-        
-        var baltimore = new google.maps.LatLng(object_lat, object_lon);
-        console.log(observer_lat)
-        console.log(object_lon)
-        var baltimore1 = new google.maps.LatLng(observer_lat, observer_lon);
-
-        var panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('pano'),
-            {
-              position: baltimore1,
-              pov: {heading: 4, pitch: 10},
-              zoom: 2
-            });
-
-      
-        var map = new google.maps.Map(
-              document.getElementById('canvasMap'),
-              {
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                center: baltimore1,
-                zoom: 14
-              });
- 
-        var cafeMarker2 = new google.maps.Marker({
-        position: baltimore,
-        map: map,
-        icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
-        title: 'utility pole'
-    });
-        var cafeMarker1 = new google.maps.Marker({
-        position: baltimore,
-        map: panorama,
-        icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
-        title: 'utility pole'
-    });
-
-        google.maps.event.addListener(panorama, 'position_changed', function () {
-        var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), cafeMarker2.getPosition());
-        panorama.setPov({
-            heading: heading,
-            pitch: 0
-        }); 
-
-    });
-        map.setStreetView(panorama);
-
-      }
-         
-});
-
+            current_id="i"+current_c+"-"+"0";
+            img_dialog(current_id);
         }
 
     }, false);

@@ -5,7 +5,9 @@
 
     <meta charset="UTF-8">
     <style>
-
+   *:focus {
+    outline: 0 !important;
+}
     </style>
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -74,28 +76,49 @@
 <body>
 
     
-  
-  <div class="jumbotron">
-    <h3>Disaster management</h3>
-    <label class="container_t">flood<input type="checkbox" name="c1" id="x"/><span class="checkmark"></span>
+  <button type="button" class="t_button" data-toggle="collapse" aria-expanded="true" data-target=".jumbotron">
+<span class="dashicons dashicons-menu">Diaster control</span>
+  </button>
+
+   <div class="jumbotron show collapse">
+   <!-- <h3>Disaster management</h3> -->
+
+    <label class="container_t">flood<input type="checkbox" name="flood object" id="x"/><span class="checkmark"></span>
 </label>
 
-<label class="container_t">blackout<input type="checkbox" name="c2" id="y"/><span class="checkmark"></span>
+<label class="container_t">blackout<input type="checkbox" name="power object" id="y"/><span class="checkmark"></span>
 </label>
 <hr />
+<fieldset class="scheduler-border">
 <legend class="scheduler-border">Map legend</legend>
-    <ul>           
-            <div class="dot blue"></div>
-            <div><label for="myid1">reported object</label></div>
-            <div class="foo purple"></div>
-            <div><label for="myid2">Substation</label></div>
-            <div class="foo purple"></div>
-            <div><label for="myid2">Wire</label></div>
-            <div class="dot green"></div>
-            <div><label for="myid2">Utility pole</label></div>
-            <div class="dot white"></div>
-            <div><label for="myid2">Inlet</label></div>
+    <ul id="legend_list" style="list-style-type:none">           
+            <li><div class="dot blue"></div>
+            <div><label for="myid1">reported object</label></div></li>
+            <li data-type='flood object'><div class="foo purple">
+            </div><label for="myid2">Wire</label></li>
+            <li data-type='flood object' ><div class="foo purple">
+            </div><label for="myid2">Substation</label></li>
+            <li data-type='flood object'><div class="dot green"></div>
+            <label for="myid2">Utility pole</label></li>
+            <li data-type='power object' ><div class="dot white"></div>
+            <div><label for="myid2">Inlet</label></div></li>
     </ul>
+</fieldset>
+<!--
+<legend class="scheduler-border">Map legend</legend>
+    <ul id="legend_list" style="list-style-type:none">           
+            <li><div class="dot blue"></div>
+            <div><label for="myid1">reported object</label></div></li>
+            <li data-type='power object'><div class="foo purple"></div>
+            <div><label for="myid2">Substation</label></div></li>
+            <li data-type='power object' ><div class="foo purple"></div>
+            <div><label for="myid2">Wire</label></div></li>
+            <li data-type='power object'><div class="dot green"></div>
+            <div><label for="myid2">Utility pole</label></div></li>
+            <li data-type='flood object' ><div class="dot white"></div>
+            <div><label for="myid2">Inlet</label></div></li>
+    </ul>
+    <-->
   </div>
 
 
@@ -131,41 +154,51 @@
 
     <div class="PowerC hide1" >
 <div class ="back" id="back1">
-        <h4>Power Infrastructure</h4>
-        <label for="x"><input type="checkbox" id="updateobj" />update using reported objects</label>
+        <h5>Weather Infomation</h5>
+        <!--
+        <label for="x"><input type="checkbox" id="updateobj" />update using reported objects</label>-->
+
+
 </div>
         <div id="PowerC1">
             <div class ="back" id="back2">
-            <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>  
+                <h5>Wind Speed</h5>
+        <!--    <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>  -->
+
+<div class="slidecontainer">
+  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+  <p>Current windspeed: <span id="demo"></span></p>
+</div>
         </div>
 
 </div>
+
     </div>
+
 
    <div class="showme hide">
         <div class ="back" id="back1">
-        <h4>Flood Infrastructure</h4>
-        <label for="x"><input type="checkbox" id="updateobj1" />update using reported objects</label>
+            <h5>Weather Condition</h5>
+<!--
+            <div class="card">
+  <div class="container_card">
+    <h4><b>John Doe</b></h4> 
+    <p>Architect Engineer</p> 
+  </div>
 </div>
+        -->
+</div>
+
         <div id="showme1">
             <div class ="back" id="back2">
-    <h4>Weather Condition</h4>
 
-<ul class="toolgroup">
-    <li>Rainfall
-        <ul>
-            <li>2020</li>
-            <li>2019</li>
-        </ul>
-    </li>
-    <li><a href="">Historical event</a>
-        <ul>
-            <li>harvey</li>
-            <li>...</li>
-            <li>...</li>
-        </ul>
-    </li>
-    </ul>
+            <h5>Current Rainfall</h5>
+        <!--    <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>  -->
+
+<div class="slidecontainer">
+  <input type="range" min="1" max="100" value="50" class="slider" id="myRange1">
+  <p>Current Rainfall: <span id="demo1"></span></p>
+</div>
 
         </div>
 
@@ -185,11 +218,11 @@
     $(function(){
     $('.container_t input:checkbox').on('change',function() {
            var hide = this.name;
-           console.log("f");
-           $("#myList [data-width-type!='"+hide+"']").toggle();
+           console.log(hide);
+           $("#legend_list [data-type='"+hide+"']").toggle();
     });
 });
-/*
+
     document.getElementById('x').onchange = function () {
         var cart = document.getElementsByClassName('showme')[0];
         if (this.checked) cart.classList.remove('hide');
@@ -200,11 +233,13 @@
         if (this.checked) cart1.classList.remove('hide1');
         else cart1.classList.add('hide1');
     }
-    */
-    function checkAddress(checkbox) {
-        if (checkbox.checked) {
-
-        }
-    }
     
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
 </script>
