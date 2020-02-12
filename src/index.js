@@ -41,17 +41,12 @@ function img_dialog(img_id)
         console.log("cur"+cur);
         var res_obj;
         var res_img;
-    //    if(cur!="xx")
-    //    {
+
           res_obj = cur.substring(1, 2);
           res_img = cur.substring(3, 4);
           console.log("changed");
           console.log(res_img);
-     //   }
-    //    else
-    //    {
-      //    res_img = 0;
-    //    }
+
         let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
         let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
         let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
@@ -150,21 +145,31 @@ var url =Cesium.buildModuleUrl("./images/power.png");
 //./images/power.png
 var object_loc;
 
-geocoder = new google.maps.Geocoder();
+
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
+      geocoder = new google.maps.Geocoder();
       let objects = json['objects'];
       vulnerable_objects = objects;
+      for(let object of objects)
+      {
+
+        
+      }
+
+
       for(let object of objects){
+
         var input = object['cluster_latitude']+','+object['cluster_longitude'];
         var latlngStr = input.split(',', 2);
         var latlng = new google.maps.LatLng(parseFloat(latlngStr[0]), parseFloat(latlngStr[1]));
         geocoder.geocode({'location': latlng}, function (results, status) {
+
           if (status === google.maps.GeocoderStatus.OK) {
             if (results[0]) {
               object_loc=results[0]['formatted_address'];
-              console.log(object_loc);
+           //   console.log(object_loc);
             } 
           } else {
             alert('Geocoder failed due to: ' + status);
@@ -183,7 +188,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         var image_date= cluster_obj[0]['createdDate'];
         var object_type=cluster_obj[0]['classification'];
     //    var object_loc;
-       console.log(object_loc);
+    //   console.log(object_loc);
    // var pinBuilder = new Cesium.PinBuilder();
   //  entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.GREEN, 48);
         entity.description = '\
@@ -307,6 +312,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       }
   } )
 var current_id="xx";
+var current_id1="xx";
 var current_c="0";
   
 var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
@@ -316,7 +322,7 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
             var pick = viewer.scene.pick(click.position);
             //pick current entity
             if(pick && pick.id){
-              console.log("werwer")
+          //    console.log("werwer")
               console.log(pick.id._name)
               object_indicator=pick.id._name;
             }
@@ -352,6 +358,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
               let ima = new Image();
               //console.log();
               ima.src = object_image['image'];
+              console.log(ima.src)
               ima.height = 250;
               ima.width = 250;
               ima.id='i'+object_id+'-'+tmp.toString();
@@ -360,6 +367,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
               tmp=tmp+1;
             //  document.getElementById("dialog1").appendChild(textnode);
             }
+
             $(function(){
               $( "#dialog1" ).dialog({
                 width: 600,
@@ -372,6 +380,19 @@ viewer.infoBox.frame.addEventListener('load', function() {
                     img_dialog(current_id);
 
                 });
+
+                }
+             });
+            });
+
+             $(function(){
+              $( "#dialog2" ).dialog({
+                width: 600,
+                height: 600,
+                open: function()
+                {
+                 current_id1="i"+current_c+"-"+"0";
+                  img_dialog(current_id1);
 
                 }
              });
@@ -504,14 +525,14 @@ power1.then(function(dataSource) {
     });
 
 
-    updateP.addEventListener('change', function () {
-        if (updateP.checked) {
-            viewer.dataSources.add(updated);
-        }
-        else {
-           viewer.entities.remove(updated); 
-        }
-    });
+    // updateP.addEventListener('change', function () {
+    //     if (updateP.checked) {
+    //         viewer.dataSources.add(updated);
+    //     }
+    //     else {
+    //        viewer.entities.remove(updated); 
+    //     }
+    // });
 
 
 

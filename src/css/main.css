@@ -583,7 +583,7 @@ display:none;
 }
 .cesium-viewer-timelineContainer{
 
-  top:680px;
+  top:750px;
 }
 
 .cesium-infoBox{ font-family: "Lato", sans-serif;display:block;top:30px;position: absolute;right:0;width:20%;height:100%;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
