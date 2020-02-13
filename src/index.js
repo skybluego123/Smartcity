@@ -577,36 +577,6 @@ viewer.entities.add({
     }
 });
 
-power2.then(function (dataSource) {
-    var entities = dataSource.entities.values;
-    for (var i = 0; i < entities.length; i++) {
-        var entity = entities[i];
-        entity.billboard = undefined;
-
-        if (entity.properties.hasProperty('id')) {
-
-          entity.model=new Cesium.ModelGraphics({
-          uri: './geoMappings/Utilitypole_3Dmodel.glb'
-          });
-
-        }
-
-    }
-});
-
-Cesium.when(power2, function (dataSource) {
-    checkbox2.addEventListener('change', function () {
-        if (checkbox2.checked) {
-            viewer.dataSources.add(dataSource);
-        }
-        else {
-            viewer.dataSources.remove(dataSource);
-
-        }
-    });
-
-});
-
 //Utility pole data sources 
 // TO DO change variable name
 power3.then(function(dataSource) {
