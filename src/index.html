@@ -106,82 +106,35 @@
             <div><label for="myid2">Inlet</label></div></li>
     </ul>
 </fieldset>
-<!--
-<legend class="scheduler-border">Map legend</legend>
-    <ul id="legend_list" style="list-style-type:none">           
-            <li><div class="dot blue"></div>
-            <div><label for="myid1">reported object</label></div></li>
-            <li data-type='power object'><div class="foo purple"></div>
-            <div><label for="myid2">Substation</label></div></li>
-            <li data-type='power object' ><div class="foo purple"></div>
-            <div><label for="myid2">Wire</label></div></li>
-            <li data-type='power object'><div class="dot green"></div>
-            <div><label for="myid2">Utility pole</label></div></li>
-            <li data-type='flood object' ><div class="dot white"></div>
-            <div><label for="myid2">Inlet</label></div></li>
-    </ul>
-    <-->
-  </div>
+</div>
 
 
 <div id="cesiumContainer"></div>   
-<!--
-    <div class="backdrop" id="menu">
-    <h3>Disaster management</h3>
-<label class="container_t">flood<input type="checkbox" name="c1" id="x"/><span class="checkmark"></span>
-</label>
 
-<label class="container_t">blackout<input type="checkbox" name="c2" id="y"/><span class="checkmark"></span>
-</label>
--->
-<!--
-    <hr />
-    
-    <legend class="scheduler-border">Map legend</legend>
-    <ul>           
-            <div class="dot blue"></div>
-            <div><label for="myid1">reported object</label></div>
-            <div class="foo purple"></div>
-            <div><label for="myid2">Substation</label></div>
-            <div class="foo purple"></div>
-            <div><label for="myid2">Wire</label></div>
-            <div class="dot green"></div>
-            <div><label for="myid2">Utility pole</label></div>
-            <div class="dot white"></div>
-            <div><label for="myid2">Inlet</label></div>
-    </ul>
-
-</div>
--->
-
-    <div class="PowerC hide1" >
-<div class ="back" id="back1">
+<div class="PowerC hide1" >
+    <div class ="back" id="back1">
         <h5>Weather Infomation</h5>
-        <!--
-        <label for="x"><input type="checkbox" id="updateobj" />update using reported objects</label>-->
-
-
-</div>
-        <div id="PowerC1">
-            <div class ="back" id="back2">
-                <h5>Wind Speed</h5>
-        <!--    <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>  -->
-
-<div class="slidecontainer">
-  <input type="range" min="1" max="255" value="50" class="slider" id="myRange">
-  <p>Current windspeed: <span id="demo"></span></p>
-</div>
+    </div>
+    <div id="PowerC1">
+        <div class ="back" id="back2">
+            <h5>Wind Speed</h5>
+            <div class="slidecontainer">
+            <input type="range" min="1" max="255" value="50" class="slider" id="myRange">
+            <p>Current windspeed: <span id="demo"></span></p>
+            </div>
         </div>
 
-</div>
-
     </div>
+
+</div>
 
 
    <div class="showme hide">
         <div class ="back" id="back1">
             <h5>Weather Condition</h5>
-
+<div class="row">
+<div id="" class="col-8 mx-auto weather">
+    <div class="weather-head">
         <h8 id="location" class="text-center">Hialeah, US</h8>
         <div class="row">                           
                             <div id="description" class="description col-6 text-center">
@@ -210,33 +163,22 @@
                 <div id="visibility" class="degree-data col-4 text-center">235</div>
             </div>
         </div>
-
-<!--
-            <div class="card">
-  <div class="container_card">
-    <h4><b>John Doe</b></h4> 
-    <p>Architect Engineer</p> 
-  </div>
+    </div>
 </div>
-        -->
+</div>
+
 </div>
 
         <div id="showme1">
             <div class ="back" id="back2">
-
             <h5>Current Rainfall</h5>
-        <!--    <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>  -->
-
-<div class="slidecontainer">
-  <input type="range" min="1" max="255" value="254" class="slider" id="myRange1">
-  <p>Current Rainfall: <span id="demo1"></span></p>
-</div>
-
+        <div class="slidecontainer">
+          <input type="range" min="1" max="255" value="254" class="slider" id="myRange1">
+          <p>Current Rainfall: <span id="demo1"></span></p>
         </div>
-
+        </div>
     </div>
 </div>
-
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
     <div class="dialog" id="dialog2" title="Google street view">
         <div id="pano" style="width: 50%; height: 100%;float:left"></div>
@@ -266,10 +208,5 @@
         else cart1.classList.add('hide1');
     }
     
-// var slider = document.getElementById("myRange");
-// var output = document.getElementById("demo");
-// output.innerHTML = slider.value;
-
-
 </script>
 
