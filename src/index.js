@@ -19,17 +19,17 @@ slider.oninput = function() {
   output.innerHTML = this.value;
 }
 
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(41753)
-//     })
-// );
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(41753)
+    })
+);
 
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(36440)
-//     })
-// );
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(36440)
+    })
+);
 //viewer.zoomTo(tileset);
 
 var r= 255, g=200, b=255;
@@ -41,21 +41,8 @@ var fadeColor = new Cesium.CallbackProperty(function(t, result){
         g=g-5;
       if(b>5)
         b=b-5;
-
     }
-    // if (r > 0 && b === 0) {
-    //         r--;
-    //         g++;
-    //     }
-    //     if (g > 0 && r === 0) {
-    //         g--;
-    //         b++;
-    //     }
-    //     if (b > 0 && g === 0) {
-    //         r++;
-    //         b--;
-    //     }
-        return Cesium.Color.fromBytes(r, g, b, 255, result);
+    return Cesium.Color.fromBytes(r, g, b, 255, result);
 }, false);
 
 
@@ -192,20 +179,18 @@ var CheckPowerI = document.getElementById('y');  //updateobj
 var updateP = document.getElementById('updateobj');
 
 var power1 = Cesium.GeoJsonDataSource.load('./geoMappings/updateobj.geojson');
-var power2 = Cesium.GeoJsonDataSource.load('./geoMappings/update.geojson');
 var power3 = Cesium.GeoJsonDataSource.load('./geoMappings/power.geojson');
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
 
-var vulnerable_objects;//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg
+var vulnerable_objects;
 var object_indicator;
 var url =Cesium.buildModuleUrl("./images/power.png");
 
 //./images/power.png
 var object_loc;
 //var geocode_address=['ee'];
-https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
@@ -217,7 +202,6 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       //   console.log("received all addresses:", results);
 
       // });
-
       for(let object of objects){
 
         var entity = new Cesium.Entity();
@@ -342,7 +326,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
     <br style = "line-height:8;"><br>\
      <img data-object-id='+entity.name+' class="rotate90" src='+image_url+' >\
       <br style = "line-height:10;"><br>\
-  <button class="myButton" id="viewButton">To Google Map</button>';
+  ';
      entity.point = {
     color : Cesium.Color.BLUE,
     pixelSize : 15,
@@ -364,7 +348,6 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
             var pick = viewer.scene.pick(click.position);
             //pick current entity
             if(pick && pick.id){
-          //    console.log("werwer")
               console.log(pick.id._name)
               object_indicator=pick.id._name;
             }
@@ -557,17 +540,6 @@ power1.then(function(dataSource) {
     }
     });
 
-
-    // updateP.addEventListener('change', function () {
-    //     if (updateP.checked) {
-    //         viewer.dataSources.add(updated);
-    //     }
-    //     else {
-    //        viewer.entities.remove(updated); 
-    //     }
-    // });
-
-
 viewer.entities.add({
     name : 'Red box with fade color',
     position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 300000.0),
@@ -576,7 +548,6 @@ viewer.entities.add({
         material : new Cesium.ColorMaterialProperty(fadeColor)
     }
 });
-
 //Utility pole data sources 
 // TO DO change variable name
 power3.then(function(dataSource) {
