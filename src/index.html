@@ -23,7 +23,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -75,13 +74,16 @@
 
 <body>
 
-    
+   <!-- 
   <button type="button" class="t_button" data-toggle="collapse" aria-expanded="true" data-target=".jumbotron">
 <span class="dashicons dashicons-menu">Diaster control</span>
   </button>
 
    <div class="jumbotron show collapse">
-   <!-- <h3>Disaster management</h3> -->
+    -->
+    <div class="jumbotron">
+
+    <h3>Disaster management</h3> 
 
     <label class="container_t">flood<input type="checkbox" name="flood object" id="x"/><span class="checkmark"></span>
 </label>
@@ -166,7 +168,7 @@
         <!--    <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>  -->
 
 <div class="slidecontainer">
-  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+  <input type="range" min="1" max="255" value="50" class="slider" id="myRange">
   <p>Current windspeed: <span id="demo"></span></p>
 </div>
         </div>
@@ -179,6 +181,36 @@
    <div class="showme hide">
         <div class ="back" id="back1">
             <h5>Weather Condition</h5>
+
+        <h8 id="location" class="text-center">Hialeah, US</h8>
+        <div class="row">                           
+                            <div id="description" class="description col-6 text-center">
+                                <i id="icon-desc" class="wi wi-owm-200"></i>
+                                <p class="desc">thunderstorm</p>            
+                            </div>
+                            <div id="temperature" class="col-6 text-center">
+                                60 <i id="icon-thermometer" class="wi wi-thermometer"></i>                  
+                            </div>  
+        </div>
+        <div class="weather-body">
+            <div class="row">
+                <div class="humidity col-4 text-center">
+                    <i class="wi wi-raindrop"></i><span> Humidity</span>
+                </div>
+                <div class="wind col-4 text-center">
+                    <i class="wi wi-strong-wind"></i><span> Wind Speed</span>
+                </div>
+                <div class="visibility col-4 text-center">
+                    <i class="fa fa-eye"></i><span> Visibility</span>
+                </div>              
+            </div>
+            <div class="row">
+                <div id="humidity" class="humidity-data col-4 text-center">75%</div>
+                <div id="wind" class="wind-data col-4 text-center">34mph</div>
+                <div id="visibility" class="degree-data col-4 text-center">235</div>
+            </div>
+        </div>
+
 <!--
             <div class="card">
   <div class="container_card">
@@ -196,7 +228,7 @@
         <!--    <label for="x"><input type="checkbox" id="demage" />Show potential demage</label>  -->
 
 <div class="slidecontainer">
-  <input type="range" min="1" max="100" value="50" class="slider" id="myRange1">
+  <input type="range" min="1" max="255" value="254" class="slider" id="myRange1">
   <p>Current Rainfall: <span id="demo1"></span></p>
 </div>
 
@@ -240,3 +272,4 @@
 
 
 </script>
+

@@ -19,25 +19,32 @@ slider.oninput = function() {
   output.innerHTML = this.value;
 }
 
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(41753)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(41753)
+//     })
+// );
 
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(36440)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(36440)
+//     })
+// );
 //viewer.zoomTo(tileset);
 //Geocode function
 
 //var wait = true;
-var r= 255, g=0, b=0;
+var r= 255, g=200, b=255;
 var fadeColor = new Cesium.CallbackProperty(function(t, result){
-    b=slider.value;
+    r=slider.value;
+    if(r>0)
+    {
+      if(g>5)
+        g=g-5;
+      if(b>5)
+        b=b-5;
 
+    }
     // if (r > 0 && b === 0) {
     //         r--;
     //         g++;
@@ -50,12 +57,9 @@ var fadeColor = new Cesium.CallbackProperty(function(t, result){
     //         r++;
     //         b--;
     //     }
-        //r=slider.value;
-
-
-
-        return Cesium.Color.fromBytes(r, g, b, 160, result);
+        return Cesium.Color.fromBytes(r, g, b, 255, result);
 }, false);
+
 
 function coordinate_to_address(objects,callback)
 {
@@ -220,42 +224,19 @@ var url =Cesium.buildModuleUrl("./images/power.png");
 //./images/power.png
 var object_loc;
 //var geocode_address=['ee'];
-
+https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
      
       let objects = json['objects'];
       vulnerable_objects = objects;
-      coordinate_to_address(objects,function(results)
-      {
-        console.log("received all addresses:", results);
-
-      });
-      // for(let object of objects)
+      // coordinate_to_address(objects,function(results)
       // {
-      //   var input = object['cluster_latitude']+','+object['cluster_longitude'];
-      //   var latlngStr = input.split(',', 2);
-      //   var latlng = new google.maps.LatLng(parseFloat(latlngStr[0]), parseFloat(latlngStr[1]));
-      //   geocoder = new google.maps.Geocoder();
-      //   geocoder.geocode({'location': latlng}, function (results, status) {
+      //   console.log("received all addresses:", results);
 
-      //     if (status === google.maps.GeocoderStatus.OK) {
-      //       if (results[0]) {
-      //         object_loc=results[0]['formatted_address'];
-      //         geocode_address.push(results[0]['formatted_address']);
-      //         //console.log('s')
-      //         console.log(geocode_address[1]);
-      //       } 
-      //     } else {
-      //       alert('Geocoder failed due to: ' + status);
-      //     }
-      //   });
+      // });
 
-
-      // }
-
-    //  console.log(geocode_address[1]);
       for(let object of objects){
 
         var entity = new Cesium.Entity();
@@ -269,9 +250,9 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         var image_url = cluster_obj[0]['image'];
         var image_date= cluster_obj[0]['createdDate'];
         var object_type=cluster_obj[0]['classification'];
+        var cluster_addr=object['cluster_address'];
+
       //  console.log(geocode_address[0])
-    //    var object_loc;
-    //   console.log(object_loc);
    // var pinBuilder = new Cesium.PinBuilder();
   //  entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.GREEN, 48);
         entity.description = '\
@@ -374,7 +355,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       </tr>\
       <tr>\
         <td>Address</td>\
-        <th>'+'ssss'+'</th>\
+        <th>'+cluster_addr+'</th>\
       </tr>\
       <tr>\
         <td>Analysis Results</td>\
@@ -389,7 +370,6 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
     pixelSize : 15,
   };
 
-  //{
     var updated=viewer.entities.add(entity);
 
       }
@@ -664,6 +644,7 @@ power3.then(function(dataSource) {
         uri: './geoMappings/Utilitypole_3Dmodel.glb',
         scale: 0.2,
         color: fadeColor
+        //show: false
         // new Cesium.Color(slider.value, 0, 0, 1.0)
         });
         // var  names;
@@ -674,21 +655,25 @@ power3.then(function(dataSource) {
         viewer.entities.add(entity);
 
       }
-    
 
-
-      
     });
  
     
     Cesium.when(power3,function(dataSource){
          CheckPowerI.addEventListener('change', function() {
             if ( CheckPowerI.checked) {
-            viewer.dataSources.add(dataSource);
+        //    viewer.dataSources.add(dataSource);
+            var entities = dataSource.entities.values;
+            for (var i = 0; i < entities.length; i++) {
+              var entity = entities[i];
+              entity.show=true;
+              console.log(entity.show)
+            }
+
             //console.log(dataSource)
             }
             else{
-            viewer.dataSources.remove(dataSource);
+       //     viewer.dataSources.remove(dataSource);
             
             }
         });
@@ -764,13 +749,22 @@ power3.then(function(dataSource) {
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
         //var entity1=Entity();
-
+        if(i==40)
+        {
+          entity.billboard = undefined; 
+        entity.point = new Cesium.PointGraphics({
+            color: Cesium.Color.WHITE,
+            pixelSize: 50
+        });
+        }
+        else{
         entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
-            color: fadeColor,
+            color: Cesium.Color.YELLOW,
             pixelSize: 13
         });
-          viewer.entities.add(entity);
+      }
+    //      viewer.entities.add(entity);
       //  entity.color=Cesium.Color.YELLOW;
      //    if (entity.properties.hasProperty('id')) {
       //    entity.point = new Cesium.PointGraphics({
@@ -812,3 +806,20 @@ function colorByDistance() {
     });
 }
 //colorByDistance();
+
+
+// var viewer = new Cesium.Viewer('cesiumContainer');
+
+// var redPolygon = viewer.entities.add({
+//     name : 'Red polygon on surface',
+//     polygon : {
+//         hierarchy : Cesium.Cartesian3.fromDegreesArray([-95.334726705707027-0.00005, 29.764084676987729-0.00005,
+//                                                         -95.334726705707027+0.00005, 29.764084676987729-0.00005,
+//                                                          -95.334726705707027+0.00005, 29.764084676987729+0.00005,
+//                                                         -95.334726705707027-0.00005,  29.764084676987729+0.00005]),
+//         material : Cesium.Color.RED
+//     }
+// });
+
+
+

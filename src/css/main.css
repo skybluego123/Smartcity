@@ -45,7 +45,7 @@
 }
 .jumbotron
 {
-    top: 13%;
+    top: 0%;
     background: rgba(42, 42, 42, 0.7);
     border: 1px solid #444;
     padding: 5px 10px;
@@ -379,18 +379,15 @@ select option:first-child{
 #back1 {
     position: fixed;
     top: 0px;
-    left:18.8%;
+    left:19.5%;
     width: 20.5%;
-    height:16%;
-    margin-left: 10px; 
+    height:35%;
 }
 #back2 {
     position: fixed;
-    top: 14.7%;
-    left:18.7%;
+    top: 35%;
+    left:19.5%;
     width: 20.5%;
-    margin-left: 10px; 
-    margin-top:10px;
 }
 .slidecontainer {
   width: 100%;
@@ -581,10 +578,7 @@ display:none;
   transition: 0.3s;
   width: 40%;
 }
-.cesium-viewer-timelineContainer{
 
-  top:750px;
-}
 
 .cesium-infoBox{ font-family: "Lato", sans-serif;display:block;top:30px;position: absolute;right:0;width:20%;height:100%;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
