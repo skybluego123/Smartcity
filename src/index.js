@@ -11,13 +11,88 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     animation: true,
     shadows: true
 });
-/*
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
 var tileset = viewer.scene.primitives.add(
     new Cesium.Cesium3DTileset({
         url: Cesium.IonResource.fromAssetId(41753)
     })
 );
-*/
+
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(36440)
+    })
+);
+//viewer.zoomTo(tileset);
+//Geocode function
+
+//var wait = true;
+var r= 255, g=0, b=0;
+var fadeColor = new Cesium.CallbackProperty(function(t, result){
+    b=slider.value;
+
+    // if (r > 0 && b === 0) {
+    //         r--;
+    //         g++;
+    //     }
+    //     if (g > 0 && r === 0) {
+    //         g--;
+    //         b++;
+    //     }
+    //     if (b > 0 && g === 0) {
+    //         r++;
+    //         b--;
+    //     }
+        //r=slider.value;
+
+
+
+        return Cesium.Color.fromBytes(r, g, b, 160, result);
+}, false);
+
+function coordinate_to_address(objects,callback)
+{
+  objects=objects.slice(0,3);
+  var geocode_address=[];
+      for(let object of objects)
+      {
+        var input = object['cluster_latitude']+','+object['cluster_longitude'];
+        var latlngStr = input.split(',', 2);
+        var latlng = new google.maps.LatLng(parseFloat(latlngStr[0]), parseFloat(latlngStr[1]));
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'location': latlng}, function (results, status) {
+        //sleep(1000);
+          if (status === google.maps.GeocoderStatus.OK) {
+            //  object_loc=results[0]['formatted_address'];
+              geocode_address.push(results[0]['formatted_address']);
+                if(geocode_address.length == (objects.length)){
+                  if(typeof callback == 'function'){
+                    callback();
+                    //console.log('not equal')
+                  }
+                }
+            //  console.log(geocode_address[1]);
+          }
+          // else if(status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT){
+          //   setTimeout(1000);
+          //   console.log("over query")
+          // } 
+          else {
+            alert('Geocoder failed due to: ' + status);
+          }
+        });
+      }  
+}
+
+
+//Generate the dialog box
 function img_dialog(img_id)
 {
         $("#dialog2").dialog({
@@ -111,14 +186,14 @@ viewer.clock.shouldAnimate = true;
 viewer.infoBox.frame.removeAttribute('sandbox');
 var frame = viewer.infoBox.frame;
 
-frame.addEventListener('load', function () {
-  console.log("ddd");
-    var cssLink = frame.contentDocument.createElement('link');
-    cssLink.href = Cesium.buildModuleUrl('./css/main.css');
-    cssLink.rel = 'stylesheet';
-    cssLink.type = 'test/css';
-    frame.contentDocument.head.appendChild(cssLink);
-}, false);
+// frame.addEventListener('load', function () {
+//   console.log("ddd");
+//     var cssLink = frame.contentDocument.createElement('link');
+//     cssLink.href = Cesium.buildModuleUrl('./css/main.css');
+//     cssLink.rel = 'stylesheet';
+//     cssLink.type = 'test/css';
+//     frame.contentDocument.head.appendChild(cssLink);
+// }, false);
 
 viewer.scene.camera.setView({
     destination: initialPosition,
@@ -144,37 +219,44 @@ var url =Cesium.buildModuleUrl("./images/power.png");
 
 //./images/power.png
 var object_loc;
-
+//var geocode_address=['ee'];
 
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
-      geocoder = new google.maps.Geocoder();
+     
       let objects = json['objects'];
       vulnerable_objects = objects;
-      for(let object of objects)
+      coordinate_to_address(objects,function(results)
       {
+        console.log("received all addresses:", results);
 
-        
-      }
+      });
+      // for(let object of objects)
+      // {
+      //   var input = object['cluster_latitude']+','+object['cluster_longitude'];
+      //   var latlngStr = input.split(',', 2);
+      //   var latlng = new google.maps.LatLng(parseFloat(latlngStr[0]), parseFloat(latlngStr[1]));
+      //   geocoder = new google.maps.Geocoder();
+      //   geocoder.geocode({'location': latlng}, function (results, status) {
+
+      //     if (status === google.maps.GeocoderStatus.OK) {
+      //       if (results[0]) {
+      //         object_loc=results[0]['formatted_address'];
+      //         geocode_address.push(results[0]['formatted_address']);
+      //         //console.log('s')
+      //         console.log(geocode_address[1]);
+      //       } 
+      //     } else {
+      //       alert('Geocoder failed due to: ' + status);
+      //     }
+      //   });
 
 
+      // }
+
+    //  console.log(geocode_address[1]);
       for(let object of objects){
-
-        var input = object['cluster_latitude']+','+object['cluster_longitude'];
-        var latlngStr = input.split(',', 2);
-        var latlng = new google.maps.LatLng(parseFloat(latlngStr[0]), parseFloat(latlngStr[1]));
-        geocoder.geocode({'location': latlng}, function (results, status) {
-
-          if (status === google.maps.GeocoderStatus.OK) {
-            if (results[0]) {
-              object_loc=results[0]['formatted_address'];
-           //   console.log(object_loc);
-            } 
-          } else {
-            alert('Geocoder failed due to: ' + status);
-          }
-        });
 
         var entity = new Cesium.Entity();
         entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'],object['cluster_latitude'], 0);
@@ -187,6 +269,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
         var image_url = cluster_obj[0]['image'];
         var image_date= cluster_obj[0]['createdDate'];
         var object_type=cluster_obj[0]['classification'];
+      //  console.log(geocode_address[0])
     //    var object_loc;
     //   console.log(object_loc);
    // var pinBuilder = new Cesium.PinBuilder();
@@ -291,7 +374,7 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       </tr>\
       <tr>\
         <td>Address</td>\
-        <th>'+object_loc+'</th>\
+        <th>'+'ssss'+'</th>\
       </tr>\
       <tr>\
         <td>Analysis Results</td>\
@@ -310,7 +393,8 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
     var updated=viewer.entities.add(entity);
 
       }
-  } )
+  });
+
 var current_id="xx";
 var current_id1="xx";
 var current_c="0";
@@ -504,15 +588,6 @@ power1.then(function(dataSource) {
       entity.description = descriptions;
         }
     
-    /*
-        if (entity.properties.hasProperty('id')) {
-          entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.YELLOW,
-            pixelSize: 10
-        }); 
-         }
-      */  
-        
         else
         {
          entity.billboard=undefined;
@@ -535,6 +610,14 @@ power1.then(function(dataSource) {
     // });
 
 
+viewer.entities.add({
+    name : 'Red box with fade color',
+    position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 300000.0),
+    box : {
+        dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
+        material : new Cesium.ColorMaterialProperty(fadeColor)
+    }
+});
 
 power2.then(function (dataSource) {
     var entities = dataSource.entities.values;
@@ -543,10 +626,14 @@ power2.then(function (dataSource) {
         entity.billboard = undefined;
 
         if (entity.properties.hasProperty('id')) {
-            entity.point = new Cesium.PointGraphics({
-                color: Cesium.Color.YELLOW,
-                pixelSize: 10
-            });
+
+          entity.model=new Cesium.ModelGraphics({
+          uri: './geoMappings/Utilitypole_3Dmodel.glb'
+          });
+            // entity.point = new Cesium.PointGraphics({
+            //     color: Cesium.Color.YELLOW,
+            //     pixelSize: 10
+      //      });
 
         }
 
@@ -566,24 +653,39 @@ Cesium.when(power2, function (dataSource) {
 
 });
 
+//Utility pole data sources 
+// TO DO change variable name
 power3.then(function(dataSource) {
     var entities = dataSource.entities.values;
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
         entity.billboard = undefined; 
-        entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.GREEN,
-            pixelSize: 13
+        entity.model=new Cesium.ModelGraphics({
+        uri: './geoMappings/Utilitypole_3Dmodel.glb',
+        scale: 0.2,
+        color: fadeColor
+        // new Cesium.Color(slider.value, 0, 0, 1.0)
         });
-         }
+        // var  names;
+        // if (entity.properties.hasProperty('Name')) {         
+        // var  names = entity.properties.Name.valueOf();
+        //  }
+
+        viewer.entities.add(entity);
+
+      }
+    
+
+
       
     });
-    
+ 
     
     Cesium.when(power3,function(dataSource){
          CheckPowerI.addEventListener('change', function() {
             if ( CheckPowerI.checked) {
             viewer.dataSources.add(dataSource);
+            //console.log(dataSource)
             }
             else{
             viewer.dataSources.remove(dataSource);
@@ -593,7 +695,15 @@ power3.then(function(dataSource) {
     
     });
     
-    
+    //    Cesium.when(power3,function(dataSource){
+    //     var entities = dataSource.entities.values;
+    //     for (var i = 0; i < entities.length; i++) {
+    //     var entity = entities[i];
+    //     entity.color=new Cesium.Color(slider.value, 0, 0, 1.0);
+    //     console.log('change')
+    //   }
+    // });
+
     power4.then(function(dataSource) {
     var entities = dataSource.entities.values;
     for (var i = 0; i < entities.length; i++) {
@@ -630,6 +740,7 @@ power3.then(function(dataSource) {
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
         entity.billboard = undefined; 
+        //entity.color=new Cesium.Color(fadeColor);
          }
       
     });
@@ -652,11 +763,15 @@ power3.then(function(dataSource) {
     var entities = dataSource.entities.values;
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
+        //var entity1=Entity();
+
         entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.WHITE,
+            color: fadeColor,
             pixelSize: 13
         });
+          viewer.entities.add(entity);
+      //  entity.color=Cesium.Color.YELLOW;
      //    if (entity.properties.hasProperty('id')) {
       //    entity.point = new Cesium.PointGraphics({
        //     color: Cesium.Color.YELLOW,
