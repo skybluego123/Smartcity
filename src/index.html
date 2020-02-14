@@ -26,8 +26,24 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- weather icons -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
     <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAykBBxucwUKbwJkXtToreK3iQVHj8quHE&libraries=StreetViewPanorama"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
     <script>
 </script>
 </head>
@@ -58,12 +74,49 @@
 </fieldset>
 </div>
 
-
 <div id="cesiumContainer"></div>   
-
 <div class="PowerC hide1" >
     <div class ="back" id="back1">
         <h5>Weather Infomation</h5>
+        <div class="container" id="flood">       
+        <div class="row">
+            <div class="weather-head">
+                <h8 id="location" class="text-center">College Station, US</h8>
+                <div class="row">                           
+                    <div id="description" class="description col-6 text-center">
+                        <i id="icon-desc" class="wi wi-owm-200"></i>
+                        <p class="desc">thunderstorm</p>            
+                    </div>
+                    <div id="temperature" class="col-6 text-center">
+                    60<i id="icon-thermometer" class="wi wi-thermometer"></i>                  
+                    </div>  
+                </div>
+                <div class="weather-body">
+                    <div class="row">
+                        <div class="humidity col-4 text-center">
+                            <i class="wi wi-raindrop"></i><span> Humidity</span>
+                        </div>
+                        <div class="wind col-4 text-center">
+                            <i class="wi wi-strong-wind"></i><span> Wind Speed</span>
+                        </div>
+                        <div class="visibility col-4 text-center">
+                            <i class="fa fa-eye"></i><span> Visibility</span>
+                        </div>              
+                    </div>
+                    <div class="row">
+                        <div id="humidity" class="humidity-data col-4 text-center">75%</div>
+                        <div id="wind" class="wind-data col-4 text-center">34mph</div>
+                        <div id="visibility" class="degree-data col-4 text-center">235</div>
+                    </div>
+                    <div class="row">
+                        <div id="time" class="humidity-data col-12 text-center">
+                            Time
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
     <div id="PowerC1">
         <div class ="back" id="back2">
@@ -73,61 +126,61 @@
             <p>Current windspeed: <span id="demo"></span></p>
             </div>
         </div>
-
     </div>
-
 </div>
 
-
-   <div class="showme hide">
-        <div class ="back" id="back1">
-            <h5>Weather Condition</h5>
-<div class="row">
-
-    <div class="weather-head">
-        <h8 id="location" class="text-center">Hialeah, US</h8>
-        <div class="row">                           
-                            <div id="description" class="description col-6 text-center">
-                                <i id="icon-desc" class="wi wi-owm-200"></i>
-                                <p class="desc">thunderstorm</p>            
-                            </div>
-                            <div id="temperature" class="col-6 text-center">
-                                60 <i id="icon-thermometer" class="wi wi-thermometer"></i>                  
-                            </div>  
-        </div>
-        <div class="weather-body">
-            <div class="row">
-                <div class="humidity col-4 text-center">
-                    <i class="wi wi-raindrop"></i><span> Humidity</span>
+<div class="showme hide">
+    <div class ="back" id="back1">
+        <h5>Weather Condition</h5>
+        <div class="container" id="blackout">       
+        <div class="row">
+            <div class="weather-head">
+                <h8 id="location" class="text-center">College Station, US</h8>
+                <div class="row">                           
+                    <div id="description" class="description col-6 text-center">
+                        <i id="icon-desc" class="wi wi-owm-200"></i>
+                        <p class="desc">thunderstorm</p>            
+                    </div>
+                    <div id="temperature" class="col-6 text-center">
+                    60<i id="icon-thermometer" class="wi wi-thermometer"></i>                  
+                    </div>  
                 </div>
-                <div class="wind col-4 text-center">
-                    <i class="wi wi-strong-wind"></i><span> Wind Speed</span>
+                <div class="weather-body">
+                    <div class="row">
+                        <div class="humidity col-4 text-center">
+                            <i class="wi wi-raindrop"></i><span> Humidity</span>
+                        </div>
+                        <div class="wind col-4 text-center">
+                            <i class="wi wi-strong-wind"></i><span> Wind Speed</span>
+                        </div>
+                        <div class="visibility col-4 text-center">
+                            <i class="fa fa-eye"></i><span> Visibility</span>
+                        </div>              
+                    </div>
+                    <div class="row">
+                        <div id="humidity" class="humidity-data col-4 text-center">75%</div>
+                        <div id="wind" class="wind-data col-4 text-center">34mph</div>
+                        <div id="visibility" class="degree-data col-4 text-center">235</div>
+                    </div>
+                    <div class="row">
+                        <div id="time" class="humidity-data col-12 text-center">
+                            Time
+                        </div>
+                    </div>
                 </div>
-                <div class="visibility col-4 text-center">
-                    <i class="fa fa-eye"></i><span> Visibility</span>
-                </div>              
-            </div>
-            <div class="row">
-                <div id="humidity" class="humidity-data col-4 text-center">75%</div>
-                <div id="wind" class="wind-data col-4 text-center">34mph</div>
-                <div id="visibility" class="degree-data col-4 text-center">235</div>
             </div>
         </div>
-    </div>
-
-</div>
-
-</div>
-
-        <div id="showme1">
-            <div class ="back" id="back2">
+        </div>
+    <div id="showme1">
+        <div class ="back" id="back2">
             <h5>Current Rainfall</h5>
-        <div class="slidecontainer">
-          <input type="range" min="1" max="255" value="254" class="slider" id="myRange1">
-          <p>Current Rainfall: <span id="demo1"></span></p>
-        </div>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="255" value="254" class="slider" id="myRange1">
+                <p>Current Rainfall: <span id="demo1"></span></p>
+            </div>
         </div>
     </div>
+</div>
 </div>
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
     <div class="dialog" id="dialog2" title="Google street view">
@@ -146,7 +199,6 @@
            $("#legend_list [data-type='"+hide+"']").toggle();
     });
 });
-
     document.getElementById('x').onchange = function () {
         var cart = document.getElementsByClassName('showme')[0];
         if (this.checked) cart.classList.remove('hide');

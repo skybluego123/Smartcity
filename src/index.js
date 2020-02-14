@@ -18,7 +18,8 @@ output.innerHTML = slider.value;
 slider.oninput = function() {
   output.innerHTML = this.value;
 }
-
+var myPos = { my: "center center", at: "center-350 center", of: window };
+var myPos_right = { my: "center center", at: "center+350 center", of: window };
 var tileset = viewer.scene.primitives.add(
     new Cesium.Cesium3DTileset({
         url: Cesium.IonResource.fromAssetId(41753)
@@ -44,6 +45,41 @@ var fadeColor = new Cesium.CallbackProperty(function(t, result){
     }
     return Cesium.Color.fromBytes(r, g, b, 255, result);
 }, false);
+
+let API_KEY = '49406c4e8b6ee455d1904676a313aa40';
+function getWeather(latitude, longtitude) {
+  $.ajax({
+    url: 'http://api.openweathermap.org/data/2.5/forecast',
+    data: {
+      lat: latitude,
+      lon: longtitude,
+      units: 'imperial',
+      APPID: API_KEY
+    },
+    success: data => {
+      console.log(data['list'][30]['weather'][0]['main']);
+      var temperature=data['list'][0]['main']['temp']; //humidity
+      var humidity=data['list'][0]['main']['humidity'];
+      var windSpeed=data['list'][0]['wind']['speed'];
+      var desc=data['list'][30]['weather'][0]['main'];
+      var curr_time=data['list'][0]['dt_txt'];
+      console.log(curr_time)
+      var tempElement = document.getElementById("temperature");
+        tempElement.innerHTML = `${temperature}<i id="icon-thermometer" class="wi wi-thermometer"></i>` ;
+      var humidityElem = document.getElementById("humidity");
+        humidityElem.innerHTML = `${humidity}%`;
+      var windElem = document.getElementById("wind");
+        windElem.innerHTML = `${windSpeed}m/h`;
+      var description = document.getElementById("description");
+        description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p>${desc}</p>`;
+      var time =document.getElementById("time");
+        time.innerHTML = `${curr_time}`;
+      
+    }
+  })
+}
+
+getWeather(40.863372, -74.113181);
 
 
 function coordinate_to_address(objects,callback)
@@ -72,93 +108,83 @@ function coordinate_to_address(objects,callback)
       }  
 }
 
-
 //Generate the dialog box
+function map_create(img_id)
+{
+  var mapOptions = {
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: baltimore,
+    zoom: 14
+  }
+  var cur=img_id;
+  var res_obj;
+  var res_img;
+  res_obj = cur.substring(1, 2);
+  res_img = cur.substring(3, 4);
+  console.log(res_img);
+  let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
+  let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
+  let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
+  let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];      
+  var baltimore = new google.maps.LatLng(object_lat, object_lon);
+  console.log(observer_lat)
+  console.log(object_lon)
+  var baltimore1 = new google.maps.LatLng(observer_lat, observer_lon);
+  var panorama = new google.maps.StreetViewPanorama(
+    document.getElementById('pano'),
+    {
+        position: baltimore1,
+        pov: {heading: 4, pitch: 10},
+        zoom: 2
+    });
+  var map = new google.maps.Map(
+      document.getElementById('canvasMap'),
+      {
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          center: baltimore1,
+          zoom: 14
+      });
+      var cafeMarker2 = new google.maps.Marker({
+          position: baltimore,
+          map: map,
+          icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
+          title: 'utility pole'
+      });
+      var cafeMarker1 = new google.maps.Marker({
+          position: baltimore,
+          map: panorama,
+          icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
+          title: 'utility pole'
+      });
+      google.maps.event.addListener(panorama, 'position_changed', function(){
+          var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), cafeMarker2.getPosition());
+          panorama.setPov({
+              heading: heading,
+              pitch: 0
+          }); 
+    });
+      map.setStreetView(panorama);
+}
+
 function img_dialog(img_id)
 {
-        $("#dialog2").dialog({
+    $("#dialog2").dialog({
       width: 700,
       resizable: false,
       draggable: true,
       height: 600,
+      position: myPos_right,
       buttons: {
       Close: function() {
           $(this).dialog('close');
         }
       },
-      open: function() {
-        //debugger;
-        var mapOptions = {
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          center: baltimore,
-          zoom: 14
-          }
-        var cur=img_id;
-        console.log("cur"+cur);
-        var res_obj;
-        var res_img;
-
-          res_obj = cur.substring(1, 2);
-          res_img = cur.substring(3, 4);
-          console.log("changed");
-          console.log(res_img);
-
-        let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
-        let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
-        let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
-        let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];
-        
-        var baltimore = new google.maps.LatLng(object_lat, object_lon);
-        console.log(observer_lat)
-        console.log(object_lon)
-        var baltimore1 = new google.maps.LatLng(observer_lat, observer_lon);
-
-        var panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('pano'),
-            {
-              position: baltimore1,
-              pov: {heading: 4, pitch: 10},
-              zoom: 2
-            });
-
-      
-        var map = new google.maps.Map(
-              document.getElementById('canvasMap'),
-              {
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                center: baltimore1,
-                zoom: 14
-              });
- 
-        var cafeMarker2 = new google.maps.Marker({
-        position: baltimore,
-        map: map,
-        icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
-        title: 'utility pole'
-    });
-        var cafeMarker1 = new google.maps.Marker({
-        position: baltimore,
-        map: panorama,
-        icon: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FE7569',
-        title: 'utility pole'
-    });
-
-        google.maps.event.addListener(panorama, 'position_changed', function () {
-        var heading = google.maps.geometry.spherical.computeHeading(panorama.getPosition(), cafeMarker2.getPosition());
-        panorama.setPov({
-            heading: heading,
-            pitch: 0
-        }); 
-
-    });
-        map.setStreetView(panorama);
-
+      open: function(){
+          map_create(img_id);
       }
-         
-}
+    }
 );
 }
-
 
 viewer.scene.globe.depthTestAgainstTerrain = true;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.381735, 29.749122, 753);
@@ -172,7 +198,6 @@ viewer.scene.camera.setView({
     orientation: initialOrientation,
     endTransform: Cesium.Matrix4.IDENTITY
 });
-
 
 var CheckFloodI = document.getElementById('x'); 
 var CheckPowerI = document.getElementById('y');  //updateobj
@@ -188,115 +213,82 @@ var vulnerable_objects;
 var object_indicator;
 var url =Cesium.buildModuleUrl("./images/power.png");
 
-//./images/power.png
 var object_loc;
-//var geocode_address=['ee'];
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
-     
       let objects = json['objects'];
       vulnerable_objects = objects;
       // coordinate_to_address(objects,function(results)
       // {
       //   console.log("received all addresses:", results);
-
       // });
-      for(let object of objects){
+    for(let object of objects){
+      var entity = new Cesium.Entity();
+      entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'],object['cluster_latitude'], 0);
+      entity.name = object['cluster_id'];
+      var lat =object['cluster_latitude'];
+      var lon =object['cluster_longitude'];
+      var name=object['cluster_id'];
+      var cluster_obj=object['cluster_objects'];
+      var image_url = cluster_obj[0]['image'];
+      var image_date= cluster_obj[0]['createdDate'];
+      var object_type=cluster_obj[0]['classification'];
+      var cluster_addr=object['cluster_address'];
 
-        var entity = new Cesium.Entity();
-        entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'],object['cluster_latitude'], 0);
-        entity.name = object['cluster_id'];
-      //  object_indicator=object['cluster_id'];
-        var lat =object['cluster_latitude'];
-        var lon =object['cluster_longitude'];
-        var name=object['cluster_id'];
-        var cluster_obj=object['cluster_objects'];
-        var image_url = cluster_obj[0]['image'];
-        var image_date= cluster_obj[0]['createdDate'];
-        var object_type=cluster_obj[0]['classification'];
-        var cluster_addr=object['cluster_address'];
-
-        entity.description = '\
-     <style>\
-     .rotate90 {\
-    -webkit-transform: rotate(90deg);\
-    -moz-transform: rotate(90deg);\
-    -o-transform: rotate(90deg);\
-    -ms-transform: rotate(90deg);\
-    transform: rotate(90deg);\
-    float: center;\
-    text-align: center;\
-    font-style: italic;\
-    text-indent: 0;\
-    border: thin silver solid;\
-    margin: 0.5em;\
-    padding: 0.5em;\
-    width:100%;\
-    min-width: 150px;\
-}\
-    .cesium-infoBox-description {\
+      entity.description = '\
+      <style>\
+      .rotate90 {\
+        -webkit-transform: rotate(90deg);\
+        -moz-transform: rotate(90deg);\
+        -o-transform: rotate(90deg);\
+        -ms-transform: rotate(90deg);\
+        transform: rotate(90deg);\
+        float: center;\
+        text-align: center;\
+        font-style: italic;\
+        text-indent: 0;\
+        border: thin silver solid;\
+        margin: 0.5em;\
+        padding: 0.5em;\
+        width:100%;\
+        min-width: 150px;\
+      }\
+      .cesium-infoBox-description {\
         font-family: "Times New Roman", Times, serif;\
         font-size: 6px;\
         padding: 4px 10px;\
         margin-right: 4px;\
         color: #edffff;\
-    }\
-    .cesium-infoBox-defaultTable tr:nth-child(odd) {\
+      }\
+      .cesium-infoBox-defaultTable tr:nth-child(odd) {\
         background-color: rgba(38, 38, 38, 1.0);\
         font-size:small;\
-    }\
-    .cesium-infoBox-defaultTable tr:nth-child(even) {\
+      }\
+      .cesium-infoBox-defaultTable tr:nth-child(even) {\
         background-color: rgba(38, 38, 38, 1.0);\
         font-size:small;\
-    }\
-    .cesium-infoBox-defaultTable th {\
+      }\
+      .cesium-infoBox-defaultTable th {\
         font-weight: normal;\
         padding: 4px;\
         vertical-align: middle;\
         text-align: center;\
         font-size:small;\
-    }\
-    .cesium-infoBox-defaultTable td {\
+      }\
+      .cesium-infoBox-defaultTable td {\
         padding: 4px;\
         vertical-align: middle;\
         text-align: center;\
         font-size:small;\
-    }\
-    .cesium-infoBox-visible {\
+      }\
+      .cesium-infoBox-visible {\
         transform: translate(0, 0);\
         visibility: visible;\
         opacity: 0;\
         transition: opacity 0.2s ease-out, transform 0.2s ease-out;\
-    }\
-    .myButton {\
-  box-shadow: 3px 4px 0px 0px #899599;\
-  background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);\
-  background-color:#ededed;\
-  border-radius:15px;\
-  border:1px solid #cccccc;\
-  display:inline-block;\
-  cursor:pointer;\
-  color:#000000;\
-  font-family:Arial;\
-  font-size:15px;\
-  padding:14px 80px;\
-  text-decoration:none;\
-  text-shadow:0px 1px 0px #e1e2ed;\
-  float:center;\
-  position:absolute;\
-  left:45;\
-}\
-.myButton:hover {\
-  background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);\
-  background-color:#bab1ba;\
-}\
-.myButton:active {\
-  position:relative;\
-  top:1px;\
-}\
-\
-   </style>\
+      }\
+    </style>\
     <br style = "line-height:1;"><br>\
     <table class="cesium-infoBox-defaultTable">\
       <tr>\
@@ -324,26 +316,22 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       </tr>\
     </table>\
     <br style = "line-height:8;"><br>\
-     <img data-object-id='+entity.name+' class="rotate90" src='+image_url+' >\
-      <br style = "line-height:10;"><br>\
+    <img data-object-id='+entity.name+' class="rotate90" src='+image_url+' >\
+    <br style = "line-height:10;"><br>\
   ';
-     entity.point = {
+    entity.point = {
     color : Cesium.Color.BLUE,
     pixelSize : 15,
   };
-
     var updated=viewer.entities.add(entity);
-
       }
   });
 
 var current_id="xx";
 var current_id1="xx";
 var current_c="0";
-  
 var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
         handler.setInputAction(function(click) {
-           // mouse handler
            // Get current mouth position
             var pick = viewer.scene.pick(click.position);
             //pick current entity
@@ -351,115 +339,91 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
               console.log(pick.id._name)
               object_indicator=pick.id._name;
             }
-
          }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
 
 viewer.infoBox.frame.addEventListener('load', function() {
-
-        
-        viewer.infoBox.frame.contentDocument.body.addEventListener('click', function(e) {
- 
-        console.log("frame clicked")
-        console.log(e.target.className)
-        console.log(e.target.className == "rotate90")
-
-        if (e.target && e.target.className === 'rotate90') 
+  viewer.infoBox.frame.contentDocument.body.addEventListener('click', function(e) {
+  console.log("frame clicked")
+  console.log(e.target.className)
+  console.log(e.target.className == "rotate90")
+  if(e.target && e.target.className === 'rotate90')
+  {
+    let myNode = document.getElementById("dialog1");
+    while(myNode.firstChild)
+    {
+      myNode.removeChild(myNode.firstChild);
+    }
+    let element = e.target;
+    let object_id = element.getAttribute("data-object-id");
+    let object_clusters = vulnerable_objects[object_indicator]['cluster_objects'];
+    current_c=object_clusters;
+    var tmp=1;
+    for(let object_image of object_clusters)
+    { 
+      let ima = new Image();
+      ima.src = object_image['image'];
+      console.log(ima.src)
+      ima.height = 250;
+      ima.width = 250;
+      ima.id='i'+object_id+'-'+tmp.toString();
+      ima.className="test";
+      document.getElementById("dialog1").appendChild(ima);
+      tmp=tmp+1;
+    }
+    var track=0
+    current_id1='i'+object_id+'-'+track.toString();
+    $(function(){
+      $( "#dialog1" ).dialog({
+        width: 600,
+        height: 600,
+        position: myPos,
+        open: function()
         {
-            let myNode = document.getElementById("dialog1");
-            while (myNode.firstChild) {
-                myNode.removeChild(myNode.firstChild);
-            }
-        
-            console.log("Im entering in this if");
-            let element = e.target;
-            let object_id = element.getAttribute("data-object-id");
-            //cluster_obj[0]['image'];
-            let object_clusters = vulnerable_objects[object_indicator]['cluster_objects'];
-            current_c=object_clusters;
-           // console.log(object_clusters[0]);
-            var tmp=1;
-            for(let object_image of object_clusters){
-
-              let ima = new Image();
-              //console.log();
-              ima.src = object_image['image'];
-              console.log(ima.src)
-              ima.height = 250;
-              ima.width = 250;
-              ima.id='i'+object_id+'-'+tmp.toString();
-              ima.className="test";
-              document.getElementById("dialog1").appendChild(ima);
-              tmp=tmp+1;
-            //  document.getElementById("dialog1").appendChild(textnode);
-            }
-
-            $(function(){
-              $( "#dialog1" ).dialog({
-                width: 600,
-                height: 600,
-                open: function()
-                {
-                  $(".test").on('click', function () {
-                    current_id=$(this).attr('id');
-                    console.log("curr id"+current_id);
-                    img_dialog(current_id);
-
-                });
-
-                }
-             });
-            });
-
-             $(function(){
-              $( "#dialog2" ).dialog({
-                width: 600,
-                height: 600,
-                open: function()
-                {
-                 current_id1="i"+current_c+"-"+"0";
-                  img_dialog(current_id1);
-
-                }
-             });
-            });
-        }
-        else if(e.target && e.target.id === 'viewButton'){
-            current_id="i"+current_c+"-"+"0";
+          $(".test").on('click', function () {
+            current_id=$(this).attr('id');
             img_dialog(current_id);
+          });
         }
-
-    }, false);
+      });
+    });
+    $(function(){
+      $( "#dialog2" ).dialog({
+        width: 600,
+        height: 600,
+        position:myPos_right,
+        open: function()
+        {
+          console.log("map id"+current_id1)
+          map_create(current_id1);
+        }
+      });
+    });
+  }
+        // In case need to add button later
+        // else if(e.target && e.target.id === 'viewButton'){
+        //     current_id="i"+current_c+"-"+"0";
+        //     img_dialog(current_id);
+        // }
+  }, false);
 }, false);
-
 
 power1.then(function(dataSource) {
     var entities = dataSource.entities.values;
-        var name="";
-        var Coordinate="";
-        var Status="";
-        var Potential_demage="";
+    var name="";
+    var Coordinate="";
+    var Status="";
+    var Potential_demage="";
     for (var i = 0; i < entities.length; i++) {
-         var entity = entities[i];
-        
-        if (entity.properties.hasProperty('Name')) {
-        
-       // var pinBuilder = new Cesium.PinBuilder();
-        //entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.RED, 48);
-        
-         if (entity.properties.hasProperty('Name')) {         
+      var entity = entities[i];  
+      if(entity.properties.hasProperty('Name')) {
+        if(entity.properties.hasProperty('Name'))        
           name = entity.properties.Name.valueOf();
-         }
-        if (entity.properties.hasProperty('Coordinate')) {         
+        if(entity.properties.hasProperty('Coordinate'))      
           Coordinate = entity.properties.Coordinate.valueOf();
-         }
-    if (entity.properties.hasProperty('Status')) {         
+        if(entity.properties.hasProperty('Status'))        
           Status = entity.properties.Status.valueOf();
-         }
-    if (entity.properties.hasProperty('Potential_demage')) {         
+        if (entity.properties.hasProperty('Potential_demage'))         
           Potential_demage = entity.properties.Potential_demage.valueOf();
-         }
-        
-    //table id="t01" <table class="cesium-infoBox-defaultTable cesium-infoBox-defaultTable-lighter">
     var descriptions = '\
      <style>\
     .cesium-infoBox-description {\
@@ -528,7 +492,6 @@ power1.then(function(dataSource) {
      ';
       entity.description = descriptions;
         }
-    
         else
         {
          entity.billboard=undefined;
@@ -560,114 +523,95 @@ power3.then(function(dataSource) {
         scale: 0.2,
         color: fadeColor
         //show: false
-        // new Cesium.Color(slider.value, 0, 0, 1.0)
         });
         viewer.entities.add(entity);
       }
     });
- 
-    
-    Cesium.when(power3,function(dataSource){
-         CheckPowerI.addEventListener('change', function() {
-            if ( CheckPowerI.checked) {
+
+Cesium.when(power3,function(dataSource){
+  CheckPowerI.addEventListener('change', function() {
+    if ( CheckPowerI.checked) {
         //    viewer.dataSources.add(dataSource);
-            var entities = dataSource.entities.values;
-            for (var i = 0; i < entities.length; i++) {
-              var entity = entities[i];
-              entity.show=true;
-              console.log(entity.show)
-            }
-            }
-            else{
+      var entities = dataSource.entities.values;
+      for (var i = 0; i < entities.length; i++) {
+        var entity = entities[i];
+        entity.show=true;
+         //     console.log(entity.show)
+      }
+    }else{
             
             }
         });
     
     });
 
-
-    power4.then(function(dataSource) {
-    var entities = dataSource.entities.values;
+power4.then(function(dataSource) {
+  var entities = dataSource.entities.values;
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
         entity.billboard = undefined; 
         entity.polyline.material=Cesium.Color.Red;
-         }
-      
-    });
+    }      
+});
     
+Cesium.when(power4,function(dataSource){
+  CheckPowerI.addEventListener('change', function() {
+    if (CheckPowerI.checked) {
+      viewer.dataSources.add(dataSource);
+    }else{
+      viewer.dataSources.remove(dataSource);      
+    }
+  });  
+});
     
-    Cesium.when(power4,function(dataSource){
-        CheckPowerI.addEventListener('change', function() {
-            if (CheckPowerI.checked) {
-            viewer.dataSources.add(dataSource);
-            }
-            else{
-            viewer.dataSources.remove(dataSource);
-            
-            }
-        });
-    
-    });
-    
-    power5.then(function(dataSource) {
-    var entities = dataSource.entities.values;
-    for (var i = 0; i < entities.length; i++) {
-        var entity = entities[i];
-        entity.billboard = undefined; 
+power5.then(function(dataSource) {
+  var entities = dataSource.entities.values;
+    for(var i = 0; i < entities.length; i++) {
+      var entity = entities[i];
+      entity.billboard = undefined; 
         //entity.color=new Cesium.Color(fadeColor);
-         }
-      
-    });
+    }  
+});
     
-    
-    Cesium.when(power5,function(dataSource){
-        CheckPowerI.addEventListener('change', function() {
-            if (CheckPowerI.checked) {
-            viewer.dataSources.add(dataSource);
-            }
-            else{
-            viewer.dataSources.remove(dataSource);
-            
-            }
-        });
-    
-    });
+Cesium.when(power5,function(dataSource){
+  CheckPowerI.addEventListener('change', function() {
+    if (CheckPowerI.checked) {
+      viewer.dataSources.add(dataSource);
+    }else{
+      viewer.dataSources.remove(dataSource);      
+    }
+  }); 
+});
 
-       flood1.then(function(dataSource) {
-    var entities = dataSource.entities.values;
-    for (var i = 0; i < entities.length; i++) {
-        var entity = entities[i];
-        //var entity1=Entity();
-        if(i==40)
-        {
-          entity.billboard = undefined; 
+flood1.then(function(dataSource) {
+  var entities = dataSource.entities.values;
+    for(var i = 0; i < entities.length; i++) {
+      var entity = entities[i];
+    //  if(i==40){
+        entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.WHITE,
-            pixelSize: 50
+          color: Cesium.Color.WHITE,
+          pixelSize: 50
         });
-        }
-        else{
+    //  }else{
         entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
             color: Cesium.Color.YELLOW,
             pixelSize: 13
         });
-      }
+    //  }
       }
     });
     
-    Cesium.when(flood1,function(dataSource){
-        CheckFloodI.addEventListener('change', function() {
-            if (CheckFloodI.checked) {
-            viewer.dataSources.add(dataSource);
-            }
-            else{
-            viewer.dataSources.remove(dataSource);
-            }
-        });
-    
-    });
+Cesium.when(flood1,function(dataSource){
+  CheckFloodI.addEventListener('change', function() {
+    if (CheckFloodI.checked) {
+      viewer.dataSources.add(dataSource);
+    }else{
+      viewer.dataSources.remove(dataSource);
+    }
+  });    
+});
 
 function colorByDistance() {
     tileset.style = new Cesium.Cesium3DTileStyle({

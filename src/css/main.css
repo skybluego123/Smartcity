@@ -52,7 +52,7 @@
     color: #fff;
     line-height: 150%;
     font-size: small;
-    width:19.5%;
+    width:15.5%;
     position:absolute;
     z-index : 1;
 
@@ -281,46 +281,11 @@ float: left;
 .overSelect {
   position: absolute;
   left: 0;
-  right: 0;
+  right: 0;j
   top: 0;
   bottom: 0;
 }
 
-#checkboxes {
-  display: none;
-  border: 1px #dadada solid;
-}
-
-#checkboxes label {
-  display: block;
-  color: white;
-}
-
-#checkboxes label:hover {
-  background-color: #1e90ff;
-}
-.groupcheck label {
-  display: block;
-  padding-right: 10px;
-  padding-left: 22px;
-  text-indent: -22px;
-}
-.groupcheck input {
-  vertical-align: middle;
-}
-.groupcheck label span {
-  vertical-align: middle;
-}
-select{
-  width: 150px;
-  height: 30px;
-  padding: 5px;
-  color: green;
-}
-select option { color: black; }
-select option:first-child{
-  color: green;
-}
 
     #toolbar {
         background: rgba(42, 42, 42, 0.8);
@@ -379,15 +344,15 @@ select option:first-child{
 #back1 {
     position: fixed;
     top: 0px;
-    left:19.5%;
-    width: 20.5%;
-    height:35%;
+    left:15.5%;
+    width: 17%;
+    height:26%;
 }
 #back2 {
     position: fixed;
-    top: 35%;
-    left:19.5%;
-    width: 20.5%;
+    top: 26%;
+    left:15.5%;
+    width: 17%;
 }
 .slidecontainer {
   width: 100%;
@@ -482,37 +447,6 @@ select option:first-child{
             width:10%;
         }
 
-/* HTML Nav Styles */
-/* HTML Nav Styles */
-/* HTML Nav Styles */
-nav menuitem {
-   position:relative;
-   display:block;
-   opacity:0;
-   cursor:pointer;
-}
-
-nav menuitem > menu {
-   position: absolute;
-   pointer-events:none;
-}
-nav > menu { display:flex; }
-
-nav > menu > menuitem { pointer-events: all; opacity:1; }
-menu menuitem a { white-space:nowrap; display:block; }
-   
-menuitem:hover > menu {
-   pointer-events:initial;
-}
-menuitem:hover > menu > menuitem,
-menu:hover > menuitem{
-   opacity:1;
-}
-nav > menu > menuitem menuitem menu {
-   transform:translateX(100%);
-   top:0; right:0;
-}
-
 
 .title_bar {
     background: red;
@@ -521,38 +455,13 @@ nav > menu > menuitem menuitem menu {
     border-bottom: 1px solid #DCDCDC;
 }
 
-.toolgroup,.toolgroup li ul { padding:0px; list-style:none; width:80%; background:rgba(38,38,38,0.7); }
-.toolgroup li,.toolgroup li ul li { width:90%; position:relative; }
-.toolgroup li a,.toolgroup li ul li a { padding:7px 10px; display:block;color:#fff; }
-.toolgroup li ul { display:none; position:absolute; left:150px; top:0px; }
-.toolgroup li:hover ul { display:block; }
-ul li li
-{
-margin:0px;
- background:rgba(38,38,38,0.7); 
-}
 a
 {color:#fff;}
-.special
-{
-text-align: center;
-}
-.special-dropdown
-{
-
-border: none;
-font-weight:200;
-font-size: 1.1em;
-color:rgba(38,38,38,.95);
-text-align: right;
-margin-top:4.8%;
-margin-right:2%;
-}
 
 .cesium-viewer-bottom {
 display:none;
-
 }
+
 .column {
   float: left;
   width: 100%;
@@ -569,18 +478,55 @@ display:none;
   clear: both;
 }
 
-/* Responsive columns */
-
-
-/* Style the counter cards */
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 40%;
-}
 #description {
   font-size: 0.8rem;
 }
+#temperature {
+  font-size: 1rem;
+  margin-top: 0.6rem;
+}
+
+#humidity, #wind, #visibility {
+  font-size: 1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+
+#icon-thermometer {
+  font-size: 1rem;
+}
+
+.humidity, .wind, .visibility {
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  font-size: 1.0rem;
+  padding: 1.0rem;
+
+}
+.weather-head {
+  height: 50%;
+}
+
+#icon-desc {
+  font-size: 1rem;
+  padding-top: 0.1rem;
+}
+
+.weather {
+  border:1px solid white;
+  margin-top: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  color: white;
+}
+.hero {
+    position: absolute;
+    min-height: 100vh;
+    min-width: 100vw;
+    top: 0;
+    bottom: 0;
+}
+
 
 .cesium-infoBox{ font-family: "Lato", sans-serif;display:block;top:30px;position: absolute;right:0;width:20%;height:100%;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
