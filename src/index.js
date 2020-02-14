@@ -629,16 +629,5 @@ function colorByDistance() {
         }
     });
 }
-// var redPolygon = viewer.entities.add({
-//     name : 'Red polygon on surface',
-//     polygon : {
-//         hierarchy : Cesium.Cartesian3.fromDegreesArray([-95.334726705707027-0.00005, 29.764084676987729-0.00005,
-//                                                         -95.334726705707027+0.00005, 29.764084676987729-0.00005,
-//                                                          -95.334726705707027+0.00005, 29.764084676987729+0.00005,
-//                                                         -95.334726705707027-0.00005,  29.764084676987729+0.00005]),
-//         material : Cesium.Color.RED
-//     }
-// });
-
 
 
