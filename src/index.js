@@ -503,14 +503,6 @@ power1.then(function(dataSource) {
     }
     });
 
-viewer.entities.add({
-    name : 'Red box with fade color',
-    position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 300000.0),
-    box : {
-        dimensions : new Cesium.Cartesian3(400000.0, 300000.0, 500000.0),
-        material : new Cesium.ColorMaterialProperty(fadeColor)
-    }
-});
 //Utility pole data sources 
 // TO DO change variable name
 power3.then(function(dataSource) {
