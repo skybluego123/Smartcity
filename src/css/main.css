@@ -345,14 +345,15 @@ float: left;
     position: fixed;
     top: 0px;
     left:15.5%;
-    width: 17%;
-    height:26%;
+    min-height: 20vh;
+    min-width: 19vw;
 }
 #back2 {
-    position: fixed;
-    top: 26%;
+    position: inherit;
+    top: 39.9%;
     left:15.5%;
-    width: 17%;
+    min-height: 15vh;
+    min-width: 31vw;
 }
 .slidecontainer {
   width: 100%;
