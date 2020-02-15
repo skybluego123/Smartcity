@@ -111,6 +111,7 @@ function coordinate_to_address(objects,callback)
 //Generate the dialog box
 function map_create(img_id)
 {
+  console.log("img_id"+img_id)
   var mapOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     center: baltimore,
@@ -120,7 +121,7 @@ function map_create(img_id)
   var res_obj;
   var res_img;
   res_obj = cur.substring(1, 2);
-  res_img = cur.substring(3, 4);
+  res_img = parseInt(cur.substring(3, 4));
   console.log(res_img);
   let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
   let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
@@ -167,12 +168,18 @@ function map_create(img_id)
 }
 
 function img_dialog(img_id)
-{
+{ 
+    let wWidth = $(window).width();
+    let wHeight = $(window).height();
+    let dWidth = wWidth *0.5;
+    let dHeight = wHeight * 0.5;
+    console.log("img_dialog called")
+    $("#dialog2").dialog('close');
     $("#dialog2").dialog({
-      width: 700,
+      width: dWidth,
       resizable: false,
       draggable: true,
-      height: 600,
+      height: dHeight,
       position: myPos_right,
       buttons: {
       Close: function() {
@@ -187,7 +194,7 @@ function img_dialog(img_id)
 }
 
 viewer.scene.globe.depthTestAgainstTerrain = true;
-var initialPosition = Cesium.Cartesian3.fromDegrees(-95.381735, 29.749122, 753);
+var initialPosition = Cesium.Cartesian3.fromDegrees(-96.3403507, 30.6173014, 753);
 var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 viewer.clock.shouldAnimate = true; 
 viewer.infoBox.frame.removeAttribute('sandbox');
@@ -372,15 +379,21 @@ viewer.infoBox.frame.addEventListener('load', function() {
     }
     var track=0
     current_id1='i'+object_id+'-'+track.toString();
+    let wWidth = $(window).width();
+    let wHeight = $(window).height();
+    let dWidth = wWidth * 0.5;
+    let dHeight = wHeight * 0.5; 
+
     $(function(){
       $( "#dialog1" ).dialog({
-        width: 600,
-        height: 600,
+        width: dWidth,
+        height: dHeight,
         position: myPos,
         open: function()
         {
           $(".test").on('click', function () {
             current_id=$(this).attr('id');
+            console.log("zzzz")
             img_dialog(current_id);
           });
         }
@@ -388,8 +401,8 @@ viewer.infoBox.frame.addEventListener('load', function() {
     });
     $(function(){
       $( "#dialog2" ).dialog({
-        width: 600,
-        height: 600,
+        width: dWidth,
+        height: dHeight,
         position:myPos_right,
         open: function()
         {
