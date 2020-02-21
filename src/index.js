@@ -3,14 +3,22 @@ require('cesium/Widgets/widgets.css');
 require('./css/main.css');
 var Cesium = require('cesium/Cesium');
 
+
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzYyNDZmZi1lYTdhLTQwMDgtOGRhZC03ZDE5YTlkYmVkMGMiLCJpZCI6NDAxOSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTYzODc1OX0.Kb7k51vZGYR5F7btrBIAuSan3ZNyKY_AWrFv1cLFUFk';
 var numClicks = 0;
 var toolbar = document.getElementById('toolbar');
 var viewer = new Cesium.Viewer('cesiumContainer', {
+    // terrainProvider: Cesium.createWorldTerrain({
+    //    //     requestVertexNormals: true,
+    //     //    requestWaterMask: true
+
+    //     }),
     timeline: true,
     animation: true,
-    shadows: true
+    shadows: true,
+
 });
+
 
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
@@ -18,11 +26,20 @@ output.innerHTML = slider.value;
 slider.oninput = function() {
   output.innerHTML = this.value;
 }
+
+
+var slider1 = document.getElementById("myRange1");
+var output1 = document.getElementById("demo1");
+output1.innerHTML = slider1.value;
+slider1.oninput = function() {
+  output1.innerHTML = this.value;
+}
+
 var myPos = { my: "center center", at: "center-350 center", of: window };
 var myPos_right = { my: "center center", at: "center+350 center", of: window };
 var tileset = viewer.scene.primitives.add(
     new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(41753)
+        url: Cesium.IonResource.fromAssetId(37161)
     })
 );
 
@@ -45,6 +62,16 @@ var fadeColor = new Cesium.CallbackProperty(function(t, result){
     }
     return Cesium.Color.fromBytes(r, g, b, 255, result);
 }, false);
+
+
+var water_height = new Cesium.CallbackProperty(function(result){
+  //  waterHeight=slider.value-;
+  //  if(waterHeight < 12)
+      water_height=slider.value;
+      water_height += 0.1;
+    return water_height;
+
+},false);
 
 let API_KEY = '49406c4e8b6ee455d1904676a313aa40';
 function getWeather(latitude, longtitude) {
@@ -194,8 +221,8 @@ function img_dialog(img_id)
 }
 
 viewer.scene.globe.depthTestAgainstTerrain = true;
-var initialPosition = Cesium.Cartesian3.fromDegrees(-96.3403507, 30.6173014, 753);
-var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
+var initialPosition = Cesium.Cartesian3.fromDegrees(-95.334726705707027, 29.764084676987729, 253);
+ var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 viewer.clock.shouldAnimate = true; 
 viewer.infoBox.frame.removeAttribute('sandbox');
 var frame = viewer.infoBox.frame;
@@ -205,7 +232,9 @@ viewer.scene.camera.setView({
     orientation: initialOrientation,
     endTransform: Cesium.Matrix4.IDENTITY
 });
-
+// viewer.camera.setView({
+//    destination: Cesium.Cartesian3.fromDegrees(-122.19, 46.20, 10000.0)
+// });
 var CheckFloodI = document.getElementById('x'); 
 var CheckPowerI = document.getElementById('y');  //updateobj
 var updateP = document.getElementById('updateobj');
@@ -527,28 +556,27 @@ power3.then(function(dataSource) {
         uri: './geoMappings/Utilitypole_3Dmodel.glb',
         scale: 0.2,
         color: fadeColor
-        //show: false
         });
-        viewer.entities.add(entity);
+     
       }
     });
 
 Cesium.when(power3,function(dataSource){
   CheckPowerI.addEventListener('change', function() {
-    if ( CheckPowerI.checked) {
-        //    viewer.dataSources.add(dataSource);
+    if ( CheckPowerI.checked) {    
       var entities = dataSource.entities.values;
       for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
         entity.show=true;
-         //     console.log(entity.show)
       }
-    }else{
-            
-            }
-        });
+      viewer.dataSources.add(dataSource);
+
+    }else
+     viewer.dataSources.remove(dataSource);    
+      
+});
     
-    });
+});
 
 power4.then(function(dataSource) {
   var entities = dataSource.entities.values;
@@ -592,19 +620,19 @@ flood1.then(function(dataSource) {
   var entities = dataSource.entities.values;
     for(var i = 0; i < entities.length; i++) {
       var entity = entities[i];
-    //  if(i==40){
+      if(i==40){
         entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
           color: Cesium.Color.WHITE,
-          pixelSize: 50
+          pixelSize: 13
         });
-    //  }else{
+      }else{
         entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
             color: Cesium.Color.YELLOW,
             pixelSize: 13
         });
-    //  }
+      }
       }
     });
     
@@ -612,8 +640,10 @@ Cesium.when(flood1,function(dataSource){
   CheckFloodI.addEventListener('change', function() {
     if (CheckFloodI.checked) {
       viewer.dataSources.add(dataSource);
+      viewer.entities.add(entity_example);
     }else{
       viewer.dataSources.remove(dataSource);
+      viewer.entities.remove(entity_example);
     }
   });    
 });
@@ -635,4 +665,60 @@ function colorByDistance() {
     });
 }
 
+//waterHeight=0
+var primitives = viewer.scene.primitives;
+var poss_arr=[-95.334726705707027-0.00005, 29.764084676987729-0.00005,
+              -95.334726705707027+0.00005, 29.764084676987729-0.00005,
+              -95.334726705707027+0.00005, 29.764084676987729+0.00005,
+              -95.334726705707027-0.00005,  29.764084676987729+0.00005
+          ];
+var poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
+var dynamicPositions = new Cesium.CallbackProperty(function() {
+    let temp=parseFloat(slider1.value/1000000);
+    let poss1=Cesium.Cartesian3.fromDegreesArray([poss_arr[0]-temp,poss_arr[1]-temp,poss_arr[2]+temp,poss_arr[3]-temp
+    ,poss_arr[4]+temp,poss_arr[5]+temp,poss_arr[6]-temp,poss_arr[7]+temp]);
 
+    return new Cesium.PolygonHierarchy(poss1);
+}, false);
+
+var entity_example=new Cesium.Entity();
+entity_example.polygon={height: 0,
+        hierarchy: dynamicPositions ,
+        material: Cesium.Color.RED.withAlpha(0.5)
+}
+entity_example.hierarchy=dynamicPositions;
+entity_example.material=Cesium.Color.RED.withAlpha(0.5);
+
+//     var entity = viewer.entities.add({
+//         polygon: {height: 0,
+//         hierarchy: dynamicPositions ,
+//         material: Cesium.Color.RED.withAlpha(0.5)
+// }
+//     });
+ // viewer.entities.add(entity_example);
+viewer.zoomTo(entity_example);
+//Need to fix after heatmap.js load
+// let bounds = {
+//     west: 147.13833844,
+//     east: 147.13856899,
+//     south: -41.43606916,
+//     north: -41.43582929
+// };
+ 
+// // init heatmap
+// let heatMap = CesiumHeatmap.create(
+//     myViewer, // your cesium viewer
+//     bounds, // bounds for heatmap layer
+//     {
+//         // heatmap.js options go here
+//         // maxOpacity: 0.3
+//     }
+// );
+ 
+// // random example data
+// let data = [{"x":147.1383442264,"y":-41.4360048372,"value":76},{"x":147.1384363011,"y":-41.4360298848,"value":63},{"x":147.138368102,"y":-41.4358360603,"value":1},{"x":147.1385627739,"y":-41.4358799123,"value":21},{"x":147.1385138501,"y":-41.4359327669,"value":28},{"x":147.1385031219,"y":-41.4359730105,"value":41},{"x":147.1384127393,"y":-41.435928255,"value":75},{"x":147.1384551136,"y":-41.4359450132,"value":3},{"x":147.1384927196,"y":-41.4359158649,"value":45},{"x":147.1384938639,"y":-41.4358498311,"value":45},{"x":147.1385183299,"y":-41.4360213794,"value":93},{"x":147.1384007925,"y":-41.4359860133,"value":46},{"x":147.1383604844,"y":-41.4358298672,"value":54},{"x":147.13851025,"y":-41.4359098303,"value":39},{"x":147.1383874733,"y":-41.4358511035,"value":34},{"x":147.1384981796,"y":-41.4359355403,"value":81},{"x":147.1384504107,"y":-41.4360332348,"value":39},{"x":147.1385582664,"y":-41.4359788335,"value":20},{"x":147.1383967364,"y":-41.4360581999,"value":35},{"x":147.1383839615,"y":-41.436016316,"value":47},{"x":147.1384082712,"y":-41.4358423338,"value":36},{"x":147.1385092651,"y":-41.4358577623,"value":69},{"x":147.138360356,"y":-41.436046789,"value":90},{"x":147.138471893,"y":-41.4359184292,"value":88},{"x":147.1385605689,"y":-41.4360271359,"value":81},{"x":147.1383585714,"y":-41.4359362476,"value":32},{"x":147.1384939114,"y":-41.4358844253,"value":67},{"x":147.138466724,"y":-41.436019121,"value":17},{"x":147.1385504355,"y":-41.4360614056,"value":49},{"x":147.1383883832,"y":-41.4358733544,"value":82},{"x":147.1385670669,"y":-41.4359650236,"value":25},{"x":147.1383416534,"y":-41.4359310876,"value":82},{"x":147.138525285,"y":-41.4359394661,"value":66},{"x":147.1385487719,"y":-41.4360137656,"value":73},{"x":147.1385496029,"y":-41.4359187277,"value":73},{"x":147.1383989222,"y":-41.4358556562,"value":61},{"x":147.1385499424,"y":-41.4359149305,"value":67},{"x":147.138404523,"y":-41.4359563326,"value":90},{"x":147.1383883675,"y":-41.4359794855,"value":78},{"x":147.1383967187,"y":-41.435891185,"value":15},{"x":147.1384610005,"y":-41.4359044797,"value":15},{"x":147.1384688489,"y":-41.4360396127,"value":91},{"x":147.1384431875,"y":-41.4360684409,"value":8},{"x":147.1385411067,"y":-41.4360645847,"value":42},{"x":147.1385237178,"y":-41.4358843181,"value":31},{"x":147.1384406464,"y":-41.4360003831,"value":51},{"x":147.1384679169,"y":-41.4359950456,"value":96},{"x":147.1384194314,"y":-41.4358419739,"value":22},{"x":147.1385049792,"y":-41.4359574813,"value":44},{"x":147.1384097378,"y":-41.4358598672,"value":82},{"x":147.1384993219,"y":-41.4360352975,"value":84},{"x":147.1383640499,"y":-41.4359839518,"value":81}];
+// let valueMin = 0;
+// let valueMax = 100;
+
+// // add data to heatmap
+// heatMap.setWGS84Data(valueMin, valueMax, data);

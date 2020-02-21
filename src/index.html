@@ -8,6 +8,10 @@
    *:focus {
     outline: 0 !important;
     }
+    #heatmap{
+        width: 500px;
+        height: 500px;
+    }
     </style>
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -16,39 +20,29 @@
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Smart City</title>
     <!-- The Cesium library. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- weather icons -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
     <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAykBBxucwUKbwJkXtToreK3iQVHj8quHE&libraries=StreetViewPanorama"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAykBBxucwUKbwJkXtToreK3iQVHj8quHE&libraries=StreetViewPanorama"></script>  
 
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script type="text/javascript" src="./src/CesiumHeatmap.js"></script>
+    <script type="text/javascript" src="./src/heatmap.js"></script>
 
     <script>
 </script>
 </head>
 
 <body>
+
     <div class="jumbotron">
     <h3>Disaster management</h3> 
     <label class="container_t">flood<input type="checkbox" name="flood object" id="x"/><span class="checkmark"></span>
@@ -75,6 +69,7 @@
 </div>
 
 <div id="cesiumContainer"></div>   
+<div id="heatmap" v-show="false"></div>
 <div class="PowerC hide1" >
     <div class ="back" id="back1">
         <h5>Weather Infomation</h5>
@@ -122,7 +117,7 @@
         <div class ="back" id="back2">
             <h5>Wind Speed</h5>
             <div class="slidecontainer">
-            <input type="range" min="1" max="255" value="50" class="slider" id="myRange">
+            <input type="range" min="0" max="255" value="0"  class="slider" id="myRange">
             <p>Current windspeed: <span id="demo"></span></p>
             </div>
         </div>
@@ -171,16 +166,18 @@
             </div>
         </div>
         </div>
+    </div>
     <div id="showme1">
         <div class ="back" id="back2">
             <h5>Current Rainfall</h5>
             <div class="slidecontainer">
-                <input type="range" min="1" max="255" value="254" class="slider" id="myRange1">
+                <input type="range" min="0" max="255" value="0" class="slider" id="myRange1">
                 <p>Current Rainfall: <span id="demo1"></span></p>
             </div>
         </div>
     </div>
 </div>
+
 </div>
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
     <div class="dialog" id="dialog2" title="Google street view">
@@ -209,6 +206,17 @@
         if (this.checked) cart1.classList.remove('hide1');
         else cart1.classList.add('hide1');
     }
-    
-</script>
+//     var viewer = new Cesium.Viewer('cesiumContainer', {
+//     // terrainProvider: Cesium.createWorldTerrain({
+//     //    //     requestVertexNormals: true,
+//     //     //    requestWaterMask: true
+
+//     //     }),
+//     timeline: true,
+//     animation: true,
+//     shadows: true,
+
+// });
+
+     </script>
 
