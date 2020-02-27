@@ -9,7 +9,7 @@
   height: 100%;
   width: 100%;
   margin: 0px;
-  padding: 0px
+  padding: 0px;
 }
 .container_t {
   display: block;
@@ -265,52 +265,6 @@ float: left;
  background: #228B22;
 }
 
-.multiselect {
-  width: 200px;
-}
-
-.selectBox {
-  position: relative;
-}
-
-.selectBox select {
-  width: 100%;
-  font-weight: bold;
-}
-
-.overSelect {
-  position: absolute;
-  left: 0;
-  right: 0;j
-  top: 0;
-  bottom: 0;
-}
-
-
-    #toolbar {
-        background: rgba(42, 42, 42, 0.8);
-        padding: 4px;
-        border-radius: 4px;
-    }
-    #toolbar input {
-        vertical-align: middle;
-        padding-top: 2px;
-        padding-bottom: 2px;
-    }
-    #toolbar table tr {
-        transform: translateY(0);
-        transition: transform 0.4s ease-out;
-    }
-
-#checkboxess {
-  display: none;
-  border: 1px #dadada solid;
-}
-
-#checkboxess label {
-  display: block;
-  color: white;
-}
 
 .dropdown-submenu {
   position: relative;
@@ -447,7 +401,14 @@ float: left;
         .scheduler-border .u1 hr{
             width:10%;
         }
-
+#other
+{
+    position: fixed;
+    top: 0px;
+    left:15.5%;
+    min-height: 20vh;
+    min-width: 19vw;
+}
 
 .title_bar {
     background: red;
@@ -529,6 +490,14 @@ display:none;
 }
 
 
+        #loadingDiv {
+            position:absolute;;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background-color:#000;
+        }
 .cesium-infoBox{ font-family: "Lato", sans-serif;display:block;top:30px;position: absolute;right:0;width:20%;height:100%;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
 .cesium-infoBox-title{ font-family: "Lato", sans-serif;display:block;height:20px;padding:5px 30px 5px 25px;background:rgba(84,84,84,1);border-top-left-radius:7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;box-sizing:content-box}
