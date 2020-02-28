@@ -20,12 +20,6 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 });
 
 
-function removeLoader(){
-    $( "#loadingDiv" ).fadeOut(500, function() {
-      // fadeOut complete. Remove the loading div
-      $( "#loadingDiv" ).remove(); //makes page more lightweight 
-  });  
-}
 
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
@@ -64,12 +58,87 @@ var fadeColor = new Cesium.CallbackProperty(function(t, result){
     return Cesium.Color.fromBytes(r, g, b, 255, result);
 }, false);
 
+// var tf = new Cesium.CallbackProperty(function(){
+//     if (slider.value>10)
+//       return true;
+//     }
+//     else
+//       return false;
+// }, false);
+
+
+
+function distance_to_reported(reported_long,reported_lat,inlet_long,inlet_lat)
+{
+      var R = 6371; // km
+      var dLat = toRad(inlet_lat-reported_lat);
+      var dLon = toRad(inlet_long-reported_long);
+      var lat1 = toRad(reported_lat);
+      var lat2 = toRad(inlet_lat);
+
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c;
+      if(d > 0.5)
+        return false;
+      else
+        return true;
+}
+
+// function getCallbackFunction(reported_long,reported_lat,inlet_long,inlet_lat) {
+   
+
+//     return function callbackFunction() {
+//         var R = 6371; // km
+//       var dLat = toRad(inlet_lat-reported_lat);
+//       var dLon = toRad(inlet_long-reported_long);
+//       var lat1 = toRad(reported_lat);
+//       var lat2 = toRad(inlet_lat);
+
+//       var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+//       Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+//       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+//       var d = R * c;
+//       console.log(d)
+//       var show_or_not=false;
+//        if(d > 0.5)
+//         return false;
+//       else
+//         return true;
+//     };
+// }
+function getCallback(long,lat) {
+   
+
+    return function callbackFunction() {
+    var poss_arr=[long-0.00005, lat-0.00005,
+              long+0.00005, lat-0.00005,
+              long+0.00009, lat+0.00009,
+              long-0.00005, lat+0.00005,
+              long-0.00007, lat+0.00007
+          ];
+var poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
+if(slider1.value > 10)
+{
+ let temp=parseFloat((slider1.value-10)/1000000);
+    let poss1=Cesium.Cartesian3.fromDegreesArray([poss_arr[0]-temp,poss_arr[1]-temp,poss_arr[2]+temp,poss_arr[3]-temp
+    ,poss_arr[4]+temp,poss_arr[5]+temp,poss_arr[6]-temp,poss_arr[7]+temp,poss_arr[8]-temp,poss_arr[9]+temp]);
+ return new Cesium.PolygonHierarchy(poss1);
+}
+  
+
+
+    };
+}
+
+
+
 
 var water_height = new Cesium.CallbackProperty(function(result){
       water_height=slider.value;
       water_height += 0.1;
     return water_height;
-
 },false);
 
 let API_KEY = '49406c4e8b6ee455d1904676a313aa40';
@@ -249,6 +318,7 @@ var url =Cesium.buildModuleUrl("./images/power.png");
 
 var inlet_longs=[]
 var inlet_lats=[]
+var entity_array=[]
 fetch("./geoMappings/dStormInlet_L5457_ver3.json")
   .then(response => response.json())
   .then(function(json){
@@ -261,10 +331,123 @@ fetch("./geoMappings/dStormInlet_L5457_ver3.json")
       inlet_lats.push(inlet_lat)
 
     }
-      console.log(inlet_longs[40])
-      console.log(inlet_lats[40])
+  
+let target_long=inlet_longs[40]
+let target_lat=inlet_lats[40]
+
+//draw_polygon(inlet_longs,inlet_lats,target_long,target_lat)
+for(let i =0;i<inlet_longs.length;i++)
+  {
+    let poss_arr=[inlet_longs[i]-0.00005,inlet_lats[i]-0.00005,
+              inlet_longs[i]+0.00005, inlet_lats[i]-0.00005,
+              inlet_longs[i]+0.00009, inlet_lats[i]+0.00009,
+              inlet_longs[i]-0.00005, inlet_lats[i]+0.00005,
+              inlet_longs[i]-0.00007, inlet_lats[i]+0.00007
+          ];
+
+let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
+
+
+    let entity_example=new Cesium.Entity();
+    entity_example.polygon={
+        hierarchy:new Cesium.CallbackProperty(getCallback(inlet_longs[i],inlet_lats[i]), false),//new Cesium.PolygonHierarchy(poss),//getCallback(inlet_longs[i],inlet_lats[i]),
+        material: Cesium.Color.RED.withAlpha(0.5),
+        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+        show: true
+    }
+    entity_array.push(entity_example);
+    viewer.entities.add(entity_example);
+  }
+
   });
 
+  
+function draw_polygon(center_long,center_lat,target_long,target_lat)
+{
+  for(let i =0;i<center_long.length;i++)
+  {
+    let poss_arr=[center_long[i]-0.00005,center_lat[i]-0.00005,
+              center_long[i]+0.00005, center_lat[i]-0.00005,
+              center_long[i]+0.00009, center_lat[i]+0.00009,
+              center_long[i]-0.00005, center_lat[i]+0.00005,
+              center_long[i]-0.00007, center_lat[i]+0.00007
+          ];
+
+let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
+    let entity_example=new Cesium.Entity();
+    entity_example.polygon={
+        hierarchy: new Cesium.PolygonHierarchy(poss),
+        material: Cesium.Color.RED.withAlpha(0.5),
+        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+        show: tf
+        // show: new Cesium.CallbackProperty(getCallbackFunction(target_long,target_lat,center_long,center_lat), false)
+//         show: new Cesium.CallbackProperty(function(reported_long,reported_lat,inlet_long,inlet_lat){
+//       //   var R = 6371; // km
+//       // var dLat = toRad(inlet_lat-reported_lat);
+//       // var dLon = toRad(inlet_long-reported_long);
+//       // var lat1 = toRad(reported_lat);
+//       // var lat2 = toRad(inlet_lat);
+
+//       // var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+//       // Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+//       // var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+//       // var d = R * c;
+//       let d=0.1;
+//       if(d > 0.5)
+//         return false;
+//       else
+//         return true;
+
+// }, false);
+
+    }
+    entity_array.push(entity_example);
+    viewer.entities.add(entity_example);
+  }
+ // console.log(entity_array.length)
+}
+
+// function polygon_coordinate(center_long,center_lat)
+// {
+//   let poss_arr=[center_long-0.00005,center_lat-0.00005,
+//               center_long+0.00005, center_lat-0.00005,
+//               center_long+0.00009, center_lat+0.00009,
+//               center_long-0.00005, center_lat+0.00005,
+//               center_long-0.00007, center_lat+29.764084676987729+0.00007
+//           ];
+
+// let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
+// var dynamicPositions = new Cesium.CallbackProperty(function() {
+//     let temp=parseFloat(slider1.value/1000000);
+//     var poss1=Cesium.Cartesian3.fromDegreesArray([poss_arr[0]-temp,poss_arr[1]-temp,poss_arr[2]+temp,poss_arr[3]-temp
+//     ,poss_arr[4]+temp,poss_arr[5]+temp,poss_arr[6]-temp,poss_arr[7]+temp,poss_arr[8]-temp,poss_arr[9]+temp]);
+//     return new Cesium.PolygonHierarchy(poss1);
+// }, false);
+// return new Cesium.PolygonHierarchy(poss1);
+// }
+
+function toRad(Value) 
+{
+      return Value * Math.PI / 180;
+}
+
+function distance_to_reported(reported_long,reported_lat,inlet_long,inlet_lat)
+{
+      var R = 6371; // km
+      var dLat = toRad(inlet_lat-reported_lat);
+      var dLon = toRad(inlet_long-reported_long);
+      var lat1 = toRad(reported_lat);
+      var lat2 = toRad(inlet_lat);
+
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c;
+      if(d > 0.5)
+        return false;
+      else
+        return true;
+}
 
 var object_loc;
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
@@ -593,7 +776,7 @@ function colorByDistance() {
 }
 
 //waterHeight=0
-var primitives = viewer.scene.primitives;
+// var primitives = viewer.scene.primitives;
 var poss_arr=[-95.334726705707027-0.00005, 29.764084676987729-0.00005,
               -95.334726705707027+0.00005, 29.764084676987729-0.00005,
               -95.334726705707027+0.00009, 29.764084676987729+0.00009,
@@ -609,6 +792,13 @@ var dynamicPositions = new Cesium.CallbackProperty(function() {
     return new Cesium.PolygonHierarchy(poss1);
 }, false);
 
+var dynamicPositions1 = new Cesium.CallbackProperty(function() {
+    let temp=parseFloat((slider1.value-10)/1000000);
+    let poss1=Cesium.Cartesian3.fromDegreesArray([poss_arr[0]-temp,poss_arr[1]-temp,poss_arr[2]+temp,poss_arr[3]-temp
+    ,poss_arr[4]+temp,poss_arr[5]+temp,poss_arr[6]-temp,poss_arr[7]+temp,poss_arr[8]-temp,poss_arr[9]+temp]);
+
+    return new Cesium.PolygonHierarchy(poss1);
+}, false);
 
 var entity_example=new Cesium.Entity();
 entity_example.polygon={
@@ -617,8 +807,8 @@ entity_example.polygon={
         material: Cesium.Color.RED.withAlpha(0.5),
         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
 }
-entity_example.hierarchy=dynamicPositions;
-entity_example.material=Cesium.Color.RED.withAlpha(0.5);
+// entity_example.hierarchy=dynamicPositions;
+// entity_example.material=Cesium.Color.RED.withAlpha(0.5);
 
 //     var entity = viewer.entities.add({
 //         polygon: {height: 0,
