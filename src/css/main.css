@@ -304,10 +304,10 @@ float: left;
 }
 #back2 {
     position: inherit;
-    top: 39vh;
+    top: 25.5vh;
     left:15.5%;
     min-height: 15vh;
-    min-width: 31vw;
+    min-width: 21vw;
 }
 .slidecontainer {
   width: 100%;
