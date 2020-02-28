@@ -42,19 +42,19 @@ slider1.oninput = function() {
   output1.innerHTML = this.value;
 }
 
-var myPos = { my: "center center", at: "center-350 center", of: window };
-var myPos_right = { my: "center center", at: "center+350 center", of: window };
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(37161)
-    })
-);
+var myPos = { my: "center center", at: "center-370 center", of: window };
+var myPos_right = { my: "center center", at: "center+370 center", of: window };
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(37161)
+//     })
+// );
 
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(36440)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(36440)
+//     })
+// );
 //viewer.zoomTo(tileset);
 
 var r= 0, g=255, b=0;
@@ -223,8 +223,7 @@ viewer.scene.globe.depthTestAgainstTerrain = true;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.334726705707027, 29.764084676987729, 253);
  var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 viewer.clock.shouldAnimate = true; 
-viewer.infoBox.frame.removeAttribute('sandbox');
-var frame = viewer.infoBox.frame;
+
 
 viewer.scene.camera.setView({
     destination: initialPosition,
@@ -238,7 +237,7 @@ var CheckFloodI = document.getElementById('x');
 var CheckPowerI = document.getElementById('y');  //updateobj
 var updateP = document.getElementById('updateobj');
 
-var power1 = Cesium.GeoJsonDataSource.load('./geoMappings/updateobj.geojson');
+
 var power3 = Cesium.GeoJsonDataSource.load('./geoMappings/power.geojson');
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
@@ -248,28 +247,44 @@ var vulnerable_objects;
 var object_indicator;
 var url =Cesium.buildModuleUrl("./images/power.png");
 
+var inlet_longs=[]
+var inlet_lats=[]
+fetch("./geoMappings/dStormInlet_L5457_ver3.json")
+  .then(response => response.json())
+  .then(function(json){
+    let inlets=json['features'];
+    for(let inlet of inlets)
+    {
+      let inlet_long = inlet['geometry']['coordinates'][0];
+      let inlet_lat = inlet['geometry']['coordinates'][1];
+      inlet_longs.push(inlet_long)
+      inlet_lats.push(inlet_lat)
+
+    }
+      console.log(inlet_longs[40])
+      console.log(inlet_lats[40])
+  });
+
+
 var object_loc;
 fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
       let objects = json['objects'];
       vulnerable_objects = objects;
-      // coordinate_to_address(objects,function(results)
-      // {
-      //   console.log("received all addresses:", results);
-      // });
+
     for(let object of objects){
-      var entity = new Cesium.Entity();
+      let entity = new Cesium.Entity();
       entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'],object['cluster_latitude'], 0);
       entity.name = object['cluster_id'];
-      var lat =object['cluster_latitude'];
-      var lon =object['cluster_longitude'];
-      var name=object['cluster_id'];
-      var cluster_obj=object['cluster_objects'];
-      var image_url = cluster_obj[0]['image'];
-      var image_date= cluster_obj[0]['createdDate'];
-      var object_type=cluster_obj[0]['classification'];
-      var cluster_addr=object['cluster_address'];
+      let lat =object['cluster_latitude'];
+      let lon =object['cluster_longitude'];
+      let name=object['cluster_id'];
+      let cluster_obj=object['cluster_objects'];
+      let image_url = cluster_obj[0]['image'];
+      let image_date= cluster_obj[0]['createdDate'];
+      let object_type=cluster_obj[0]['classification'];
+      let cluster_addr=object['cluster_address'];
 
       entity.description = '\
       <style>\
@@ -448,103 +463,8 @@ viewer.infoBox.frame.addEventListener('load', function() {
   }, false);
 }, false);
 
-power1.then(function(dataSource) {
-    var entities = dataSource.entities.values;
-    var name="";
-    var Coordinate="";
-    var Status="";
-    var Potential_demage="";
-    for (var i = 0; i < entities.length; i++) {
-      var entity = entities[i];  
-      if(entity.properties.hasProperty('Name')) {
-        if(entity.properties.hasProperty('Name'))        
-          name = entity.properties.Name.valueOf();
-        if(entity.properties.hasProperty('Coordinate'))      
-          Coordinate = entity.properties.Coordinate.valueOf();
-        if(entity.properties.hasProperty('Status'))        
-          Status = entity.properties.Status.valueOf();
-        if (entity.properties.hasProperty('Potential_demage'))         
-          Potential_demage = entity.properties.Potential_demage.valueOf();
-    var descriptions = '\
-     <style>\
-    .cesium-infoBox-description {\
-        font-family: "Times New Roman", Times, serif;\
-        font-size: 6px;\
-        padding: 4px 10px;\
-        margin-right: 4px;\
-        color: #edffff;\
-    }\
-    .cesium-infoBox-defaultTable tr:nth-child(odd) {\
-        background-color: rgba(38, 38, 38, 1.0);\
-        font-size:small;\
-    }\
-    .cesium-infoBox-defaultTable tr:nth-child(even) {\
-        background-color: rgba(38, 38, 38, 1.0);\
-        font-size:small;\
-    }\
-    .cesium-infoBox-defaultTable th {\
-        font-weight: normal;\
-        padding: 4px;\
-        vertical-align: middle;\
-        text-align: center;\
-        font-size:small;\
-    }\
-    .cesium-infoBox-defaultTable td {\
-        padding: 4px;\
-        vertical-align: middle;\
-        text-align: center;\
-        font-size:small;\
-    }\
-    .cesium-infoBox-visible {\
-        transform: translate(0, 0);\
-        visibility: visible;\
-        opacity: 0;\
-        transition: opacity 0.2s ease-out, transform 0.2s ease-out;\
-    }\
-    \
-    </style>\
-    <table class="cesium-infoBox-defaultTable">\
-      <tr>\
-        <th>Type</th>\
-        <th>Power</th>\
-      </tr>\
-      <tr>\
-        <td>Name</td>\
-        <td>'+name+'</td>\
-      </tr>\
-      <tr>\
-        <td>Coordinate</td>\
-        <td>'+Coordinate+'</td>\
-      </tr>\
-      <tr>\
-        <td>Status</td>\
-        <td>'+Status+'</td>\
-      </tr>\
-      <tr>\
-        <td>Potential demage</td>\
-        <td>'+Potential_demage+'</td>\
-      </tr>\
-    <tr>\
-        <td>Severity</td>\
-        <td>'+'1'+'</td>\
-      </tr>\
-    </table>\
-     <img class="object-image" width="50% height="50%" style="float:center; margin: 0 1em 1em 0;" src="//cesium.com/docs/tutorials/creating-entities/Flag_of_Wyoming.svg"/>\
-     ';
-      entity.description = descriptions;
-        }
-        else
-        {
-         entity.billboard=undefined;
-          entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.WHITE,
-            pixelSize: 10
-        }); 
-        }
-    }
-    });
 
-//Utility pole data sources 
+
 // TO DO change variable name
 power3.then(function(dataSource) {
     var entities = dataSource.entities.values;
@@ -554,7 +474,9 @@ power3.then(function(dataSource) {
         entity.model=new Cesium.ModelGraphics({
         uri: './geoMappings/Utilitypole_3Dmodel.glb',
         scale: 0.2,
-        color: fadeColor
+        color: fadeColor,
+        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+
         });
      
       }
@@ -581,8 +503,9 @@ power4.then(function(dataSource) {
   var entities = dataSource.entities.values;
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
-        entity.billboard = undefined; 
-        entity.polyline.material=Cesium.Color.Red;
+        entity.polygon.material=Cesium.Color.fromRandom();
+        entity.polygon.outline=false;
+        entity.polygon.heightReference=Cesium.HeightReference.CLAMP_TO_GROUND;
     }      
 });
     
@@ -601,7 +524,8 @@ power5.then(function(dataSource) {
     for(var i = 0; i < entities.length; i++) {
       var entity = entities[i];
       entity.billboard = undefined; 
-        //entity.color=new Cesium.Color(fadeColor);
+      entity.polyline.clampToGround=true;
+      entity.polyline.material=Cesium.Color.Red;
     }  
 });
     
@@ -614,15 +538,13 @@ Cesium.when(power5,function(dataSource){
     }
   }); 
 });
+
 var inlet_coordinates=[]
 flood1.then(function(dataSource) {
   var entities = dataSource.entities.values;
     for(var i = 0; i < entities.length; i++) {
-      var entity = entities[i];
-      var Coordinate="";
-      if(entity.properties.hasProperty('Coordinate'))      
-          Coordinate = entity.properties.Coordinate.valueOf();
-
+      let entity = entities[i];
+      let Coordinate="";
       if(i==40){
         entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
@@ -674,21 +596,23 @@ function colorByDistance() {
 var primitives = viewer.scene.primitives;
 var poss_arr=[-95.334726705707027-0.00005, 29.764084676987729-0.00005,
               -95.334726705707027+0.00005, 29.764084676987729-0.00005,
-              -95.334726705707027+0.00005, 29.764084676987729+0.00005,
-              -95.334726705707027-0.00005,  29.764084676987729+0.00005
+              -95.334726705707027+0.00009, 29.764084676987729+0.00009,
+              -95.334726705707027-0.00005,  29.764084676987729+0.00005,
+              -95.334726705707027-0.00007,  29.764084676987729+0.00007
           ];
 var poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
 var dynamicPositions = new Cesium.CallbackProperty(function() {
     let temp=parseFloat(slider1.value/1000000);
     let poss1=Cesium.Cartesian3.fromDegreesArray([poss_arr[0]-temp,poss_arr[1]-temp,poss_arr[2]+temp,poss_arr[3]-temp
-    ,poss_arr[4]+temp,poss_arr[5]+temp,poss_arr[6]-temp,poss_arr[7]+temp]);
+    ,poss_arr[4]+temp,poss_arr[5]+temp,poss_arr[6]-temp,poss_arr[7]+temp,poss_arr[8]-temp,poss_arr[9]+temp]);
 
     return new Cesium.PolygonHierarchy(poss1);
 }, false);
 
 
 var entity_example=new Cesium.Entity();
-entity_example.polygon={height: 0,
+entity_example.polygon={
+        height: 0,
         hierarchy: dynamicPositions ,
         material: Cesium.Color.RED.withAlpha(0.5),
         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND

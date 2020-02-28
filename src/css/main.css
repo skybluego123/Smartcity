@@ -304,7 +304,7 @@ float: left;
 }
 #back2 {
     position: inherit;
-    top: 39.9%;
+    top: 39vh;
     left:15.5%;
     min-height: 15vh;
     min-width: 31vw;
@@ -404,7 +404,7 @@ float: left;
 #other
 {
     position: fixed;
-    top: 0px;
+    top: 0vh;
     left:15.5%;
     min-height: 20vh;
     min-width: 19vw;

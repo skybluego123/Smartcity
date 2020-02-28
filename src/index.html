@@ -34,8 +34,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="./src/CesiumHeatmap.js"></script>
-    <script type="text/javascript" src="./src/heatmap.js"></script>
+    <script type="text/javascript" src="./CesiumHeatmap.js"></script>
+    <script type="text/javascript" src="./heatmap.js"></script>
 
     <script>
 </script>
@@ -47,11 +47,12 @@
 
     <div class="jumbotron">
     <h3>Disaster management</h3> 
-    <label class="container_t">flood<input type="checkbox" name="flood object" id="x"/><span class="checkmark"></span>
+    <label class="container_t">flood<input type="checkbox"  name="flood object" id="x"/><span class="checkmark"></span>
 </label>
 
-<label class="container_t">blackout<input type="checkbox" name="power object" id="y"/><span class="checkmark"></span>
+<label class="container_t">blackout<input type="checkbox"  name="power object" id="y"/><span class="checkmark"></span>
 </label>
+
 <hr />
 <fieldset class="scheduler-border">
 <legend class="scheduler-border">Map legend</legend>
@@ -118,7 +119,7 @@
         <div class ="back" id="back2">
             <h5>Wind Speed</h5>
             <div class="slidecontainer">
-            <input type="range" min="0" max="255" value="0"  class="slider" id="myRange">
+            <input type="range" min="0" max="255" value="0" class="slider" id="myRange">
             <p>Current windspeed: <span id="demo"></span></p>
             </div>
         </div>
@@ -149,6 +150,38 @@
 </html>
 <script>
 
+// $('input[type=checkbox]').change(function(){
+//     if($(this).is(':checked')){
+// $('input[type=checkbox]').attr('disabled',true);
+//     $(this).attr('disabled','');
+// }
+// else{
+// $('input[type=checkbox]').attr('disabled','');
+// }
+// });
+var check = $("#x");
+check.on('click',checkStatus);
+function checkStatus(){
+    if($(check).is(':checked'))
+    {
+        $("#y").prop('disabled',true);
+    }
+    else
+     $("#y").prop('disabled',false);
+}
+
+var checks = $("#y");
+checks.on('click',checkStatus1);
+function checkStatus1(){
+    if($(checks).is(':checked'))
+    {
+        $("#x").prop('disabled',true);
+    }
+    else
+     $("#x").prop('disabled',false);
+}
+
+
     $(function(){
     $('.container_t input:checkbox').on('change',function() {
            var hide = this.name;
@@ -166,7 +199,6 @@
         if (this.checked) cart1.classList.remove('hide1');
         else cart1.classList.add('hide1');
     }
-  // $('#blackout').html( $('#flood > div').clone())
 //     var viewer = new Cesium.Viewer('cesiumContainer', {
 //     // terrainProvider: Cesium.createWorldTerrain({
 //     //    //     requestVertexNormals: true,
