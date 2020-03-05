@@ -5,6 +5,7 @@
     background: white;
     border: 2px solid #1f1209;
 }
+
 #canvasMap {
   height: 100%;
   width: 100%;
@@ -506,3 +507,16 @@ button.cesium-infoBox-camera{display:block;position:absolute;top:4px;left:4px;wi
 button.cesium-infoBox-close{display:block;position:absolute;top:5px;right:5px;height:20px;background:0 0;border:none;border-radius:2px;font-weight:700;font-size:16px;padding:0 5px;margin:0;color:#edffff}
 button.cesium-infoBox-close:focus{background:rgba(238,136,0,.44);outline:0}
 button.cesium-infoBox-close:hover{background:#888;color:#000}button.cesium-infoBox-close:active{background:#a00;color:#000}.cesium-infoBox-bodyless .cesium-infoBox-iframe{display:none}.cesium-infoBox-iframe{border:2px;width:100%;width:calc(100% - 2px);height:100% !important;max-height:100% !important; }
+.cesium-viewer-bottom1 {
+    /* display: none; */
+}
+.cesium-widget-credits {
+    display: block;
+    position: absolute;
+    bottom: 30;
+    left: 141;
+    color: #fff;
+    font-size: 10px;
+    text-shadow: 0px 0px 2px #000000;
+    padding-right: 5px;
+}

@@ -259,8 +259,8 @@ function img_dialog(img_id)
 { 
     let wWidth = $(window).width();
     let wHeight = $(window).height();
-    let dWidth = wWidth *0.5;
-    let dHeight = wHeight * 0.5;
+    let dWidth = wWidth *0.4;
+    let dHeight = wHeight * 0.4;
     console.log("img_dialog called")
     $("#dialog2").dialog('close');
     $("#dialog2").dialog({
@@ -283,7 +283,7 @@ function img_dialog(img_id)
 
 viewer.scene.globe.depthTestAgainstTerrain = true;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.334726705707027, 29.764084676987729, 253);
- var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
+var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 viewer.clock.shouldAnimate = true; 
 
 
@@ -755,7 +755,7 @@ var dynamicPositions = new Cesium.CallbackProperty(function() {
 }, false);
 
 var dynamicPositions1 = new Cesium.CallbackProperty(function() {
-    let temp=parseFloat((slider1.value-10)/1000000);
+    let temp=parseFloat((slider1.value-40)/1000000);
     let poss1=Cesium.Cartesian3.fromDegreesArray([poss_arr[0]-temp,poss_arr[1]-temp,poss_arr[2]+temp,poss_arr[3]-temp
     ,poss_arr[4]+temp,poss_arr[5]+temp,poss_arr[6]-temp,poss_arr[7]+temp,poss_arr[8]-temp,poss_arr[9]+temp]);
 
@@ -780,3 +780,6 @@ entity_example.polygon={
 //     });
  // viewer.entities.add(entity_example);
 viewer.zoomTo(entity_example);
+var credit = new Cesium.Credit('Title', '../images/cesium_credit.png', 'http://www.cesiumjs.org');
+console.log(credit)
+viewer.scene.frameState.creditDisplay.addDefaultCredit(credit)
