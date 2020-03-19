@@ -3,7 +3,7 @@ const express = require('express');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
+const extractTextPlugin = require('extract-text-webpack-plugin');
 // The path to the cesium source code
 const cesiumSource = 'node_modules/cesium/Source';
 const cesiumWorkers = '../Build/Cesium/Workers';
@@ -11,7 +11,9 @@ const cesiumWorkers = '../Build/Cesium/Workers';
 module.exports = [{
     context: __dirname,
     entry: {
-        app: './src/index.js'
+        app : './src/index.js',
+        // 'heatmap' : './src/heatmap.js'
+
     },
     output: {
         filename: '[name].js',
@@ -41,7 +43,17 @@ module.exports = [{
         }, {
             test: /\.(png|gif|jpg|jpeg|svg|xml|json)$/,
             use: ['url-loader']
-        }]
+        }],
+         loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015']
+                }
+            }
+        ]
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -79,4 +91,5 @@ module.exports = [{
               express.static(path.join(__dirname, 'src', 'geoMappings')));
           }
     }
-}];
+}
+];

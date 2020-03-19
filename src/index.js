@@ -1,8 +1,8 @@
 
 require('cesium/Widgets/widgets.css');
 require('./css/main.css');
+var h377=require('test/heatmap/heatmap');
 var Cesium = require('cesium/Cesium');
-
 
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzYyNDZmZi1lYTdhLTQwMDgtOGRhZC03ZDE5YTlkYmVkMGMiLCJpZCI6NDAxOSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTYzODc1OX0.Kb7k51vZGYR5F7btrBIAuSan3ZNyKY_AWrFv1cLFUFk';
 var numClicks = 0;
@@ -38,18 +38,18 @@ slider1.oninput = function() {
 
 var myPos = { my: "center center", at: "center-370 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(37161)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(37161)
+//     })
+// );
 
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(36440)
-    })
-);
-viewer.zoomTo(tileset);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(36440)
+//     })
+// );
+// viewer.zoomTo(tileset);
 
 var r= 0, g=255, b=0;
 var fadeColor = new Cesium.CallbackProperty(function(t, result){
@@ -79,28 +79,6 @@ function distance_to_reported(reported_long,reported_lat,inlet_long,inlet_lat)
         return true;
 }
 
-// function getCallbackFunction(reported_long,reported_lat,inlet_long,inlet_lat) {
-   
-
-//     return function callbackFunction() {
-//         var R = 6371; // km
-//       var dLat = toRad(inlet_lat-reported_lat);
-//       var dLon = toRad(inlet_long-reported_long);
-//       var lat1 = toRad(reported_lat);
-//       var lat2 = toRad(inlet_lat);
-
-//       var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-//       Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-//       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-//       var d = R * c;
-//       console.log(d)
-//       var show_or_not=false;
-//        if(d > 0.5)
-//         return false;
-//       else
-//         return true;
-//     };
-// }
 function getCallback(long,lat) {
    
 
@@ -119,13 +97,8 @@ if(slider1.value > 10)
     ,poss_arr[4]+temp,poss_arr[5]+temp,poss_arr[6]-temp,poss_arr[7]+temp,poss_arr[8]-temp,poss_arr[9]+temp]);
  return new Cesium.PolygonHierarchy(poss1);
 }
-  
-
-
     };
 }
-
-
 
 
 var water_height = new Cesium.CallbackProperty(function(result){
@@ -168,6 +141,28 @@ function getWeather(latitude, longtitude) {
 }
 
 getWeather(40.863372, -74.113181);
+
+var myVar = '';
+function getAddr(latitude, longtitude) {
+  $.ajax({
+    url: 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode',
+    data: {
+      'f': 'pjson',
+      'featureTypes':'',
+      'location': latitude +','+longtitude,
+    },
+    async: false,
+    dataType: 'json',
+    success:function(data){
+      myVar=data;
+    },
+    // success: data => {
+    //   //console.log(data);
+    // }
+  })
+  return myVar;
+}
+//getAddr(-95.377, 29.333);
 
 
 function coordinate_to_address(objects,callback)
@@ -274,6 +269,7 @@ function img_dialog(img_id)
           $(this).dialog('close');
         }
       },
+
       open: function(){
           map_create(img_id);
       }
@@ -412,7 +408,7 @@ function distance_to_reported(reported_long,reported_lat,inlet_long,inlet_lat)
 }
 
 var object_loc;
-fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
+fetch('https://j116o54b17.execute-api.us-east-1.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
       let objects = json['objects'];
@@ -424,12 +420,15 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       entity.name = object['cluster_id'];
       let lat =object['cluster_latitude'];
       let lon =object['cluster_longitude'];
+      var test=getAddr(lon,lat);
+      //console.log(test['address']['Match_addr'])
       let name=object['cluster_id'];
       let cluster_obj=object['cluster_objects'];
       let image_url = cluster_obj[0]['image'];
+      console.log(image_url.substring(38,image_url.length))
       let image_date= cluster_obj[0]['createdDate'];
       let object_type=cluster_obj[0]['classification'];
-      let cluster_addr=object['cluster_address'];
+      //let cluster_addr=object['cluster_address'];
 
       entity.description = '\
       <style>\
@@ -504,14 +503,14 @@ fetch('https://sk4a447dkf.execute-api.us-east-1.amazonaws.com/default/localize')
       </tr>\
       <tr>\
         <td>Address</td>\
-        <th>'+cluster_addr+'</th>\
+        <th>'+test['address']['Match_addr']+'</th>\
       </tr>\
       <tr>\
         <td>Analysis Results</td>\
       </tr>\
     </table>\
     <br style = "line-height:8;"><br>\
-    <img data-object-id='+entity.name+' class="rotate90" src='+image_url+' >\
+    <img data-object-id='+entity.name+' class="rotate90" src='+image_url.substring(38,image_url.length)+' >\
     <br style = "line-height:10;"><br>\
   ';
     entity.point = {
@@ -556,7 +555,8 @@ viewer.infoBox.frame.addEventListener('load', function() {
     for(let object_image of object_clusters)
     { 
       let ima = new Image();
-      ima.src = object_image['image'];
+      //image_url.substring(38,image_url.length)
+      ima.src = object_image['image'].substring(38,object_image['image'].length);
       console.log(ima.src)
       ima.height = 250;
       ima.width = 250;
@@ -581,7 +581,6 @@ viewer.infoBox.frame.addEventListener('load', function() {
         {
           $(".test").on('click', function () {
             current_id=$(this).attr('id');
-            console.log("zzzz")
             img_dialog(current_id);
           });
         }
@@ -769,17 +768,129 @@ entity_example.polygon={
         material: Cesium.Color.RED.withAlpha(0.5),
         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
 }
-// entity_example.hierarchy=dynamicPositions;
-// entity_example.material=Cesium.Color.RED.withAlpha(0.5);
 
-//     var entity = viewer.entities.add({
-//         polygon: {height: 0,
-//         hierarchy: dynamicPositions ,
-//         material: Cesium.Color.RED.withAlpha(0.5)
-// }
-//     });
- // viewer.entities.add(entity_example);
-viewer.zoomTo(entity_example);
-var credit = new Cesium.Credit('Title', '../images/cesium_credit.png', 'http://www.cesiumjs.org');
-console.log(credit)
-viewer.scene.frameState.creditDisplay.addDefaultCredit(credit)
+// var czml = [{
+//     "id" : "document",
+//     "name" : "CZML Model",
+//     "version" : "1.0"
+// }, {
+//     "id" : "aircraft model",
+//     "name" : "Cesium Air",
+//     "availability" :"2012-08-04T16:00:00Z/2012-08-04T16:05:00Z",
+//     "position" : {
+//         "cartographicDegrees" : [-95.46366429670309, 29.75879901362505, -10]
+//     },
+//     "model": {
+//               "heightReference" : "Cesium.HeightReference.CLAMP_TO_GROUND",
+//         "gltf" :  "./geoMappings/Utilitypole_3Dmodel.glb",
+//         "scale" : 0.2,
+//          "color": [
+//                     {
+//                       "interval" : "2012-08-04T16:00:00Z/2012-08-04T16:01:00Z",
+//                       "rgbaf" : [1, 0, 1, 1]
+//                     }, {
+//                       "interval" : "2012-08-04T16:02:00Z/2012-08-04T16:03:00Z",
+//                       "rgbaf" : [0, 1, 1, 1]
+//                     },{
+//                       "interval" : "2012-08-04T16:03:00Z/2012-08-04T16:04:00Z",
+//                       "rgbaf" : [1, 1, 0, 1]
+//                     }
+//                   ]
+//     }
+// },];
+
+// var dataSourcePromise = viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
+
+// dataSourcePromise.then(function(dataSource){
+//     viewer.trackedEntity = dataSource.entities.getById('aircraft model');
+// }).otherwise(function(error){
+//     window.alert(error);
+// });
+//-95.330944643121768, 29.745689416342991
+//-95.368383830384573, 29.745910729951682
+//-95.366800068705004, 29.751565156121519
+//-95.363476635018912, 29.761844484536709
+// -95.367730704944861, 29.76834130222397 
+//-95.331031437011589, 29.745713254469269 
+//-95.347849488397756, 29.760495406204019
+inlet_longs=[-95.330944643121768,-95.368383830384573,-95.366800068705004,-95.363476635018912,-95.367730704944861,-95.331031437011589,-95.347849488397756]
+inlet_lats=[ 29.745689416342991,29.745910729951682,29.751565156121519,29.761844484536709,29.76834130222397,29.745713254469269, 29.760495406204019]
+
+
+lonmx=Math.max.apply(null, inlet_longs)
+lonmi=Math.min.apply(null, inlet_longs)
+latmx=Math.max.apply(null, inlet_lats)
+latmi=Math.min.apply(null, inlet_lats)
+
+
+
+            var len = 294;
+            var points = [];
+            var max = 100;
+            var width = 150;
+            var height = 150;
+
+
+            // var latMin =  29.151095;
+            // var latMax =  29.766357;
+            // var lonMin = -95.851095;
+            // var lonMax = -94.366357;
+            
+            var latMin = latmi;
+            var latMax = latmx;
+            var lonMin = lonmi;
+            var lonMax = lonmx;
+            
+
+            var dataRaw = [];
+            for (var i = 0; i < 7; i=i+1) {
+                var tmp=Math.floor(Math.random() * 100)
+                var point = {
+                    lat: inlet_lats[i],
+                    lon: inlet_longs[i],
+                    value: tmp
+                };
+                
+                dataRaw.push(point);
+            }
+
+            for (var i = 0; i < 7; i=i+1) {
+                var dataItem = dataRaw[i];
+                var point = {
+                    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+                    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+                    value: Math.floor(dataItem.value)
+                };
+
+                max = Math.max(max, dataItem.value);
+                points.push(point);
+            }
+
+            var heatmapInstance = h377.create({
+                container: document.querySelector('#heatmap')
+            });
+
+            var data = {
+                max: max,
+                data: points
+            };
+
+            heatmapInstance.setData(data);
+
+            viewer._cesiumWidget._creditContainer.style.display = "none";
+
+            var canvas = document.getElementsByClassName('heatmap-canvas');
+            console.log(canvas);
+            viewer.entities.add({
+                name: 'heatmap',
+                rectangle: {
+                    coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
+                    material: new Cesium.ImageMaterialProperty({
+                        image: canvas[0],
+                        transparent: true
+                    })
+
+                }
+            });
+
+        viewer.zoomTo(viewer.entities);
