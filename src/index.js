@@ -38,18 +38,18 @@ slider1.oninput = function() {
 
 var myPos = { my: "center center", at: "center-370 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(37161)
-//     })
-// );
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(37161)
+    })
+);
 
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(36440)
-//     })
-// );
-// viewer.zoomTo(tileset);
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(36440)
+    })
+);
+//viewer.zoomTo(tileset);
 
 var r= 0, g=255, b=0;
 var fadeColor = new Cesium.CallbackProperty(function(t, result){
@@ -557,7 +557,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
       let ima = new Image();
       //image_url.substring(38,image_url.length)
       ima.src = object_image['image'].substring(38,object_image['image'].length);
-      console.log(ima.src)
+     // console.log(ima.src)
       ima.height = 250;
       ima.width = 250;
       ima.id='i'+object_id+'-'+tmp.toString();
@@ -634,11 +634,12 @@ Cesium.when(power3,function(dataSource){
         var entity = entities[i];
         entity.show=true;
       }
-      viewer.dataSources.add(dataSource);
+    //  viewer.dataSources.add(dataSource);
 
     }else
-     viewer.dataSources.remove(dataSource);    
-      
+     {
+      //viewer.dataSources.remove(dataSource);    
+      }
 });
     
 });
@@ -772,69 +773,14 @@ entity_example.polygon={
         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
 }
 
-var czml = [{
-    "id" : "document",
-    "name" : "CZML Model",
-    "version" : "1.0"
-}, {
-  //-95.56366429670309, 29.85879901362505, -10
-    "id" : "aircraft model",
-    "name" : "Cesium Air",
-    "availability" :"2012-08-04T16:00:00Z/2012-08-04T16:05:00Z",
-    "position" : {
-        "cartographicDegrees" : [-95.36577791950545, 29.76202573052496,-10]
-    },
-    "model": {
-        "heightReference" : "Cesium.HeightReference.CLAMP_TO_GROUND",
-        "gltf" :  "./geoMappings/Utilitypole_3Dmodel.glb",
-        "scale" : 0.2,
-         "color": [
-                    {
-                      "interval" : "2012-08-04T16:00:00Z/2012-08-04T16:01:00Z",
-                      "rgbaf" : [1, 0, 1, 1]
-                    }, {
-                      "interval" : "2012-08-04T16:02:00Z/2012-08-04T16:03:00Z",
-                      "rgbaf" : [0, 1, 1, 1]
-                    },{
-                      "interval" : "2012-08-04T16:03:00Z/2012-08-04T16:04:00Z",
-                      "rgbaf" : [1, 1, 0, 1]
-                    }
-                  ]
-    }
 
-},{
-    "id": "document",
-    "version": "1.0"},
-{
-  "id": "utility pole",
-   "availability": "2012-08-04T16:00:00Z/2012-08-04T16:05:00Z", 
-   "position": {"cartographicDegrees": [-95.36366429670308, 29.76193421967339, -10.0        ]},
-   "model" :{
-        "gltf" :  "./geoMappings/Utilitypole_3Dmodel.glb",
-        "scale" : 0.2,
-        "color": [
-                    {
-                      "interval" : "2012-08-04T16:00:00Z/2012-08-04T16:01:00Z",
-                      "rgbaf" : [1, 0, 1, 1]
-                    }, {
-                      "interval" : "2012-08-04T16:02:00Z/2012-08-04T16:03:00Z",
-                      "rgbaf" : [0, 1, 1, 1]
-                    },{
-                      "interval" : "2012-08-04T16:03:00Z/2012-08-04T16:04:00Z",
-                      "rgbaf" : [1, 1, 0, 1]
-                    }
-                  ]
-        }}];
-
-var dataSourcePromise = viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
-
+var dataSourcePromise=viewer.dataSources.add(Cesium.CzmlDataSource.load('./geoMappings/power.czml'));
+//var dataSourcePromise = viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
 dataSourcePromise.then(function(dataSource){
-    viewer.trackedEntity = dataSource.entities.getById('utility pole');
+    //viewer.trackedEntity = dataSource.entities.getById('utility pole');
 }).otherwise(function(error){
-    window.alert(error);
+    //window.alert(error);
 });
-viewer.dataSources.add(Cesium.CzmlDataSource.load('./geoMappings/power.czml'));
-
 
 inlet_longs=[
 -95.36577791950545,
