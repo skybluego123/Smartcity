@@ -831,15 +831,15 @@ latmi=Math.min.apply(null, inlet_lats)
             var height = 150;
 
 
-            // var latMin =  29.151095;
-            // var latMax =  29.766357;
-            // var lonMin = -95.851095;
-            // var lonMax = -94.366357;
+            var latMin =  29.151095;
+            var latMax =  29.766357;
+            var lonMin = -95.851095;
+            var lonMax = -94.366357;
             
-            var latMin = latmi;
-            var latMax = latmx;
-            var lonMin = lonmi;
-            var lonMax = lonmx;
+            // var latMin = latmi;
+            // var latMax = latmx;
+            // var lonMin = lonmi;
+            // var lonMax = lonmx;
             
 
             var dataRaw = [];
@@ -867,7 +867,8 @@ latmi=Math.min.apply(null, inlet_lats)
             }
 
             var heatmapInstance = h377.create({
-                container: document.querySelector('#heatmap')
+                container: document.querySelector('#heatmap'),
+                radius : 4
             });
 
             var data = {
@@ -884,6 +885,8 @@ latmi=Math.min.apply(null, inlet_lats)
             viewer.entities.add({
                 name: 'heatmap',
                 rectangle: {
+                   // height: 0,
+                    //heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
                     coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
                     material: new Cesium.ImageMaterialProperty({
                         image: canvas[0],
