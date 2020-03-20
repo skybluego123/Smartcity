@@ -36,9 +36,11 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "babel-preset-es2015": "^6.24.1",
+    "cesiumjs-heat": "^1.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "^3.0.2",
+    "heatmap.js": "^2.0.5",
     "install": "^0.13.0",
     "node-fetch": "^2.6.0",
     "npm": "^6.13.7"
