@@ -95,18 +95,18 @@ $('#myRange').change(function() {
 
 var myPos = { my: "center center", at: "center-370 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(37161)
-//     })
-// );
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(37161)
+    })
+);
 
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(36440)
-//     })
-// );
-//viewer.zoomTo(tileset);
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(36440)
+    })
+);
+//
 
 var r= 0, g=255, b=0;
 var fadeColor = new Cesium.CallbackProperty(function(){
@@ -239,13 +239,17 @@ function map_create(img_id)
   var res_obj;
   var res_img;
   res_obj = cur.substring(1, 2);
-  res_img = parseInt(cur.substring(3, 4));
-  console.log(parseInt(cur.substring(3, 4)));
+  res_img = parseInt(parseInt( cur.substring(
+    cur.lastIndexOf("i") + 1, 
+    cur.lastIndexOf("-")
+)));
+ 
+  console.log(cur)
   console.log(res_img);
   console.log(object_indicator);
   let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
   let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
-  console.log(vulnerable_objects[object_indicator]['cluster_objects'][res_img])
+ // console.log(vulnerable_objects[object_indicator]['cluster_objects'][res_img])
   let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
   let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];      
   var baltimore = new google.maps.LatLng(object_lat, object_lon);
@@ -347,78 +351,79 @@ var inlet_longs=[]
 var inlet_lats=[]
 var entity_array=[]
 
-fetch("./geoMappings/dStormInlet_L5457_ver3.json")
-  .then(response => response.json())
-  .then(function(json){
-    let inlets=json['features'];
-    for(let inlet of inlets)
-    {
-      let inlet_long = inlet['geometry']['coordinates'][0];
-      let inlet_lat = inlet['geometry']['coordinates'][1];
-      inlet_longs.push(inlet_long)
-      inlet_lats.push(inlet_lat)
+// fetch("./geoMappings/dStormInlet_L5457_ver3.json")
+//   .then(response => response.json())
+//   .then(function(json){
+//     let inlets=json['features'];
+//     console.log("fetch json")
+//     for(let inlet of inlets)
+//     {
+//       let inlet_long = inlet['geometry']['coordinates'][0];
+//       let inlet_lat = inlet['geometry']['coordinates'][1];
+//       inlet_longs.push(inlet_long)
+//       inlet_lats.push(inlet_lat)
 
-    }
+//     }
   
-let target_long=inlet_longs[40]
-let target_lat=inlet_lats[40]
+// let target_long=inlet_longs[40]
+// let target_lat=inlet_lats[40]
 
-//draw_polygon(inlet_longs,inlet_lats,target_long,target_lat)
-for(let i =0;i<40;i++)
-  {
-    let poss_arr=[inlet_longs[i]-0.00005,inlet_lats[i]-0.00005,
-              inlet_longs[i]+0.00005, inlet_lats[i]-0.00005,
-              inlet_longs[i]+0.00009, inlet_lats[i]+0.00009,
-              inlet_longs[i]-0.00005, inlet_lats[i]+0.00005,
-              inlet_longs[i]-0.00007, inlet_lats[i]+0.00007
-          ];
+// //draw_polygon(inlet_longs,inlet_lats,target_long,target_lat)
+// for(let i =0;i<40;i++)
+//   {
+//     let poss_arr=[inlet_longs[i]-0.00005,inlet_lats[i]-0.00005,
+//               inlet_longs[i]+0.00005, inlet_lats[i]-0.00005,
+//               inlet_longs[i]+0.00009, inlet_lats[i]+0.00009,
+//               inlet_longs[i]-0.00005, inlet_lats[i]+0.00005,
+//               inlet_longs[i]-0.00007, inlet_lats[i]+0.00007
+//           ];
 
-let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
+// let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
 
 
-    let entity_example=new Cesium.Entity();
-    entity_example.polygon={
-        hierarchy:new Cesium.CallbackProperty(getCallback(inlet_longs[i],inlet_lats[i]), false),//new Cesium.PolygonHierarchy(poss),//getCallback(inlet_longs[i],inlet_lats[i]),
-        material: Cesium.Color.RED.withAlpha(0.5),
-        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-        show: true
-    }
-    entity_array.push(entity_example);
-    viewer.entities.add(entity_example);
-  }
+//     let entity_example=new Cesium.Entity();
+//     entity_example.polygon={
+//         hierarchy:new Cesium.CallbackProperty(getCallback(inlet_longs[i],inlet_lats[i]), false),//new Cesium.PolygonHierarchy(poss),//getCallback(inlet_longs[i],inlet_lats[i]),
+//         material: Cesium.Color.RED.withAlpha(0.5),
+//         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+//         show: true
+//     }
+//     entity_array.push(entity_example);
+//     viewer.entities.add(entity_example);
+//   }
 
-  });
+//   });
 
   
-function draw_polygon(center_long,center_lat,target_long,target_lat)
-{
-for(let i =0;i<40;i++)
-  {
-    let poss_arr=[inlet_longs[i]-0.00005,inlet_lats[i]-0.00005,
-              inlet_longs[i]+0.00005, inlet_lats[i]-0.00005,
-              inlet_longs[i]+0.00009, inlet_lats[i]+0.00009,
-              inlet_longs[i]-0.00005, inlet_lats[i]+0.00005,
-              inlet_longs[i]-0.00007, inlet_lats[i]+0.00007
-          ];
+// function draw_polygon(center_long,center_lat,target_long,target_lat)
+// {
+// for(let i =0;i<40;i++)
+//   {
+//     let poss_arr=[inlet_longs[i]-0.00005,inlet_lats[i]-0.00005,
+//               inlet_longs[i]+0.00005, inlet_lats[i]-0.00005,
+//               inlet_longs[i]+0.00009, inlet_lats[i]+0.00009,
+//               inlet_longs[i]-0.00005, inlet_lats[i]+0.00005,
+//               inlet_longs[i]-0.00007, inlet_lats[i]+0.00007
+//           ];
 
-let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
+// let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
 
 
-    let entity_example=new Cesium.Entity();
-    entity_example.polygon={
-        hierarchy:new Cesium.CallbackProperty(getCallback(inlet_longs[i],inlet_lats[i]), false),//new Cesium.PolygonHierarchy(poss),//getCallback(inlet_longs[i],inlet_lats[i]),
-        material: Cesium.Color.RED.withAlpha(0.5),
-        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-        show: true
-    }
-    entity_array.push(entity_example);
-    viewer.entities.add(entity_example);
-  }
+//     let entity_example=new Cesium.Entity();
+//     entity_example.polygon={
+//         hierarchy:new Cesium.CallbackProperty(getCallback(inlet_longs[i],inlet_lats[i]), false),//new Cesium.PolygonHierarchy(poss),//getCallback(inlet_longs[i],inlet_lats[i]),
+//         material: Cesium.Color.RED.withAlpha(0.5),
+//         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+//         show: true
+//     }
+//     entity_array.push(entity_example);
+//     viewer.entities.add(entity_example);
+//   }
     
-    entity_array.push(entity_example);
-    viewer.entities.add(entity_example);
-  }
- // console.log(entity_array.length)
+//     entity_array.push(entity_example);
+//     viewer.entities.add(entity_example);
+//   }
+//  // console.log(entity_array.length)
 
 
 
@@ -461,14 +466,13 @@ fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
       let lat =object['cluster_latitude'];
       let lon =object['cluster_longitude'];
       var test=getAddr(lon,lat);
-      //console.log(test['address']['Match_addr'])
       let name=object['cluster_id'];
       let cluster_obj=object['cluster_objects'];
       let image_url = cluster_obj[0]['image'];
       let image_date= cluster_obj[0]['createdDate'];
       let object_type=cluster_obj[0]['classification'];
       //let cluster_addr=object['cluster_address'];
-      console.log(image_url)
+     // console.log(image_url)
       entity.description = '\
       <style>\
       .rotate90 {\
@@ -3344,7 +3348,7 @@ latmi=Math.min.apply(null, inlet_lats)
                 name: 'heatmap',
                 rectangle: {
                    // height: 0,
-                    //heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+                    heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
                     coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
                     material: new Cesium.ImageMaterialProperty({
                         image: canvas[0],
