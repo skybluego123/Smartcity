@@ -238,11 +238,15 @@ function map_create(img_id)
   var cur=img_id;
   var res_obj;
   var res_img;
-  res_obj = cur.substring(1, 2);
-  res_img = parseInt(parseInt( cur.substring(
+  res_obj = parseInt( cur.substring(
     cur.lastIndexOf("i") + 1, 
     cur.lastIndexOf("-")
-)));
+));
+  console.log(res_obj)
+  res_img = cur.substring(
+    cur.lastIndexOf("-") + 1, 
+    cur.lastIndexOf("-") + 2
+)
  
   console.log(cur)
   console.log(res_img);
@@ -3347,7 +3351,7 @@ latmi=Math.min.apply(null, inlet_lats)
             viewer.entities.add({
                 name: 'heatmap',
                 rectangle: {
-                   // height: 0,
+                    height: 0,
                     heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
                     coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
                     material: new Cesium.ImageMaterialProperty({
