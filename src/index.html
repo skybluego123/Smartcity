@@ -1,9 +1,6 @@
-
 <html>
-
 <head>
-
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <style>
    *:focus {
     outline: 0 !important;
@@ -52,8 +49,10 @@ position: absolute;
 </head>
 
 <body>
+
 <div id="cesiumContainer"></div>
-<div class="cesium-viewer-bottom1" style="left: 15%; bottom: 30px;"><div class="cesium-widget-credits"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img title="Cesium ion" src="./images/test1.png" height="100" width="100"></a>
+<div id="timeControlsContainer"></div>
+<div class="cesium-viewer-bottom1" style="left: 5%; bottom: 70px;"><div class="cesium-widget-credits" style="left: 3%; bottom: 13%;"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img title="Cesium ion" src="./images/test1.png" height="100" width="100"></a>
             </div></div></div></div>
 
 <div id="heatmap" display="none"></div>
@@ -131,7 +130,7 @@ position: absolute;
         <div class ="back" id="back2">
             <h5>Wind Speed</h5>
             <div class="slidecontainer">
-            <input type="range" min="0" max="255" value="0" class="slider" id="myRange">
+            <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
             <p>Current windspeed: <span id="demo"></span></p>
             </div>
         </div>
@@ -162,15 +161,9 @@ position: absolute;
 </html>
 <script>
 
-// $('input[type=checkbox]').change(function(){
-//     if($(this).is(':checked')){
-// $('input[type=checkbox]').attr('disabled',true);
-//     $(this).attr('disabled','');
-// }
-// else{
-// $('input[type=checkbox]').attr('disabled','');
-// }
-// });
+
+
+
 var check = $("#x");
 check.on('click',checkStatus);
 function checkStatus(){

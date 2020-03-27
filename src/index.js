@@ -13,19 +13,44 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
             requestWaterMask: true
 
         }),
-    timeline: true,
+    timeline: false,
     animation: true,
     shadows: true,
+    animation: false
 
 });
 
+function onTimelineScrubfunction(e) {
+  var clock = e.clock;
+
+  clock.currentTime = Cesium.JulianDate.toDate(e.timeJulian);
+  clock.shouldAnimate = false;
+  console.log(clock.currentTime );
+}
+window.setInterval(function() {
+  clock.tick();
+}, 32);
+
+var timeControlsContainer = document.getElementById('timeControlsContainer');
+var clock = new Cesium.Clock();
+var clockViewModel = new Cesium.ClockViewModel(clock);
+var animationContainer = document.createElement('div');
+animationContainer.className = 'cesium-viewer-animationContainer';
+timeControlsContainer.appendChild(animationContainer);
+var animation = new Cesium.Animation(animationContainer, new Cesium.AnimationViewModel(clockViewModel));
+var timelineContainer = document.createElement('div');
+timelineContainer.className = 'cesium-viewer-timelineContainer';
+timeControlsContainer.appendChild(timelineContainer);
+var timeline = new Cesium.Timeline(timelineContainer, clock);
+timeline.addEventListener('settime', onTimelineScrubfunction, false);
+timeline.zoomTo(clock.startTime, clock.stopTime);
 
 
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
 output.innerHTML = slider.value;
 slider.oninput = function() {
-  output.innerHTML = this.value;
+   output.innerHTML = this.value;
 }
 
 
@@ -36,52 +61,62 @@ slider1.oninput = function() {
   output1.innerHTML = this.value;
 }
 
+var myrange_stop;
+var power_demage;
+var temp_poles=[];
+$('#myRange').change(function() {
+  myrange_stop=$(this).val();
+    $.ajax({
+    url: 'https://jvc8szgvya.execute-api.us-west-2.amazonaws.com/default/networkanalysis',
+    data: {
+      'windspeed' : myrange_stop
+    },
+    async: false,
+    dataType: 'json',
+    success:function(data){
+      power_demage=data;
+    },
+  })
+ 
+  for(let x of poles_entity)
+  {
+     x.model.color=Cesium.Color.GREEN;
+    for(let y of power_demage['failedpoles'])
+    {
+      if(x['manual_id']==y)
+      {
+        x.model.color=Cesium.Color.RED;
+      }
+    }
+  }
+
+});
+
+
 var myPos = { my: "center center", at: "center-370 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(37161)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(37161)
+//     })
+// );
 
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(36440)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(36440)
+//     })
+// );
 //viewer.zoomTo(tileset);
 
 var r= 0, g=255, b=0;
-var fadeColor = new Cesium.CallbackProperty(function(t, result){
+var fadeColor = new Cesium.CallbackProperty(function(){
     r=slider.value;
     g=255-slider.value;
-    return Cesium.Color.fromBytes(r, g, b, 255, result);
+    return Cesium.Color.fromBytes(r, g, b, 255);
 }, false);
 
 
-
-
-function distance_to_reported(reported_long,reported_lat,inlet_long,inlet_lat)
-{
-      var R = 6371; // km
-      var dLat = toRad(inlet_lat-reported_lat);
-      var dLon = toRad(inlet_long-reported_long);
-      var lat1 = toRad(reported_lat);
-      var lat2 = toRad(inlet_lat);
-
-      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-      var d = R * c;
-      if(d > 0.5)
-        return false;
-      else
-        return true;
-}
-
 function getCallback(long,lat) {
-   
-
     return function callbackFunction() {
     var poss_arr=[long-0.00005, lat-0.00005,
               long+0.00005, lat-0.00005,
@@ -205,14 +240,17 @@ function map_create(img_id)
   var res_img;
   res_obj = cur.substring(1, 2);
   res_img = parseInt(cur.substring(3, 4));
+  console.log(parseInt(cur.substring(3, 4)));
   console.log(res_img);
+  console.log(object_indicator);
   let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
   let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
+  console.log(vulnerable_objects[object_indicator]['cluster_objects'][res_img])
   let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
   let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];      
   var baltimore = new google.maps.LatLng(object_lat, object_lon);
-  console.log(observer_lat)
-  console.log(object_lon)
+  //console.log(observer_lat)
+  //console.log(object_lon)
   var baltimore1 = new google.maps.LatLng(observer_lat, observer_lon);
   var panorama = new google.maps.StreetViewPanorama(
     document.getElementById('pano'),
@@ -296,7 +334,7 @@ var CheckPowerI = document.getElementById('y');  //updateobj
 var updateP = document.getElementById('updateobj');
 
 
-var power3 = Cesium.GeoJsonDataSource.load('./geoMappings/power.geojson');
+//var power3 = Cesium.GeoJsonDataSource.load('./geoMappings/power.geojson');
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
@@ -308,6 +346,7 @@ var url =Cesium.buildModuleUrl("./images/power.png");
 var inlet_longs=[]
 var inlet_lats=[]
 var entity_array=[]
+
 fetch("./geoMappings/dStormInlet_L5457_ver3.json")
   .then(response => response.json())
   .then(function(json){
@@ -406,9 +445,10 @@ function distance_to_reported(reported_long,reported_lat,inlet_long,inlet_lat)
       else
         return true;
 }
+   
 
 var object_loc;
-fetch('https://j116o54b17.execute-api.us-east-1.amazonaws.com/default/localize')
+fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
   .then(response => response.json())
   .then(function(json){
       let objects = json['objects'];
@@ -425,11 +465,10 @@ fetch('https://j116o54b17.execute-api.us-east-1.amazonaws.com/default/localize')
       let name=object['cluster_id'];
       let cluster_obj=object['cluster_objects'];
       let image_url = cluster_obj[0]['image'];
-      console.log(image_url.substring(38,image_url.length))
       let image_date= cluster_obj[0]['createdDate'];
       let object_type=cluster_obj[0]['classification'];
       //let cluster_addr=object['cluster_address'];
-
+      console.log(image_url)
       entity.description = '\
       <style>\
       .rotate90 {\
@@ -510,7 +549,7 @@ fetch('https://j116o54b17.execute-api.us-east-1.amazonaws.com/default/localize')
       </tr>\
     </table>\
     <br style = "line-height:8;"><br>\
-    <img data-object-id='+entity.name+' class="rotate90" src='+image_url.substring(38,image_url.length)+' >\
+    <img data-object-id='+entity.name+' class="rotate90" src='+image_url+' >\
     <br style = "line-height:10;"><br>\
   ';
     entity.point = {
@@ -556,7 +595,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
     { 
       let ima = new Image();
       //image_url.substring(38,image_url.length)
-      ima.src = object_image['image'].substring(38,object_image['image'].length);
+      ima.src = object_image['image'];//.substring(38,object_image['image'].length);
      // console.log(ima.src)
       ima.height = 250;
       ima.width = 250;
@@ -593,7 +632,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
         position:myPos_right,
         open: function()
         {
-          console.log("map id"+current_id1)
+        //  console.log("map id"+current_id1)
           map_create(current_id1);
         }
       });
@@ -608,40 +647,45 @@ viewer.infoBox.frame.addEventListener('load', function() {
 }, false);
 
 
-
-// TO DO change variable name
-power3.then(function(dataSource) {
-    var entities = dataSource.entities.values;
-    for (var i = 0; i < entities.length; i++) {
-        var entity = entities[i];
-        entity.billboard = undefined; 
-        entity.model=new Cesium.ModelGraphics({
-        uri: './geoMappings/Utilitypole_3Dmodel.glb',
-        scale: 0.2,
-        color: fadeColor,
-        heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
-
+var poles;
+var poles_entity=[];
+CheckPowerI.addEventListener('change',function(){
+if(CheckPowerI.checked){
+fetch('http://backend.digitaltwincities.info/poles')
+  .then(response => response.json())
+  .then(function(json){
+    let objects = json['data'];
+    poles=objects;
+    //console.log(poles)
+    for(let object of objects){
+      let entity = new Cesium.Entity();
+      entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'],object['latitude'], 0);
+      entity.name = object['id'];
+      var manual_id = object['manual_id'];
+      entity.billboard = undefined; 
+      entity.model=new Cesium.ModelGraphics({
+      uri: './geoMappings/Utilitypole_3Dmodel.glb',
+      scale: 0.2,
+      color: fadeColor,//Cesium.Color.GREEN,
+      heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
         });
-     
-      }
-    });
+      entity.addProperty("manual_id")
+      entity.manual_id=manual_id;
+      var pole=viewer.entities.add(entity);
 
-Cesium.when(power3,function(dataSource){
-  CheckPowerI.addEventListener('change', function() {
-    if ( CheckPowerI.checked) {    
-      var entities = dataSource.entities.values;
-      for (var i = 0; i < entities.length; i++) {
-        var entity = entities[i];
-        entity.show=true;
-      }
-    //  viewer.dataSources.add(dataSource);
-
-    }else
-     {
-      //viewer.dataSources.remove(dataSource);    
-      }
-});
+      poles_entity.push(entity);
+    }
     
+    });
+}
+else
+{
+  for(var x of poles_entity)
+  {
+    var pole=viewer.entities.remove(x);
+  }
+}
+
 });
 
 power4.then(function(dataSource) {
@@ -774,13 +818,13 @@ entity_example.polygon={
 }
 
 
-var dataSourcePromise=viewer.dataSources.add(Cesium.CzmlDataSource.load('./geoMappings/power.czml'));
-//var dataSourcePromise = viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
-dataSourcePromise.then(function(dataSource){
-    //viewer.trackedEntity = dataSource.entities.getById('utility pole');
-}).otherwise(function(error){
-    //window.alert(error);
-});
+// var dataSourcePromise=viewer.dataSources.add(Cesium.CzmlDataSource.load('./geoMappings/power.czml'));
+// //var dataSourcePromise = viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
+// dataSourcePromise.then(function(dataSource){
+//     //viewer.trackedEntity = dataSource.entities.getById('utility pole');
+// }).otherwise(function(error){
+//     //window.alert(error);
+// });
 
 inlet_longs=[
 -95.36577791950545,
