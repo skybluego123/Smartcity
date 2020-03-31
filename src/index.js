@@ -21,11 +21,11 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 });
 var start_time;
 var weather_data;
-var time_interval=new Map();
-var wind=[]
-var time_o=[]
+
 var pair_time=[]
 var pair_wind=[]
+var pair_temp=[]
+
 viewer.timeline.container.onmouseup = (e) => {
   $.ajax({
     url: 'http://api.openweathermap.org/data/2.5/forecast',
@@ -43,6 +43,7 @@ viewer.timeline.container.onmouseup = (e) => {
       {
 
         pair_wind.push([weather_data['list'][i]['wind']['speed'],weather_data['list'][i+1]['wind']['speed']])
+        pair_temp.push([weather_data['list'][i]['main']['temp'],weather_data['list'][i]['main']['temp']])
         pair_time.push([Cesium.JulianDate.fromDate(new Date(weather_data['list'][i]['dt_txt'])),Cesium.JulianDate.fromDate(new Date(weather_data['list'][i+1]['dt_txt']))])
         
       }
@@ -62,12 +63,14 @@ viewer.timeline.container.onmouseup = (e) => {
         }
       }
       var cur_wind=(pair_wind[wind_track][0]+pair_wind[wind_track][1])/2
+      var cur_temp=(pair_temp[wind_track][0]+pair_temp[wind_track][1])/2
       //console.log(cur_wind)
       var windElem = document.getElementById("wind");
       windElem.innerHTML = `${cur_wind.toFixed(3)}m/s`;
       var time =document.getElementById("time");
       time.innerHTML = `${Cesium.JulianDate.toDate(viewer.clock.currentTime).toString().substring(4,25)}`;
-     
+      var tempElement = document.getElementById("temperature");
+      tempElement.innerHTML = `${cur_temp}<i id="icon-thermometer" class="wi wi-thermometer"></i>` ;
     }
     });
  
