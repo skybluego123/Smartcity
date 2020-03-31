@@ -13,37 +13,92 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
             requestWaterMask: true
 
         }),
-    timeline: false,
+    timeline: true,
     animation: true,
     shadows: true,
-    animation: false
+    animation: true
 
 });
+var start_time;
+var weather_data;
+var time_interval=new Map();
+var wind=[]
+var time_o=[]
+var pair_time=[]
+var pair_wind=[]
+viewer.timeline.container.onmouseup = (e) => {
+  $.ajax({
+    url: 'http://api.openweathermap.org/data/2.5/forecast',
+    data: {
+      lat: 30.6173014,
+      lon: -96.3403507,
+      units: 'imperial',
+      APPID: API_KEY
+    }, 
+    async: false,
+    dataType: 'json',
+    success:function(data){
+      weather_data=data;
+      for(var i = 0; i < 38; i++)
+      {
 
-function onTimelineScrubfunction(e) {
-  var clock = e.clock;
+        pair_wind.push([weather_data['list'][i]['wind']['speed'],weather_data['list'][i+1]['wind']['speed']])
+        pair_time.push([Cesium.JulianDate.fromDate(new Date(weather_data['list'][i]['dt_txt'])),Cesium.JulianDate.fromDate(new Date(weather_data['list'][i+1]['dt_txt']))])
+        
+      }
+      var wind_track=0;
+      for(var i =0;i<38;i++)
+      {
+        let before=pair_time[i][0];
+        let after=pair_time[i][1];
 
-  clock.currentTime = Cesium.JulianDate.toDate(e.timeJulian);
-  clock.shouldAnimate = false;
-  console.log(clock.currentTime );
+        if(Cesium.JulianDate.greaterThanOrEquals(viewer.clock.currentTime,before) && Cesium.JulianDate.lessThan(viewer.clock.currentTime,after))
+        {
+            wind_track=i
+        }
+           if(Cesium.JulianDate.equals(viewer.clock.currentTime,before) && Cesium.JulianDate.equals(viewer.clock.currentTime,after))
+        {
+            wind_track=i
+        }
+      }
+      var cur_wind=(pair_wind[wind_track][0]+pair_wind[wind_track][1])/2
+      //console.log(cur_wind)
+      var windElem = document.getElementById("wind");
+      windElem.innerHTML = `${cur_wind.toFixed(3)}m/s`;
+      var time =document.getElementById("time");
+      time.innerHTML = `${Cesium.JulianDate.toDate(viewer.clock.currentTime).toString().substring(4,25)}`;
+     
+    }
+    });
+ 
+
 }
-window.setInterval(function() {
-  clock.tick();
-}, 32);
 
-var timeControlsContainer = document.getElementById('timeControlsContainer');
-var clock = new Cesium.Clock();
-var clockViewModel = new Cesium.ClockViewModel(clock);
-var animationContainer = document.createElement('div');
-animationContainer.className = 'cesium-viewer-animationContainer';
-timeControlsContainer.appendChild(animationContainer);
-var animation = new Cesium.Animation(animationContainer, new Cesium.AnimationViewModel(clockViewModel));
-var timelineContainer = document.createElement('div');
-timelineContainer.className = 'cesium-viewer-timelineContainer';
-timeControlsContainer.appendChild(timelineContainer);
-var timeline = new Cesium.Timeline(timelineContainer, clock);
-timeline.addEventListener('settime', onTimelineScrubfunction, false);
-timeline.zoomTo(clock.startTime, clock.stopTime);
+viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
+viewer.animation.viewModel.timeFormatter = localeTimeFormatter
+viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
+
+// Date formatting to a global form
+function localeDateTimeFormatter(datetime, viewModel, ignoredate) {
+    var julianDT = new Cesium.JulianDate(); 
+    Cesium.JulianDate.addHours(datetime,-5,julianDT)
+    var gregorianDT= Cesium.JulianDate.toGregorianDate(julianDT)
+    var objDT;
+    if (ignoredate)
+        objDT = '';
+    else {
+        objDT = new Date(gregorianDT.year, gregorianDT.month - 1, gregorianDT.day);
+        objDT = objDT.toLocaleString("default", { month: "long" })+ gregorianDT.day + ' '+gregorianDT.year  + ' ';
+        if (viewModel || gregorianDT.hour + gregorianDT.minute === 0)
+        return objDT;
+        objDT += ' ';
+    }
+    return objDT + Cesium.sprintf("%02d:%02d:%02d", gregorianDT.hour, gregorianDT.minute, gregorianDT.second);
+}
+
+function localeTimeFormatter(time, viewModel) {
+    return localeDateTimeFormatter(time, viewModel, true);
+}
 
 
 var slider = document.getElementById("myRange");
@@ -95,17 +150,17 @@ $('#myRange').change(function() {
 
 var myPos = { my: "center center", at: "center-370 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(37161)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(37161)
+//     })
+// );
 
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(36440)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(36440)
+//     })
+// );
 //
 
 var r= 0, g=255, b=0;
