@@ -19,15 +19,20 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     animation: true
 
 });
+
+var pinBuilder = new Cesium.PinBuilder();
 var start_time;
 var weather_data;
 
 var pair_time=[]
 var pair_wind=[]
 var pair_temp=[]
+var pair_humi=[]
+var weather_desc=[]
+var API_KEY='49406c4e8b6ee455d1904676a313aa40'
 
-viewer.timeline.container.onmouseup = (e) => {
-  $.ajax({
+var weather_data1;
+$.ajax({
     url: 'http://api.openweathermap.org/data/2.5/forecast',
     data: {
       lat: 30.6173014,
@@ -38,12 +43,18 @@ viewer.timeline.container.onmouseup = (e) => {
     async: false,
     dataType: 'json',
     success:function(data){
+      weather_data1=data;
+}
+});
+
+function update_weather(data,currentTime){
       weather_data=data;
       for(var i = 0; i < 38; i++)
       {
-
+        weather_desc.push(data['list'][i]['weather'][0]['main'])
+        pair_humi.push([weather_data['list'][i]['main']['humidity'],data['list'][i+1]['main']['humidity']])
         pair_wind.push([weather_data['list'][i]['wind']['speed'],weather_data['list'][i+1]['wind']['speed']])
-        pair_temp.push([weather_data['list'][i]['main']['temp'],weather_data['list'][i]['main']['temp']])
+        pair_temp.push([weather_data['list'][i]['main']['temp'],weather_data['list'][i+1]['main']['temp']])
         pair_time.push([Cesium.JulianDate.fromDate(new Date(weather_data['list'][i]['dt_txt'])),Cesium.JulianDate.fromDate(new Date(weather_data['list'][i+1]['dt_txt']))])
         
       }
@@ -53,29 +64,53 @@ viewer.timeline.container.onmouseup = (e) => {
         let before=pair_time[i][0];
         let after=pair_time[i][1];
 
-        if(Cesium.JulianDate.greaterThanOrEquals(viewer.clock.currentTime,before) && Cesium.JulianDate.lessThan(viewer.clock.currentTime,after))
+        if(Cesium.JulianDate.greaterThanOrEquals(currentTime,before) && Cesium.JulianDate.lessThan(currentTime,after))
         {
             wind_track=i
         }
-           if(Cesium.JulianDate.equals(viewer.clock.currentTime,before) && Cesium.JulianDate.equals(viewer.clock.currentTime,after))
+           if(Cesium.JulianDate.equals(currentTime,before) && Cesium.JulianDate.equals(currentTime,after))
         {
             wind_track=i
         }
       }
-      var cur_wind=(pair_wind[wind_track][0]+pair_wind[wind_track][1])/2
-      var cur_temp=(pair_temp[wind_track][0]+pair_temp[wind_track][1])/2
-      //console.log(cur_wind)
-      var windElem = document.getElementById("wind");
+      let cur_wind=(pair_wind[wind_track][0]+pair_wind[wind_track][1])/2
+      let cur_temp=(pair_temp[wind_track][0]+pair_temp[wind_track][1])/2
+      let cur_humi=(pair_humi[wind_track][0]+pair_humi[wind_track][1])/2
+      let cur_desc=weather_desc[wind_track]
+      let cur_rain='None';
+      
+      if(cur_desc=='Rain')
+      {
+        cur_rain=weather_data['list'][i]['rain']['3h']
+      }
+
+      let windElem = document.getElementById("wind");
       windElem.innerHTML = `${cur_wind.toFixed(3)}m/s`;
-      var time =document.getElementById("time");
-      time.innerHTML = `${Cesium.JulianDate.toDate(viewer.clock.currentTime).toString().substring(4,25)}`;
-      var tempElement = document.getElementById("temperature");
-      tempElement.innerHTML = `${cur_temp}<i id="icon-thermometer" class="wi wi-thermometer"></i>` ;
+      let time =document.getElementById("time");
+      time.innerHTML = `${Cesium.JulianDate.toDate(currentTime).toString().substring(4,25)}`;
+      let tempElement = document.getElementById("temperature");
+      tempElement.innerHTML = `${cur_temp.toFixed(3)}<i id="icon-thermometer" class="wi wi-thermometer"></i>` ;
+      let humidityElem = document.getElementById("humidity");
+      humidityElem.innerHTML = `${cur_humi}%`;
+      let description = document.getElementById("description");
+      description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p>${cur_desc}</p>`;
+      let rainfall =document.getElementById("visibility");
+         rainfall.innerHTML=`${cur_rain}`
     }
-    });
- 
+
+
+function onTimelineScrubfunction(e) {
+  var clock = e.clock;
+  clock.currentTime = e.timeJulian;
+  clock.shouldAnimate = true;
+  update_weather(weather_data1,e.timeJulian);
 
 }
+viewer.clock.onTick.addEventListener(function(clock){
+    update_weather(weather_data1,clock.currentTime);
+});
+
+viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
 
 viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
 viewer.animation.viewModel.timeFormatter = localeTimeFormatter
@@ -150,6 +185,36 @@ $('#myRange').change(function() {
 
 });
 
+var myVar = setInterval(myTimer, 10000);
+function myTimer() {
+  var cur_speed=Math.round(parseInt($('#wind').text()));
+  console.log(cur_speed);
+      $.ajax({
+    url: 'https://jvc8szgvya.execute-api.us-west-2.amazonaws.com/default/networkanalysis',
+    data: {
+      'windspeed' : cur_speed
+    },
+    async: false,
+    dataType: 'json',
+    success:function(data){
+      power_demage=data;
+    },
+  })
+ 
+  for(let x of poles_entity)
+  {
+     x.model.color=Cesium.Color.GREEN;
+    for(let y of power_demage['failedpoles'])
+    {
+      if(x['manual_id']==y)
+      {
+        x.model.color=Cesium.Color.RED;
+      }
+    }
+  }
+
+
+}
 
 var myPos = { my: "center center", at: "center-370 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
@@ -200,40 +265,25 @@ var water_height = new Cesium.CallbackProperty(function(result){
     return water_height;
 },false);
 
-let API_KEY = '49406c4e8b6ee455d1904676a313aa40';
-function getWeather(latitude, longtitude) {
-  $.ajax({
-    url: 'http://api.openweathermap.org/data/2.5/forecast',
-    data: {
-      lat: latitude,
-      lon: longtitude,
-      units: 'imperial',
-      APPID: API_KEY
-    },
-    success: data => {
-      console.log(data['list'][30]['weather'][0]['main']);
-      var temperature=data['list'][0]['main']['temp']; //humidity
-      var humidity=data['list'][0]['main']['humidity'];
-      var windSpeed=data['list'][0]['wind']['speed'];
-      var desc=data['list'][30]['weather'][0]['main'];
-      var curr_time=data['list'][0]['dt_txt'];
-      console.log(curr_time)
-      var tempElement = document.getElementById("temperature");
-        tempElement.innerHTML = `${temperature}<i id="icon-thermometer" class="wi wi-thermometer"></i>` ;
-      var humidityElem = document.getElementById("humidity");
-        humidityElem.innerHTML = `${humidity}%`;
-      var windElem = document.getElementById("wind");
-        windElem.innerHTML = `${windSpeed}m/h`;
-      var description = document.getElementById("description");
-        description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p>${desc}</p>`;
-      var time =document.getElementById("time");
-        time.innerHTML = `${curr_time}`;
-      
-    }
-  })
-}
+      let temperature=0 //humidity
+      let humidity=0;
+      let windSpeed=0.0;
+      let desc='rain';
+      let curr_time='Mar 31 2020 23:23:23';
+      let cur_rain=''
 
-getWeather(40.863372, -74.113181);
+      let tempElement = document.getElementById("temperature");
+        tempElement.innerHTML = `${temperature}<i id="icon-thermometer" class="wi wi-thermometer"></i>` ;
+      let humidityElem = document.getElementById("humidity");
+        humidityElem.innerHTML = `${humidity}%`;
+      let windElem = document.getElementById("wind");
+        windElem.innerHTML = `${windSpeed}m/h`;
+      let description = document.getElementById("description");
+        description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p>${desc}</p>`;
+      let time =document.getElementById("time");
+        time.innerHTML = `${curr_time}`;
+      let rainfall =document.getElementById("visibility");
+         rainfall.innerHTML=`${cur_rain}`
 
 var myVar = '';
 function getAddr(latitude, longtitude) {
@@ -249,14 +299,9 @@ function getAddr(latitude, longtitude) {
     success:function(data){
       myVar=data;
     },
-    // success: data => {
-    //   //console.log(data);
-    // }
   })
   return myVar;
 }
-//getAddr(-95.377, 29.333);
-
 
 function coordinate_to_address(objects,callback)
 {
@@ -306,17 +351,11 @@ function map_create(img_id)
     cur.lastIndexOf("-") + 2
 )
  
-  console.log(cur)
-  console.log(res_img);
-  console.log(object_indicator);
   let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
   let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
- // console.log(vulnerable_objects[object_indicator]['cluster_objects'][res_img])
   let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
   let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];      
   var baltimore = new google.maps.LatLng(object_lat, object_lon);
-  //console.log(observer_lat)
-  //console.log(object_lon)
   var baltimore1 = new google.maps.LatLng(observer_lat, observer_lon);
   var panorama = new google.maps.StreetViewPanorama(
     document.getElementById('pano'),
@@ -513,7 +552,7 @@ function distance_to_reported(reported_long,reported_lat,inlet_long,inlet_lat)
         return true;
 }
    
-
+var url = Cesium.buildModuleUrl('./images/power.png')
 var object_loc;
 fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
   .then(response => response.json())
@@ -533,8 +572,10 @@ fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
       let image_url = cluster_obj[0]['image'];
       let image_date= cluster_obj[0]['createdDate'];
       let object_type=cluster_obj[0]['classification'];
-      //let cluster_addr=object['cluster_address'];
-     // console.log(image_url)
+      entity.billboard= new Cesium.BillboardGraphics();
+      entity.billboard.image= pinBuilder.fromText('?', Cesium.Color.BLACK, 48).toDataURL()
+      entity.billboard.verticalOrigin=Cesium.VerticalOrigin.BOTTOM
+
       entity.description = '\
       <style>\
       .rotate90 {\
@@ -618,10 +659,11 @@ fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
     <img data-object-id='+entity.name+' class="rotate90" src='+image_url+' >\
     <br style = "line-height:10;"><br>\
   ';
-    entity.point = {
-    color : Cesium.Color.BLUE,
-    pixelSize : 15,
-  };
+  //   entity.point = {
+  //   color : Cesium.Color.BLUE,
+  //   pixelSize : 15,
+  //   height: 0
+  // };
     var updated=viewer.entities.add(entity);
       }
   });
@@ -758,7 +800,7 @@ power4.then(function(dataSource) {
   var entities = dataSource.entities.values;
     for (var i = 0; i < entities.length; i++) {
         var entity = entities[i];
-        entity.polygon.material=Cesium.Color.fromRandom();
+        entity.polygon.material=new Cesium.Material(Cesium.Color.YELLOW);
         entity.polygon.outline=false;
         entity.polygon.heightReference=Cesium.HeightReference.CLAMP_TO_GROUND;
     }      
@@ -780,7 +822,7 @@ power5.then(function(dataSource) {
       var entity = entities[i];
       entity.billboard = undefined; 
       entity.polyline.clampToGround=true;
-      entity.polyline.material=Cesium.Color.Red;
+      entity.polyline.material=new Cesium.Material(Cesium.Color.YELLOW);
     }  
 });
     
