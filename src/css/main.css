@@ -1,3 +1,70 @@
+
+
+/*  @media (min-width: 768px)
+ .container-md, .container-sm {
+    max-width: 720px;
+
+}*/
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
+    top: 0px;
+}
+
+.cesium-viewer {
+    font-family: sans-serif;
+    font-size: 16px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    top: 8%;
+    left: 0;
+    width: 100%;
+    height: 92%;
+}
+  .panel {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    
+    display: -moz-flex;
+    -moz-flex-direction: column;
+    -moz-flex-wrap: nowrap;
+    
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    
+    display: -ms-flex;
+    -ms-flex-direction: column;
+    -ms-flex-wrap: nowrap;
+    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+header {
+    background-color: #841e27;
+    padding: 0;
+    -moz-flex-shrink: 0;
+    -webkit-flex-shrink: 0;
+    -ms-flex-shrink: 0;
+    flex-shrink: 0;
+}
+h3{font-size:1.6vw;}
+h5{font-size:1.3vw;}
+h8#location.text-center{font-size:1.2vw;}
+p{font-size:1.2vw;}
+div#time.humidity-data.col-12.text-center{
+font-size:1.2vw;
+}
+.inside {
+  list-style-position: outside;
+  padding:10px;
+}
 .navbar-brand {
   padding: 0px;
 }
@@ -36,7 +103,7 @@
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 1.1vw;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -64,14 +131,14 @@
 }
 .j
 {
-    top: 0%;
+    top: 8vh;
     background: rgba(42, 42, 42, 0.7);
     border: 1px solid #444;
     padding: 5px 10px;
     color: #fff;
     line-height: 150%;
     font-size: small;
-    width:15.5%;
+    width:12.5vw;
     position:absolute;
     z-index : 1;
 
@@ -125,21 +192,6 @@
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-}
-.btn btn-info{
-
-
-}
-.backdrop {
-    background: rgba(42, 42, 42, 0.7);
-    border-radius: 5px;
-    border: 1px solid #444;
-    padding: 5px 10px;
-    color: #fff;
-    line-height: 150%;
-    font-size: small;
-    width:16%;
-    z-index : 1;
 }
 
 .test{
@@ -243,23 +295,22 @@ legend.scheduler-border {
 
 
 .foo {
-  float: left;
+  float:left;
   width: 10px;
   height: 10px;
   margin: 5px;
-  border: 1px solid rgba(0, 0, 0, .2);
+  
 }
 .dot{
 float: left;
   width: 10px;
   height: 10px;
   margin: 5px;
-  border: 1px solid rgba(0, 0, 0, .2);
   border-radius: 50%;
 }
 .blue {
 
-  background: #0000CD;
+  background: #000000;
 }
 .link-right {
   width: 50px;
@@ -305,29 +356,17 @@ float: left;
 
 
 .back {
-    display: inline-block;
+    /*display: inline-block;*/
     background: rgba(42, 42, 42, 0.7);
     border-radius: 5px;
     border: 1px solid #444;
     padding: 5px 10px;
     color: #fff;
-    line-height: 150%;
-    font-size: small;
+    /*line-height: 150%;*/
+    /*font-size: small;*/
+
 }
-#back1 {
-    position: fixed;
-    top: 0px;
-    left:15.5%;
-    min-height: 20vh;
-    min-width: 19vw;
-}
-#back2 {
-    position: inherit;
-    top: 25.2vh;
-    left:15.5%;
-    min-height: 15vh;
-    min-width: 21vw;
-}
+
 .slidecontainer {
   width: 100%;
 }
@@ -363,81 +402,49 @@ float: left;
   cursor: pointer;
 }
 
-        .showme {
-            width: 20%;
+        .FloodDemage {
+           width: 20%;
             padding: 50px 0;
             text-align: center;
             margin-top: 0px;
-            left: 279px;
             position: fixed;
+            padding:0px;
+            top: 25.2vh;
+            margin: 0 auto;
+            left:12.5vw;
+            /*height: calc(15vh-100px);*/
+
+            width: 21vw;
           
         }
 
-        .PowerC {
-            width: 20%;
-            padding: 50px 0;
+        .PowerDemage {
             text-align: center;
             margin-top: 0px;
-            left: 279px;
             position: fixed;
+            padding:0px;
+            top: 45.5vh;
+            margin: 0 auto;
+            left:12.5vw;
+            width: 20.5vw;
            
         }
-
-        #showme1 {
-            width: 20%;
-            padding: 50px 0;
-            text-align: center;
-            margin-top: 30px;
-            left: 279px;
-            position: fixed;
-         
-        }
-
-        #PowerC1 {
-            width: 20%;
-            padding: 50px 0;
-            text-align: center;
-            margin-top: 30px;
-            left: 279px;
-            position: fixed;
-            
-        }
-
 
         .hide {
             display: none;
         }
 
-        .hide1 {
-            display: none;
-        }
-
-        .showme h4 {
-            font-size: 15px;
-            margin-top: 10px;
-            text-align: center;
-        }
         .scheduler-border .u1 hr{
             width:10%;
         }
 #other
 {
     position: fixed;
-    top: 0vh;
-    left:15.5%;
-    min-height: 20vh;
+    top: 8vh;
+    left:12.5vw;
+    min-height: 33.2vh;
     min-width: 19vw;
 }
-
-.title_bar {
-    background: red;
-    height: 25px;
-    width: auto;
-    border-bottom: 1px solid #DCDCDC;
-}
-
-a
-{color:#fff;}
 
 .cesium-viewer-bottom {
 display:none;
@@ -460,17 +467,17 @@ display:none;
 }
 
 #description {
-  font-size: 0.8rem;
+  font-size: 1.5vh;
 }
 #temperature {
-  font-size: 1rem;
+  font-size: 1.5vh;
   margin-top: 0.6rem;
 }
 
 #humidity, #wind, #visibility {
-  font-size: 1rem;
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
+  font-size: 1.9vh;
+  padding-top: 0.2vh;
+  padding-bottom: 0.2vh;
 }
 
 #icon-thermometer {
@@ -480,8 +487,8 @@ display:none;
 .humidity, .wind, .visibility {
   border-top: 1px solid white;
   border-bottom: 1px solid white;
-  font-size: 1.0rem;
-  padding: 1.0rem;
+  font-size: 2.0vh;
+  padding: 1.0vh;
 
 }
 .weather-head {
@@ -528,7 +535,7 @@ button.cesium-infoBox-close:hover{background:#888;color:#000}button.cesium-infoB
 .cesium-viewer-bottom1 {
     /* display: none; */
 }
-.cesium-widget-credits {
+/*.cesium-widget-credits {
     display: block;
     position: absolute;
     bottom: 30;
@@ -537,4 +544,4 @@ button.cesium-infoBox-close:hover{background:#888;color:#000}button.cesium-infoB
     font-size: 10px;
     text-shadow: 0px 0px 2px #000000;
     padding-right: 5px;
-}
+}*/

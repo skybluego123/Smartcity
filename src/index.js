@@ -188,7 +188,7 @@ $('#myRange').change(function() {
 var myVar = setInterval(myTimer, 10000);
 function myTimer() {
   var cur_speed=Math.round(parseInt($('#wind').text()));
-  console.log(cur_speed);
+  //console.log(cur_speed);
       $.ajax({
     url: 'https://jvc8szgvya.execute-api.us-west-2.amazonaws.com/default/networkanalysis',
     data: {
@@ -218,18 +218,18 @@ function myTimer() {
 
 var myPos = { my: "center center", at: "center-370 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(37161)
-//     })
-// );
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(37161)
+    })
+);
 
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(36440)
-//     })
-// );
-//
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(36440)
+    })
+);
+
 
 var r= 0, g=255, b=0;
 var fadeColor = new Cesium.CallbackProperty(function(){

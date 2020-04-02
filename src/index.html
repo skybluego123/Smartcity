@@ -6,21 +6,21 @@
     outline: 0 !important;
     }
 
-       #heatmap{
+    #heatmap{
         width: 90%;
         height:90%;        
+        }
+
+    #cesiumContainer {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #000000;
+    }
+    .cesium-viewer{
+    position: absolute;
     }
 
-        #cesiumContainer {
-
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #000000;
-}
-.cesium-viewer{
-position: absolute;
-}
     </style>
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -43,20 +43,22 @@ position: absolute;
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
-
-<!-- <script type='text/javascript' src='https://darksky.net/widget/graph/30.5898,-96.2946/us12/en.js?width=100%&height=320&title=college station&textColor=333333&bgColor=FFFFFF&z-index=1&transparency=false&fontFamily=Default&customFont=&units=us&graph=temperature_graph&timeColor=333333&tempColor=333333&lineColor=333333&markerColor=333333'></script> -->
 </head>
 
 <body>
-    <!-- Navigation -->
-<!-- Page Content -->
 
 <div id="cesiumContainer"></div>
 <div id="timeControlsContainer"></div>
-<div class="cesium-viewer-bottom1" style="left: 5%; bottom: 70px;"><div class="cesium-widget-credits" style="left: 2%; bottom: 13%;"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img title="Cesium ion" src="./images/logo1.png" height="150" width="150"></a>
+<!-- <div class="cesium-viewer-bottom1" style="left: 5%; bottom: 70px;"><div class="cesium-widget-credits" style="left: 2%; bottom: 13%;"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img title="Cesium ion" src="./images/logo1.png" height="150" width="150"></a>
             </div></div></div></div>
+ -->
+ <div class="panel">
+    <header><h2>Texas A&M University</h2>   
+     <span style="right:0px;top:0px; position:fixed; padding-right:15px;" width="100">
+        <a href='http://people.tamu.edu/~yham/'>Dr Ham's Lab</a></span>
+        </header>
 
+</div>
 <div id="heatmap" display="none"></div>
     <div class="j">
     <h3>Disaster management</h3> 
@@ -65,31 +67,14 @@ position: absolute;
 
 <label class="container_t">blackout<input type="checkbox"  name="power object" id="y"/><span class="checkmark"></span>
 </label>
-<!-- <h4>Texas A&M University</h4>
-<h5>Sensing and Analytics for Sustainable and Resilient Built Environments Lab</h5> -->
- 
-<!-- Brand and toggle get grouped for better mobile display -->
 
-    <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      
-      <a class="navbar-brand" href="https://cesium.com/cesiumjs/"><img src="http://placehold.it/140x60&text=Logo"></a>
-      <p class="navbar-text">Texas A&M University</p>
-    </div>
-
- 
-  </div>
-  <!-- /.container-fluid --> 
-</nav>
 
 <hr />
 <fieldset class="scheduler-border">
 <legend class="scheduler-border">Map legend</legend>
-    <ul id="legend_list" style="list-style-type:none">           
-            <li><div class="dot blue"></div>
-            <div><label for="myid1">reported object</label></div></li>
+    <ul class = "inside" id="legend_list" style="list-style-type:none">            
+            <div class="foo blue"></div>
+            <div><label for="myid1">reported object</label></div>
             <li data-type='flood object'><div class="foo purple">
             </div><label for="myid2">Wire</label></li>
             <li data-type='flood object' ><div class="foo purple">
@@ -99,12 +84,14 @@ position: absolute;
             <li data-type='power object' ><div class="dot white"></div>
             <div><label for="myid2">Inlet</label></div></li>
     </ul>
-</fieldset>
+
+
 
 </div>
+
 <div class="back text-center" id = "other">
      <h5>Weather Infomation</h5>
-        <div class="container" id="flood">       
+        <div class="container">       
         <div class="row">
             <div class="weather-head">
                 <h8 id="location" class="text-center">Houston, US</h8>
@@ -144,32 +131,33 @@ position: absolute;
         </div>
         </div>
 </div>
-<div id="heatmap" v-show="false"></div>
-<div class="PowerC hide1" >
-    <div id="PowerC1">
-        <div class ="back" id="back2">
+
+
+<div class="PowerDemage hide" >
+        <div class ="back">
             <h5>Wind Speed</h5>
             <div class="slidecontainer">
             <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
             <p>Current windspeed: <span id="demo"></span></p>
             </div>
         </div>
-    </div>
 </div>
 
-<div class="showme hide">
-    <div id="showme1">
-        <div class ="back" id="back2">
+<div class="FloodDemage hide">
+        <div class ="back">
             <h5>Current Rainfall</h5>
             <div class="slidecontainer">
                 <input type="range" min="0" max="255" value="0" class="slider" id="myRange1">
                 <p>Current Rainfall: <span id="demo1"></span></p>
             </div>
-        </div>
-    </div>
+        </div>    
 </div>
 
+
 </div>
+
+<div id="heatmap" v-show="false"></div>
+
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
     <div class="dialog" id="dialog2" title="Google street view">
         <div id="pano" style="width: 50%; height: 100%;float:left"></div>
@@ -215,14 +203,14 @@ function checkStatus1(){
     });
 });
     document.getElementById('x').onchange = function () {
-        var cart = document.getElementsByClassName('showme')[0];
+        var cart = document.getElementsByClassName('FloodDemage')[0];
         if (this.checked) cart.classList.remove('hide');
         else cart.classList.add('hide');
     }
     document.getElementById('y').onchange = function () {
-        var cart1 = document.getElementsByClassName('PowerC')[0];
-        if (this.checked) cart1.classList.remove('hide1');
-        else cart1.classList.add('hide1');
+        var cart1 = document.getElementsByClassName('PowerDemage')[0];
+        if (this.checked) cart1.classList.remove('hide');
+        else cart1.classList.add('hide');
     }
 
      </script>
