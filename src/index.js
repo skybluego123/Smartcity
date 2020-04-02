@@ -855,7 +855,7 @@ flood1.then(function(dataSource) {
       }else{
         entity.billboard = undefined; 
         entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.YELLOW,
+            color: Cesium.Color.WHITE,
             pixelSize: 13,
             heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
         });
