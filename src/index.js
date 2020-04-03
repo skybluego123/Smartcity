@@ -20,6 +20,9 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 
 });
 
+//viewer.animation.viewModel.multiplier=2000.0;
+//viewer.clock.multiplier = 10;
+
 var pinBuilder = new Cesium.PinBuilder();
 var start_time;
 var weather_data;
@@ -81,7 +84,7 @@ function update_weather(data,currentTime){
       
       if(cur_desc=='Rain')
       {
-        cur_rain=weather_data['list'][i]['rain']['3h']
+        cur_rain=weather_data['list'][wind_track]['rain']['3h']
       }
 
       let windElem = document.getElementById("wind");
@@ -112,10 +115,6 @@ viewer.clock.onTick.addEventListener(function(clock){
 
 viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
 
-viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
-viewer.animation.viewModel.timeFormatter = localeTimeFormatter
-viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
-
 // Date formatting to a global form
 function localeDateTimeFormatter(datetime, viewModel, ignoredate) {
     var julianDT = new Cesium.JulianDate(); 
@@ -137,6 +136,10 @@ function localeDateTimeFormatter(datetime, viewModel, ignoredate) {
 function localeTimeFormatter(time, viewModel) {
     return localeDateTimeFormatter(time, viewModel, true);
 }
+
+viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
+viewer.animation.viewModel.timeFormatter = localeTimeFormatter
+viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
 
 
 var slider = document.getElementById("myRange");
@@ -438,8 +441,6 @@ var CheckFloodI = document.getElementById('x');
 var CheckPowerI = document.getElementById('y');  //updateobj
 var updateP = document.getElementById('updateobj');
 
-
-//var power3 = Cesium.GeoJsonDataSource.load('./geoMappings/power.geojson');
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
