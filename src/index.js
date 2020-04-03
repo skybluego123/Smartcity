@@ -219,7 +219,7 @@ function myTimer() {
 
 }
 
-var myPos = { my: "center center", at: "center-370 center", of: window };
+var myPos = { my: "center center", at: "center-390 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
 var tileset = viewer.scene.primitives.add(
     new Cesium.Cesium3DTileset({
@@ -410,12 +410,11 @@ function img_dialog(img_id)
       draggable: true,
       height: dHeight,
       position: myPos_right,
-      buttons: {
+     buttons: {
       Close: function() {
           $(this).dialog('close');
         }
-      },
-
+     },
       open: function(){
           map_create(img_id);
       }
@@ -717,8 +716,8 @@ viewer.infoBox.frame.addEventListener('load', function() {
     current_id1='i'+object_id+'-'+track.toString();
     let wWidth = $(window).width();
     let wHeight = $(window).height();
-    let dWidth = wWidth * 0.5;
-    let dHeight = wHeight * 0.5; 
+    let dWidth = wWidth * 0.4;
+    let dHeight = wHeight * 0.4; 
 
     $(function(){
       $( "#dialog1" ).dialog({
