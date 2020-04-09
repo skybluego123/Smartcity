@@ -116,7 +116,7 @@ function update_weather(data,currentTime){
       let description = document.getElementById("description");
       description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p class="desc">${cur_desc}</p>`;
       let rainfall =document.getElementById("visibility");
-         rainfall.innerHTML=`${cur_rain}`
+         rainfall.innerHTML=`${cur_rain}mm`
     }
 
 
