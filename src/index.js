@@ -20,11 +20,28 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 
 });
 
+
+
+
 //viewer.animation.viewModel.multiplier=2000.0;
 //viewer.clock.multiplier = 10;
 
 var pinBuilder = new Cesium.PinBuilder();
-var start_time;
+var now = new Cesium.JulianDate();
+var res = new Cesium.JulianDate();
+var start_time=now;
+
+
+// $('#time_default').on('click', function(){
+// viewer.clock.startTime = now.clone();
+// viewer.clock.stopTime = Cesium.JulianDate.addDays(now,4.0,res);
+// viewer.clock.multiplier = 1.0;
+
+// viewer.timeline.updateFromClock();
+// viewer.timeline.zoomTo(viewer.clock.startTime, viewer.clock.stopTime);
+
+// });
+
 var weather_data;
 
 var pair_time=[]
@@ -89,14 +106,15 @@ function update_weather(data,currentTime){
 
       let windElem = document.getElementById("wind");
       windElem.innerHTML = `${cur_wind.toFixed(3)}m/s`;
-      let time =document.getElementById("time");
-      time.innerHTML = `${Cesium.JulianDate.toDate(currentTime).toString().substring(4,25)}`;
+      // let time =document.getElementById("time");
+      // time.innerHTML = `${Cesium.JulianDate.toDate(currentTime).toString().substring(4,25)}`;
       let tempElement = document.getElementById("temperature");
-      tempElement.innerHTML = `${cur_temp.toFixed(3)}<i id="icon-thermometer" class="wi wi-thermometer"></i>` ;
+      tempElement.innerHTML = `<i id="icon-thermometer" class="wi wi-thermometer" style=" font-size: 0.9rem;
+  padding-bottom: 0.1rem;"></i><p class="temp">${cur_temp.toFixed(3)}<span>&#8457;</span></p>` ;
       let humidityElem = document.getElementById("humidity");
       humidityElem.innerHTML = `${cur_humi}%`;
       let description = document.getElementById("description");
-      description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p>${cur_desc}</p>`;
+      description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p class="desc">${cur_desc}</p>`;
       let rainfall =document.getElementById("visibility");
          rainfall.innerHTML=`${cur_rain}`
     }
@@ -268,26 +286,6 @@ var water_height = new Cesium.CallbackProperty(function(result){
     return water_height;
 },false);
 
-      let temperature=0 //humidity
-      let humidity=0;
-      let windSpeed=0.0;
-      let desc='rain';
-      let curr_time='Mar 31 2020 23:23:23';
-      let cur_rain=''
-
-      let tempElement = document.getElementById("temperature");
-        tempElement.innerHTML = `${temperature}<i id="icon-thermometer" class="wi wi-thermometer"></i>` ;
-      let humidityElem = document.getElementById("humidity");
-        humidityElem.innerHTML = `${humidity}%`;
-      let windElem = document.getElementById("wind");
-        windElem.innerHTML = `${windSpeed}m/h`;
-      let description = document.getElementById("description");
-        description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p>${desc}</p>`;
-      let time =document.getElementById("time");
-        time.innerHTML = `${curr_time}`;
-      let rainfall =document.getElementById("visibility");
-         rainfall.innerHTML=`${cur_rain}`
-
 var myVar = '';
 function getAddr(latitude, longtitude) {
   $.ajax({
@@ -423,7 +421,7 @@ function img_dialog(img_id)
 }
 
 viewer.scene.globe.depthTestAgainstTerrain = true;
-var initialPosition = Cesium.Cartesian3.fromDegrees(-95.334726705707027, 29.764084676987729, 253);
+var initialPosition = Cesium.Cartesian3.fromDegrees(-95.364808777523, 29.736084676987729, 953);
 var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 viewer.clock.shouldAnimate = true; 
 
@@ -843,23 +841,20 @@ flood1.then(function(dataSource) {
     for(var i = 0; i < entities.length; i++) {
       let entity = entities[i];
       let Coordinate="";
-      //Coordinate=entity.properties.Coordinate.valueOf();
-      //console.log(Coordinate)
-      if(i==40){
+
         entity.billboard = undefined; 
-        entity.point = new Cesium.PointGraphics({
+        entity.model= new Cesium.ModelGraphics({
+          uri: './geoMappings/inlet.glb',
+          scale: 0.1,
           color: Cesium.Color.WHITE,
-          pixelSize: 13,
           heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
         });
-      }else{
-        entity.billboard = undefined; 
-        entity.point = new Cesium.PointGraphics({
-            color: Cesium.Color.WHITE,
-            pixelSize: 13,
-            heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
-        });
-      }
+        // entity.point = new Cesium.PointGraphics({
+        //     color: Cesium.Color.WHITE,
+        //     pixelSize: 13,
+        //     heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+        // });
+      
       }
     });
     

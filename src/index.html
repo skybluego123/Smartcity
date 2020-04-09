@@ -24,11 +24,14 @@
     </style>
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <script src="https://kit.fontawesome.com/f7a4761a7a.js" crossorigin="anonymous"></script>
     <!-- Make the app on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Smart City</title>
     <!-- The Cesium library. -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -43,6 +46,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
 </head>
 
 <body>
@@ -52,47 +56,69 @@
 <!-- <div class="cesium-viewer-bottom1" style="left: 5%; bottom: 70px;"><div class="cesium-widget-credits" style="left: 2%; bottom: 13%;"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img title="Cesium ion" src="./images/logo1.png" height="150" width="150"></a>
             </div></div></div></div>
  -->
+<!-- <div class = "wrapper"> -->
  <div class="panel">
     <header>
-    <img src="./images/logo2.png" style="float: left;" height="50" width="50" alt="logo" border="0">  
-    <h2 style="color:#ffffff">Dr Ham's Lab at Texas A&M University</h2> 
-     <span style="right:0px;top:0px; position:fixed; padding-right:15px;" width="100">
-        <a href='http://people.tamu.edu/~yham/'>Sensing and Analytics for Sustainable and Resilient Built Environments Lab</a></span>
+    <!-- <h3 style="color:#ffffff">Dr Ham's Lab at Texas A&M University</h3>  -->
+    <h3 style="color:#ffffff">Digital Twin Smart City</h3> 
+     <span style="right:0px;top:0px; position:absolute; padding-right:15px; float:right min-width=300px" id="title_text">
+        <a href='http://people.tamu.edu/~yham/'>Dr Ham's Lab: Sensing and Analytics for Sustainable <br/>and Resilient Built Environments Lab</a></span>
+       <!--  <div id="biglist"></div> -->
         </header>
-
 </div>
+<div class="btn-group" role="group" data-toggle="button" id="button_group" aria-label="Button group with nested dropdown">
+  <button type="button"   data-box="div1" class="btn btn-secondary">
+    <i class="fas fa-bars"></i>Objects & Legend</button>
+  <button type="button"  data-box="div2" class="btn btn-secondary"> 
+    <i class="fas fa-layer-group"></i>Potential Demage</button>
+  <button type="button"  data-box="div3" class="btn btn-secondary">
+  <i class="fas fa-cloud"></i>Weather Information</button>
+  
+    <button id="btnGroupDrop1"  data-box="div4" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-wind"></i>
+      Historical Event
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <a class="dropdown-item" href="#">Dropdown link</a>
+      <a class="dropdown-item" href="#">Dropdown link</a>
+    </div>
+</div>
+
 <div id="heatmap" display="none"></div>
-    <div class="j">
-    <h3>Disaster management</h3> 
-    <label class="container_t">flood<input type="checkbox"  name="flood object" id="x"/><span class="checkmark"></span>
-</label>
-
-<label class="container_t">blackout<input type="checkbox"  name="power object" id="y"/><span class="checkmark"></span>
-</label>
 
 
-<hr />
-<fieldset class="scheduler-border">
-<legend class="scheduler-border">Map legend</legend>
-    <ul class = "inside" id="legend_list" style="list-style-type:none">            
-            <div class="foo blue"></div>
-            <div><label for="myid1">reported object</label></div>
-            <li data-type='flood object'><div class="foo purple">
-            </div><label for="myid2">Wire</label></li>
-            <li data-type='flood object' ><div class="foo purple">
-            </div><label for="myid2">Substation</label></li>
-            <li data-type='flood object'><div class="dot green"></div>
-            <label for="myid2">Utility pole</label></li>
-            <li data-type='power object' ><div class="dot white"></div>
-            <div><label for="myid2">Inlet</label></div></li>
-    </ul>
+<div id="divWrap">
+    <div class="j hide div1" >
+        <label class="container_t">flood<input type="checkbox"  name="flood object" id="x"/><span class="checkmark"></span>
+        </label>
+
+        <label class="container_t">blackout<input type="checkbox"  name="power object" id="y"/><span class="checkmark"></span>
+        </label>
 
 
+        <fieldset class="scheduler-border"> 
+        <!-- <legend class="scheduler-border">Map legend</legend> -->
+             <ul class = "inside" id="legend_list" style="list-style-type:none">            
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <label for="myid1">Reported object</label>
+                    <li data-type='flood object'>
+                    <span style="color:#FFFF00">&#8213;</span>
+                    <label for="myid2">Wire</label></li>
+                    <li data-type='flood object'>
+                    <i class="fas fa-square-full" style="color:#FFFF00"></i>
+                    <label for="myid2">Substation</label></li>
+                    <li data-type='flood object'>
+                    <span style="color:#28a745;padding-left: 5px;padding-right:3px">&#8607;</span>
+                    <label for="myid2"> Utility pole</label></li>
+                    <li data-type='power object' >
+                    <span style="color:#A0A0A0">&#8855;</span>
+                    <label for="myid2">Inlet</label></li>
+            </ul>
 
-</div>
+        </fieldset>
 
-<div class="back text-center" id = "other">
-     <h5>Weather Infomation</h5>
+    </div>
+    <div class="back text-center hide other div3" >
         <div class="container">       
         <div class="row">
             <div class="weather-head">
@@ -103,19 +129,21 @@
                         <p class="desc">thunderstorm</p>            
                     </div>
                     <div id="temperature" class="col-6 text-center">
-                    60<i id="icon-thermometer" class="wi wi-thermometer"></i>                  
+                        <i id="icon-thermometer" class="wi wi-thermometer"></i> 
+                    <p class="temp">60<span>&#8457;</span></p>       
                     </div>  
                 </div>
                 <div class="weather-body">
                     <div class="row">
+
                         <div class="humidity col-4 text-center">
-                            <i class="wi wi-raindrop"></i><span> Humidity</span>
+                            <i class="wi wi-raindrop"></i><br /><span> Humidity</span>
                         </div>
                         <div class="wind col-4 text-center">
-                            <i class="wi wi-strong-wind"></i><span> Wind Speed</span>
+                            <i class="wi wi-strong-wind"></i><br /><span> Wind Speed</span>
                         </div>
                         <div class="visibility col-4 text-center">
-                            <i class="fa fa-eye"></i><span>Rainfall</span>
+                            <i class="fa fa-eye"></i><br /><span>Rainfall</span>
                         </div>              
                     </div>
                     <div class="row">
@@ -124,40 +152,38 @@
                         <div id="visibility" class="degree-data col-4 text-center">0</div>
                     </div>
                     <div class="row">
-                        <div id="time" class="humidity-data col-12 text-center">
-                            Time
+                        <!-- <div id="time" class="humidity-data col-12 text-center"> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         </div>
-</div>
 
-
-<div class="PowerDemage hide" >
-        <div class ="back">
+   <div class="Demage hide div2">
+        <div class ="back hide" id="PowerDemage" >
             <h5>Wind Speed</h5>
             <div class="slidecontainer">
             <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
             <p>Current windspeed: <span id="demo"></span></p>
             </div>
         </div>
-</div>
-
-<div class="FloodDemage hide">
-        <div class ="back">
+         <div class ="back hide" id="FloodDemage">
             <h5>Current Rainfall</h5>
             <div class="slidecontainer">
                 <input type="range" min="0" max="255" value="0" class="slider" id="myRange1">
                 <p>Current Rainfall: <span id="demo1"></span></p>
             </div>
-        </div>    
-</div>
-
+        </div>  
 
 </div>
 
+    <div class="hide" id="div4"></div>
+
+</div>
+
+
+<button type="button" class="btn btn-default" id="time_default">Default</button>
 <div id="heatmap" v-show="false"></div>
 
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
@@ -170,8 +196,6 @@
 
 </html>
 <script>
-
-
 
 
 var check = $("#x");
@@ -204,16 +228,34 @@ function checkStatus1(){
            $("#legend_list [data-type='"+hide+"']").toggle();
     });
 });
-    document.getElementById('x').onchange = function () {
-        var cart = document.getElementsByClassName('FloodDemage')[0];
-        if (this.checked) cart.classList.remove('hide');
-        else cart.classList.add('hide');
-    }
+
+document.getElementById('x').onchange = function () {
+        var cart = document.getElementById('FloodDemage');
+            if (this.checked) 
+                cart.classList.remove('hide');
+    else 
+        cart.classList.add('hide');
+}
+
     document.getElementById('y').onchange = function () {
-        var cart1 = document.getElementsByClassName('PowerDemage')[0];
+        var cart1 = document.getElementById('PowerDemage');
         if (this.checked) cart1.classList.remove('hide');
         else cart1.classList.add('hide');
     }
+
+$('#button_group > .btn-secondary').on('click', function () {
+    console.log($(this).attr('data-box'))
+    var divID = $(this).attr('data-box');
+    // if(divID=="div2")
+    console.log(document.getElementsByClassName(divID)[0].classList)
+    // console.log(divId)
+   // document.getElementById(divID).classList.remove('hide');
+    // $('#'+divId).classList.remove('hide');
+    // $(this).classList.remove('hide').siblings().addClass('hide');
+    $('.' + divID).removeClass('hide').siblings().addClass('hide');
+
+});
+
 
      </script>
 

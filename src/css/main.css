@@ -5,20 +5,92 @@
     max-width: 720px;
 
 }*/
- @media (min-width: 1039px) and (max-width: 10000px) {
-
-   .other {
-   width:100%;
+/*.btn-group button{
+    background-color:green;
+}*/
+.dropdown-menu { 
+  background-color: rgba(42, 42, 42, 0.8) !important;
+  /*width:200px;*/
 }
 
-} 
+ .dropdown-menu > a:hover, .dropdown-menu > a:focus {
+            background-color:#4b4f53 !important;
+ }
+.dropdown-menu a{
+    color: #ffffff !important;
+
+}
+#time_default{
+    position: absolute;
+    /* bottom: 0px; */
+    left: 12% !important;
+    bottom: 7% !important;
+    color: white !important;
+}
+#divWrap{height:100%;width:100%;}
+
+#div2{}
+
+#div4{}
+/*box attributes*/
+ .Active{
+    display:block;
+    opacity:1;
+  /*  -webkit-animation:fadeUp ease-in-out 0.5s;
+    animation:fadeUp ease-in-out 0.5s;*/
+}
+@-webkit-keyframes fadeUp{
+  from{opacity:0;margin-top:30px;}
+  to  {opacity:1;margin-top:0;}
+}
+@keyframes fadeUp{
+  from{opacity:0;margin-top:30px;}
+  to  {opacity:1;margin-top:0;}
+}
+
+/*span {
+  content: "\2015";
+  color:#FFFF00;
+}
+*/
+.wrapper {
+  width: 28%;
+  /* whatever width you want */
+  display: inline-block;
+  position: relative;
+}
+.wrapper:after {
+  padding-top: 56.25%;
+  /* 16:9 ratio */
+  display: block;
+  content: '';
+}
+.btn{
+   background-color:rgba(42, 42, 42, 0.8) !important;
+}
+.btn-group, .btn-group-vertical{
+  top:3.0vh;
+  width:30%;
+  z-index: 1;
+  position:absolute;
+  font-size: 0.9vw;
+}
+/*@media screen and (max-width: 1585px){
+.panel{
+    width: 600px;
+   
+}
+
+}*/
 
 a {
     color: #ffffff;
     text-decoration: none;
     background-color: transparent;
     top: 0px;
+    font-size: 1.0vh;
 }
+
 
 .cesium-viewer {
     font-family: sans-serif;
@@ -26,16 +98,19 @@ a {
     overflow: hidden;
     display: block;
     position: relative;
-    top: 3.9vh;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 96.1vh;
+    height: 100%;
 }
   .panel {
+
     position: absolute;
-    top: 0;
-    width: 100%;
-    
+    min-width: 440px;  
+   /* width:fit-content;*/
+    top: 0px;
+    width: 30.0vw;
+    z-index: 1;
     display: -moz-flex;
     -moz-flex-direction: column;
     -moz-flex-wrap: nowrap;
@@ -54,21 +129,30 @@ a {
 }
 
 header {
-    background-color: #841e27;
+
+   min-height: 200px;
+    min-width: 440px;  
+    border-radius: 1px;
+    background-color: rgba(42, 42, 42, 0.8);
     padding: 0;
-    -moz-flex-shrink: 0;
+   /* -moz-flex-shrink: 0;
     -webkit-flex-shrink: 0;
     -ms-flex-shrink: 0;
-    flex-shrink: 0;
+    flex-shrink: 0;*/
     min-height: fit-content;
 }
-h2{font-size:1.9vw;color:#ffffff;}
-h3{font-size:1.2vw;}
-h5{font-size:1.1vw;}
+#title_text{
+   word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+   
+}
+h2{font-size:1.7vw;color:#ffffff;}
+h3{font-size:1.0vw;}
+h5{font-size:0.9vw;}
 h8#location.text-center{font-size:1.0vw;}
-p{font-size:1.0vw;}
+p{font-size:0.9vw;}
 div#time.humidity-data.col-12.text-center{
-font-size:1.0vw;
+font-size:0.9vw;
 }
 
 #canvasMap {
@@ -83,7 +167,7 @@ font-size:1.0vw;
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 1.1vw;
+  font-size: 1.1vh;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -109,21 +193,7 @@ font-size:1.0vw;
   background-color: #40403f;
   border: 1px solid #212529;
 }
-.j
-{
-    top: 5.25vh;
-    background: rgba(42, 42, 42, 0.7);
-    border: 1px solid #444;
-    padding: 5px 10px;
-    color: #fff;
-    line-height: 150%;
-    font-size: small;
-    width:12.5vw;
-    position:absolute;
-    z-index : 1;
-    min-width: fit-content;
 
-}
 
 .t_button {
   border: 1px solid #444;
@@ -361,18 +431,18 @@ float: left;
   cursor: pointer;
 }
 
-.FloodDemage {
+.Demage {
   text-align: center;
   margin-top: 0px;
   position: fixed;
   padding:0px;
-  top: 38.5vh;
+  top: 9vh;
   margin: 0 auto;
-  left:12.5vw;
-  width: 20.5vw;        
+  left:0vw;
+  width: 13.5vw;        
 }
 
-.PowerDemage {
+/*.PowerDemage {
   text-align: center;
   margin-top: 0px;
   position: fixed;
@@ -383,23 +453,49 @@ float: left;
   width: 20.5vw;
   min-width: fit-content;         
 }
-
+*/
 .hide {
   display: none;
+/*   -webkit-animation:fadeUp ease-in-out 0.5s;
+  animation:fadeUp ease-in-out 0.5s;*/
  }
 
 .scheduler-border .u1 hr{
 width:10%;
         }
-#other
+.other
 {
     position: fixed;
-    top: 5.25vh;
-    left:12.5vw;
-    min-height: 33.2vh;
-    min-width: 20vw;
+    top: 9vh;
+    /*left:12.5vw;*/
+    /*min-height: 33.2vh;*/
+    min-width: 17vw;
 }
+.j
+{
 
+    top: 9vh;
+    background: rgba(42, 42, 42, 0.7);
+    border: 1px solid #444;
+    padding: 5px 10px;
+    color: #fff;
+    line-height: 150%;
+    font-size: small;
+    width:10vw;
+    position:fixed;
+    z-index : 1;
+    /*min-width: 249px;*/
+    min-width: 10vw;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 10px;
+}
 .cesium-viewer-bottom {
 display:none;
 }
@@ -423,6 +519,9 @@ display:none;
 #description {
   font-size: 1.5vh;
 }
+p.desc{
+  margin-top: 0.4rem;
+}
 #temperature {
   font-size: 1.5vh;
   margin-top: 0.6rem;
@@ -435,9 +534,12 @@ display:none;
 }
 
 #icon-thermometer {
-  font-size: 1rem;
+  font-size: 0.9rem;
+  padding-bottom: 0.1rem;
 }
-
+p.temp {
+    margin-top: 0.1rem;
+}
 .humidity, .wind, .visibility {
   border-top: 1px solid white;
   border-bottom: 1px solid white;
