@@ -571,7 +571,7 @@ fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
       let image_date= cluster_obj[0]['createdDate'];
       let object_type=cluster_obj[0]['classification'];
       entity.billboard= new Cesium.BillboardGraphics();
-      entity.billboard.image= pinBuilder.fromText('?', Cesium.Color.BLACK, 48).toDataURL()
+      entity.billboard.image= pinBuilder.fromText('!', Cesium.Color.BLACK, 48).toDataURL()
       entity.billboard.verticalOrigin=Cesium.VerticalOrigin.BOTTOM
 
       entity.description = '\
