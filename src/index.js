@@ -35,7 +35,7 @@ var start_time=now;
 // $('#time_default').on('click', function(){
 // viewer.clock.startTime = now.clone();
 // viewer.clock.stopTime = Cesium.JulianDate.addDays(now,4.0,res);
-// viewer.clock.multiplier = 1.0;
+viewer.clock.multiplier = 2000.0;
 
 // viewer.timeline.updateFromClock();
 // viewer.timeline.zoomTo(viewer.clock.startTime, viewer.clock.stopTime);
@@ -550,7 +550,7 @@ function distance_to_reported(reported_long,reported_lat,inlet_long,inlet_lat)
         return true;
 }
    
-var url = Cesium.buildModuleUrl('./images/power.png')
+var url = Cesium.buildModuleUrl('./images/exclaimation.png')
 var object_loc;
 fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
   .then(response => response.json())
@@ -571,8 +571,9 @@ fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
       let image_date= cluster_obj[0]['createdDate'];
       let object_type=cluster_obj[0]['classification'];
       entity.billboard= new Cesium.BillboardGraphics();
-      entity.billboard.image= pinBuilder.fromText('!', Cesium.Color.BLACK, 48).toDataURL()
-      entity.billboard.verticalOrigin=Cesium.VerticalOrigin.BOTTOM
+      //entity.billboard.image= pinBuilder.fromText('!', Cesium.Color.BLACK, 48).toDataURL()
+entity.billboard.image= pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48)
+      //entity.billboard.verticalOrigin=Cesium.VerticalOrigin.BOTTOM
 
       entity.description = '\
       <style>\
@@ -846,7 +847,7 @@ flood1.then(function(dataSource) {
         entity.model= new Cesium.ModelGraphics({
           uri: './geoMappings/inlet.glb',
           scale: 0.1,
-          color: Cesium.Color.WHITE,
+          color: Cesium.Color.ORANGE,
           heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
         });
         // entity.point = new Cesium.PointGraphics({

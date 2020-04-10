@@ -24,7 +24,7 @@
     position: absolute;
     /* bottom: 0px; */
     left: 12% !important;
-    bottom: 7% !important;
+    bottom: 4.5% !important;
     color: white !important;
 }
 #divWrap{height:100%;width:100%;}
@@ -148,7 +148,7 @@ header {
 }
 h2{font-size:1.7vw;color:#ffffff;}
 h3{font-size:1.0vw;}
-h5{font-size:0.9vw;}
+h5{font-size:1.1vw;}
 h8#location.text-center{font-size:1.0vw;}
 p{font-size:0.9vw;}
 div#time.humidity-data.col-12.text-center{
@@ -167,7 +167,7 @@ font-size:0.9vw;
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 1.1vh;
+  font-size: 1.3vh;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -436,24 +436,13 @@ float: left;
   margin-top: 0px;
   position: fixed;
   padding:0px;
-  top: 9vh;
+  top: 9.4vh;
   margin: 0 auto;
   left:0vw;
   width: 13.5vw;        
 }
 
-/*.PowerDemage {
-  text-align: center;
-  margin-top: 0px;
-  position: fixed;
-  padding:0px;
-  top: 38.5vh;
-  margin: 0 auto;
-  left:12.5vw;
-  width: 20.5vw;
-  min-width: fit-content;         
-}
-*/
+
 .hide {
   display: none;
 /*   -webkit-animation:fadeUp ease-in-out 0.5s;
@@ -466,7 +455,7 @@ width:10%;
 .other
 {
     position: fixed;
-    top: 9vh;
+    top: 9.4vh;
     /*left:12.5vw;*/
     /*min-height: 33.2vh;*/
     min-width: 17vw;
@@ -474,7 +463,7 @@ width:10%;
 .j
 {
 
-    top: 9vh;
+    top: 9.4vh;
     background: rgba(42, 42, 42, 0.7);
     border: 1px solid #444;
     padding: 5px 10px;
