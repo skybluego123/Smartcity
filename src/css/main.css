@@ -8,6 +8,10 @@
 /*.btn-group button{
     background-color:green;
 }*/
+
+.btn {
+    font-size: 1.4vh;
+}
 .dropdown-menu { 
   background-color: rgba(42, 42, 42, 0.8) !important;
   /*width:200px;*/
@@ -69,10 +73,11 @@
    background-color:rgba(42, 42, 42, 0.8) !important;
 }
 .btn-group, .btn-group-vertical{
-  top:3.0vh;
+
+  margin-top:3.0vh;
   width:30%;
   z-index: 1;
-  position:absolute;
+/*  position:relative;*/
   font-size: 0.9vw;
 }
 /*@media screen and (max-width: 1585px){
@@ -105,8 +110,8 @@ a {
 }
   .panel {
 
-    position: absolute;
-    min-width: 440px;  
+    /*position: absolute;*/
+    min-width: 400px;  
    /* width:fit-content;*/
     top: 0px;
     width: 30.0vw;
@@ -130,8 +135,9 @@ a {
 
 header {
 
-   min-height: 200px;
-    min-width: 440px;  
+   /*min-height: 200px;*/
+   margin-bottom:-3vh;
+    min-width: 400px;  
     border-radius: 1px;
     background-color: rgba(42, 42, 42, 0.8);
     padding: 0;
@@ -139,7 +145,7 @@ header {
     -webkit-flex-shrink: 0;
     -ms-flex-shrink: 0;
     flex-shrink: 0;*/
-    min-height: fit-content;
+  /*  min-height: fit-content;*/
 }
 #title_text{
    word-wrap: break-word;         /* All browsers since IE 5.5+ */
@@ -454,7 +460,7 @@ width:10%;
         }
 .other
 {
-    position: fixed;
+    position: absolute;
     top: 9.4vh;
     /*left:12.5vw;*/
     /*min-height: 33.2vh;*/
@@ -462,8 +468,9 @@ width:10%;
 }
 .j
 {
-
-    top: 9.4vh;
+    /*margin-top: -5%;*/
+    top:calc(40% - 3vh);
+    /*bottom: calc(40% - 3vh);*/
     background: rgba(42, 42, 42, 0.7);
     border: 1px solid #444;
     padding: 5px 10px;
@@ -475,6 +482,8 @@ width:10%;
     z-index : 1;
     /*min-width: 249px;*/
     min-width: 10vw;
+    /*////min-height: */
+    
 }
 ul {
     display: block;
