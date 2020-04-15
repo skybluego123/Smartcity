@@ -21,26 +21,19 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 });
 
 
-
-
-//viewer.animation.viewModel.multiplier=2000.0;
-//viewer.clock.multiplier = 10;
-
 var pinBuilder = new Cesium.PinBuilder();
-var now = new Cesium.JulianDate();
-var res = new Cesium.JulianDate();
-var start_time=now;
-
-
-// $('#time_default').on('click', function(){
-// viewer.clock.startTime = now.clone();
-// viewer.clock.stopTime = Cesium.JulianDate.addDays(now,4.0,res);
+var now = viewer.clock.startTime;
+var res=new Cesium.JulianDate();
 viewer.clock.multiplier = 2000.0;
 
-// viewer.timeline.updateFromClock();
-// viewer.timeline.zoomTo(viewer.clock.startTime, viewer.clock.stopTime);
-
-// });
+$('#time_default').on('click', function(){
+viewer.clock.currentTime = now.clone();
+Cesium.JulianDate.addDays(now,4.0,res);
+viewer.timeline.updateFromClock();
+viewer.timeline.zoomTo(now, res);
+now=viewer.clock.currentTime ;
+viewer.clock.shouldAnimate=false;
+});
 
 var weather_data;
 
@@ -97,7 +90,7 @@ function update_weather(data,currentTime){
       let cur_temp=(pair_temp[wind_track][0]+pair_temp[wind_track][1])/2
       let cur_humi=(pair_humi[wind_track][0]+pair_humi[wind_track][1])/2
       let cur_desc=weather_desc[wind_track]
-      let cur_rain='None';
+      let cur_rain='0';
       
       if(cur_desc=='Rain')
       {
@@ -105,12 +98,12 @@ function update_weather(data,currentTime){
       }
 
       let windElem = document.getElementById("wind");
-      windElem.innerHTML = `${cur_wind.toFixed(3)}m/s`;
+      windElem.innerHTML = `${cur_wind.toFixed(2)}m/s`;
       // let time =document.getElementById("time");
       // time.innerHTML = `${Cesium.JulianDate.toDate(currentTime).toString().substring(4,25)}`;
       let tempElement = document.getElementById("temperature");
       tempElement.innerHTML = `<i id="icon-thermometer" class="wi wi-thermometer" style=" font-size: 0.9rem;
-  padding-bottom: 0.1rem;"></i><p class="temp">${cur_temp.toFixed(3)}<span>&#8457;</span></p>` ;
+  padding-bottom: 0.1rem;"></i><p class="temp">${cur_temp.toFixed(3)}&nbsp;<nobr>°F</nobr></p>` ;
       let humidityElem = document.getElementById("humidity");
       humidityElem.innerHTML = `${cur_humi}%`;
       let description = document.getElementById("description");
@@ -162,17 +155,25 @@ viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(tim
 
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
-output.innerHTML = slider.value;
+output.innerHTML = slider.value+"m/s";
 slider.oninput = function() {
-   output.innerHTML = this.value;
+  output.innerHTML = this.value+"m/s";
+    if(this.value>0)
+      viewer.clock.shouldAnimate=false;
+    else
+      viewer.clock.shouldAnimate=true;
 }
 
 
 var slider1 = document.getElementById("myRange1");
 var output1 = document.getElementById("demo1");
-output1.innerHTML = slider1.value;
+output1.innerHTML = slider1.value+"m/s";
 slider1.oninput = function() {
-  output1.innerHTML = this.value;
+  output1.innerHTML = this.value+"m/s";
+  if(this.value>0)
+    viewer.clock.shouldAnimate=false;
+  else
+      viewer.clock.shouldAnimate=true;
 }
 
 var myrange_stop;
@@ -495,7 +496,7 @@ var entity_array=[]
 
   
 // function draw_polygon(center_long,center_lat,target_long,target_lat)
-// {
+// 
 // for(let i =0;i<40;i++)
 //   {
 //     let poss_arr=[inlet_longs[i]-0.00005,inlet_lats[i]-0.00005,

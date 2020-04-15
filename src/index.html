@@ -60,23 +60,23 @@
  <div class="panel">
     <header>
     <!-- <h3 style="color:#ffffff">Dr Ham's Lab at Texas A&M University</h3>  -->
-    <h3 style="color:#ffffff">Digital Twin Smart City</h3> 
-     <span style="right:0px;top:0px; position:absolute; padding-right:15px; float:right min-width=300px" id="title_text">
-        <a href='http://people.tamu.edu/~yham/'>Dr Ham's Lab: Sensing and Analytics for Sustainable <br/>and Resilient Built Environments Lab</a></span>
+    <h3 style="color:#ffffff">Smart City Digital Twin</h3> 
+     <span style="right:0px;top:20%; position:absolute; padding-right:100px; float:right min-width:300px" id="title_text">
+        <a href='http://people.tamu.edu/~yham/'>Dr. Youngjib Ham's Lab at Texas A&M University</a></span>
        <!--  <div id="biglist"></div> -->
         </header>
 </div>
 <div class="btn-group" role="group" data-toggle="button" id="button_group" aria-label="Button group with nested dropdown">
   <button type="button"   data-box="div1" class="btn btn-secondary">
-    <i class="fas fa-bars"></i>Type of disaster</button>
+    <i class="fas fa-bars"></i><br /><span>Disaster</span></button>
   <button type="button"  data-box="div2" class="btn btn-secondary"> 
-    <i class="fas fa-layer-group"></i>Potential Demage</button>
+    <i class="fas fa-layer-group"></i><br /><span>Vulnerability</span></button>
   <button type="button"  data-box="div3" class="btn btn-secondary">
-  <i class="fas fa-cloud"></i>Weather Information</button>
+  <i class="fas fa-cloud"></i><br /><span>Weather</span></button>
   
     <button id="btnGroupDrop1"  data-box="div4" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class="fas fa-wind"></i>
-      Historical Event
+      <br /><span>Historical Event</span>
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
       <a class="dropdown-item" href="#">Dropdown link</a>
@@ -101,16 +101,16 @@
              <ul class = "inside" id="legend_list" style="list-style-type:none">            
                     <i class="fas fa-exclamation-triangle"></i>
                     <label for="myid1">Reported object</label>
-                    <li data-type='flood object'>
+                    <li data-type='power object' class='hide'>
                     <span style="color:#FFFF00">&#8213;</span>
                     <label for="myid2">Wire</label></li>
-                    <li data-type='flood object'>
+                    <li data-type='power object' class='hide'>
                     <i class="fas fa-square-full" style="color:#FFFF00"></i>
                     <label for="myid2">Substation</label></li>
-                    <li data-type='flood object'>
+                    <li data-type='power object' class='hide'>
                     <span style="color:#28a745;padding-left: 5px;padding-right:5px">&#8607;</span>
                     <label for="myid2"> Utility pole</label></li>
-                    <li data-type='flood object' >
+                    <li data-type='flood object' class='hide'>
                     <span style="color:#A0A0A0">&#8855;</span>
                     <label for="myid2">Inlet</label></li>
             </ul>
@@ -122,7 +122,7 @@
         <div class="container">       
         <div class="row">
             <div class="weather-head">
-                <h8 id="location" class="text-center">Houston, US</h8>
+                <h8 id="location" class="text-center">Houston, TX, USA</h8>
                 <div class="row">                           
                     <div id="description" class="description col-6 text-center">
                         <i id="icon-desc" class="wi wi-owm-200"></i>
@@ -130,26 +130,26 @@
                     </div>
                     <div id="temperature" class="col-6 text-center">
                         <i id="icon-thermometer" class="wi wi-thermometer"></i> 
-                    <p class="temp">60<span>&#8457;</span></p>       
+                    <p class="temp">60 &nbsp;<nobr>°F</nobr><!-- <span>&#8457;</span> -->
+                    </p>       
                     </div>  
                 </div>
                 <div class="weather-body">
                     <div class="row">
-
-                        <div class="humidity col-4 text-center">
-                            <i class="wi wi-raindrop"></i><br /><span> Humidity</span>
-                        </div>
                         <div class="wind col-4 text-center">
-                            <i class="wi wi-strong-wind"></i><br /><span> Wind Speed</span>
+                            <i class="wi wi-strong-wind"></i><br /><span> Wind</span>
                         </div>
                         <div class="visibility col-4 text-center">
                             <i class="fa fa-eye"></i><br /><span>Rainfall</span>
-                        </div>              
+                        </div>  
+                         <div class="humidity col-4 text-center">
+                            <i class="wi wi-raindrop"></i><br /><span> Humidity</span>
+                        </div>            
                     </div>
                     <div class="row">
-                        <div id="humidity" class="humidity-data col-4 text-center">75%</div>
-                        <div id="wind" class="wind-data col-4 text-center">34mph</div>
-                        <div id="visibility" class="degree-data col-4 text-center">0</div>
+                        <div id="humidity" class="humidity-data col-4 text-center">75&nbsp;</div>
+                        <div id="wind" class="wind-data col-4 text-center">0</div>
+                        <div id="visibility" class="degree-data col-4 text-center">34</div>
                     </div>
                     <div class="row">
                         <!-- <div id="time" class="humidity-data col-12 text-center"> -->
@@ -162,10 +162,9 @@
 
    <div class="Demage hide div2">
         <div class ="back hide" id="PowerDemage" >
-            <h5>Wind Speed</h5>
             <div class="slidecontainer">
             <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
-            <p>Current windspeed: <span id="demo"></span></p>
+            <p>Power Grid Vulnerability: <span id="demo"></span></p>
             </div>
         </div>
          <div class ="back hide" id="FloodDemage">
@@ -183,7 +182,7 @@
 </div>
 
 
-<button type="button" class="btn btn-default" id="time_default">return to current time</button>
+<button type="button" class="btn btn-default" id="time_default">Return to Current Time</button>
 <div id="heatmap" v-show="false"></div>
 
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>

@@ -23,8 +23,8 @@
 #time_default{
     position: absolute;
     /* bottom: 0px; */
-    left: 12% !important;
-    bottom: 4.5% !important;
+    left: 9.5% !important;
+    bottom: 4% !important;
     color: white !important;
 }
 #divWrap{height:100%;width:100%;}
@@ -87,8 +87,8 @@ a {
     color: #ffffff;
     text-decoration: none;
     background-color: transparent;
-    top: 0px;
-    font-size: 1.0vh;
+    top: 3%;
+    font-size: 1.4vh;
 }
 
 
@@ -143,7 +143,7 @@ header {
 }
 #title_text{
    word-wrap: break-word;         /* All browsers since IE 5.5+ */
-    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+   overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
    
 }
 h2{font-size:1.7vw;color:#ffffff;}
@@ -458,7 +458,7 @@ width:10%;
     top: 9.4vh;
     /*left:12.5vw;*/
     /*min-height: 33.2vh;*/
-    min-width: 17vw;
+    min-width: 15vw;
 }
 .j
 {
