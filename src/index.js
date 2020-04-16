@@ -50,7 +50,7 @@ $.ajax({
     data: {
       lat: 30.6173014,
       lon: -96.3403507,
-      units: 'imperial',
+      units: 'standard',
       APPID: API_KEY
     }, 
     async: false,
@@ -573,7 +573,8 @@ fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
       let object_type=cluster_obj[0]['classification'];
       entity.billboard= new Cesium.BillboardGraphics();
       //entity.billboard.image= pinBuilder.fromText('!', Cesium.Color.BLACK, 48).toDataURL()
-entity.billboard.image= pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48)
+entity.billboard.image= pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48);
+entity.billboard.heightReference =Cesium.HeightReference.CLAMP_TO_GROUND;
       //entity.billboard.verticalOrigin=Cesium.VerticalOrigin.BOTTOM
 
       entity.description = '\
@@ -845,17 +846,17 @@ flood1.then(function(dataSource) {
       let Coordinate="";
 
         entity.billboard = undefined; 
-        entity.model= new Cesium.ModelGraphics({
-          uri: './geoMappings/inlet.glb',
-          scale: 0.1,
-          color: Cesium.Color.ORANGE,
-          heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
-        });
-        // entity.point = new Cesium.PointGraphics({
-        //     color: Cesium.Color.WHITE,
-        //     pixelSize: 13,
-        //     heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+        // entity.model= new Cesium.ModelGraphics({
+        //   uri: './geoMappings/inlet.glb',
+        //   scale: 0.1,
+        //   color: Cesium.Color.ORANGE,
+        //   heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
         // });
+        entity.point = new Cesium.PointGraphics({
+            color: Cesium.Color.WHITE,
+            pixelSize: 13,
+            heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
+        });
       
       }
     });

@@ -51,13 +51,8 @@
 
 <body>
 
-<!-- <div id="cesiumContainer"></div> -->
-<div id="timeControlsContainer"></div>
-<!-- <div class="cesium-viewer-bottom1" style="left: 5%; bottom: 70px;"><div class="cesium-widget-credits" style="left: 2%; bottom: 13%;"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img title="Cesium ion" src="./images/logo1.png" height="150" width="150"></a>
-            </div></div></div></div>
- -->
-<!-- <div class = "wrapper"> -->
- <div class="panel">
+<div id="cesiumContainer">
+     <div class="panel">
     <header>
     <!-- <h3 style="color:#ffffff">Dr Ham's Lab at Texas A&M University</h3>  -->
     <h3 style="color:#ffffff">Smart City Digital Twin</h3> 
@@ -83,6 +78,15 @@
     </div>
    
 </div>
+
+</div>
+<div id="timeControlsContainer"></div>
+<!-- <div class="cesium-viewer-bottom1" style="left: 5%; bottom: 70px;"><div class="cesium-widget-credits" style="left: 2%; bottom: 13%;"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img title="Cesium ion" src="./images/logo1.png" height="150" width="150"></a>
+            </div></div></div></div>
+ -->
+<!-- <div class = "wrapper"> -->
+
+
 
 <div id="heatmap" display="none"></div>
 
@@ -257,9 +261,9 @@ $('#button_group > .btn-secondary').on('click', function () {
 });
 $(window).on('load resize', function(){
     $('.j').width($(this).width()*0.10);
-     $('.j').css('top',$(this).height()*0.075+43+'px');
-     $('.other').css('top',$(this).height()*0.075+43+'px');
-     $('.Demage').css('top',$(this).height()*0.075+43+'px');
+     // $('.j').css('top',$(this).height()*0.075+43+'px');
+     // $('.other').css('top',$(this).height()*0.075+43+'px');
+     // $('.Demage').css('top',$(this).height()*0.075+43+'px');
     // $('.j').height($(this).width()*0.12);
 });
 
