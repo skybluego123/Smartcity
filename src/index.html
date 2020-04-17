@@ -68,7 +68,7 @@
   <button type="button"  data-box="div3" class="btn btn-secondary">
   <i class="fas fa-cloud"></i><br /><span>Weather</span></button>
 
-   <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+   <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class="fas fa-wind"></i>
       <br /><span>Historical Event</span>
     </button>
@@ -127,7 +127,7 @@
         <div class="container">       
         <div class="row">
             <div class="weather-head">
-                <h8 id="location" class="text-center">Houston, TX, USA</h8>
+                <h8 id="location" class="text-center" sytle="font-size:1.0vw;">Houston, TX, USA</h8>
                 <div class="row">                           
                     <div id="description" class="description col-6 text-center">
                         <i id="icon-desc" class="wi wi-owm-200"></i>
@@ -194,7 +194,7 @@
 </div>
 
 
-<button type="button" class="btn btn-default" id="time_default">Return to Current Time</button>
+<button type="button" class="btn btn-default" id="time_default">Return to Start Time</button>
 <div id="heatmap" v-show="false"></div>
 
     <div class="dialog" id="dialog1" title="Display all the pictures"></div>
@@ -274,12 +274,8 @@ $('#button_group > .btn-secondary').on('click', function () {
 //     // $('.j').height($(this).width()*0.12);
 // });
 
-$('.dropdown-menu a').click(function () {           
-  //  $('button[data-toggle="dropdown"]').($(this).text());
-  let t=$(this).text();
- $('button[data-toggle="dropdown"]').html('<i class="fas fa-wind"></i>'+
-      '<br /><span>'+t+'</span>');
-    console.log($(this).text())
-  });
-     </script>
+
+
+</script>
+
 

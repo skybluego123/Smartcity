@@ -61,11 +61,11 @@ $.ajax({
 });
 
 
-function fetch_weather()
-{
+// function fetch_weather()
+// {
 
 
-}
+// }
 
 
 function update_weather(data,currentTime){
@@ -252,17 +252,17 @@ function myTimer() {
 
 var myPos = { my: "center center", at: "center-390 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(37161)
-//     })
-// );
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(37161)
+    })
+);
 
-// var tileset = viewer.scene.primitives.add(
-//     new Cesium.Cesium3DTileset({
-//         url: Cesium.IonResource.fromAssetId(36440)
-//     })
-// );
+var tileset = viewer.scene.primitives.add(
+    new Cesium.Cesium3DTileset({
+        url: Cesium.IonResource.fromAssetId(36440)
+    })
+);
 
 
 var r= 0, g=255, b=0;
@@ -3453,83 +3453,83 @@ inlet_lats=[
 
 
 
-// lonmx=Math.max.apply(null, inlet_longs)
-// lonmi=Math.min.apply(null, inlet_longs)
-// latmx=Math.max.apply(null, inlet_lats)
-// latmi=Math.min.apply(null, inlet_lats)
+lonmx=Math.max.apply(null, inlet_longs)
+lonmi=Math.min.apply(null, inlet_longs)
+latmx=Math.max.apply(null, inlet_lats)
+latmi=Math.min.apply(null, inlet_lats)
 
 
 
-//             var len = 294;
-//             var points = [];
-//             var max = 100;
-//             var width = 650;
-//             var height = 550;
+            var len = 294;
+            var points = [];
+            var max = 100;
+            var width = 650;
+            var height = 550;
 
 
-//             // var latMin =  29.151095;
-//             // var latMax =  29.766357;
-//             // var lonMin = -95.851095;
-//             // var lonMax = -94.366357;
+            // var latMin =  29.151095;
+            // var latMax =  29.766357;
+            // var lonMin = -95.851095;
+            // var lonMax = -94.366357;
             
-//             var latMin = latmi;
-//             var latMax = latmx;
-//             var lonMin = lonmi;
-//             var lonMax = lonmx;
+            var latMin = latmi;
+            var latMax = latmx;
+            var lonMin = lonmi;
+            var lonMax = lonmx;
             
 
-//              var dataRaw = [];
-//             for (var i = 0; i < inlet_longs.length; i=i+1) {
-//                 var tmp=Math.floor(Math.random() * 100)
-//                 var point = {
-//                     lat: inlet_lats[i],
-//                     lon: inlet_longs[i],
-//                     value: tmp
-//                 };
+             var dataRaw = [];
+            for (var i = 0; i < inlet_longs.length; i=i+1) {
+                var tmp=Math.floor(Math.random() * 100)
+                var point = {
+                    lat: inlet_lats[i],
+                    lon: inlet_longs[i],
+                    value: tmp
+                };
                 
-//                 dataRaw.push(point);
-//             }
+                dataRaw.push(point);
+            }
 
-//             for (var i = 0; i < inlet_longs.length; i=i+1) {
-//                 var dataItem = dataRaw[i];
-//                 var point = {
-//                     x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
-//                     y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
-//                     value: Math.floor(dataItem.value)
-//                 };
+            for (var i = 0; i < inlet_longs.length; i=i+1) {
+                var dataItem = dataRaw[i];
+                var point = {
+                    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+                    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+                    value: Math.floor(dataItem.value)
+                };
 
-//                 max = Math.max(max, dataItem.value);
-//                 points.push(point);
-//             }
+                max = Math.max(max, dataItem.value);
+                points.push(point);
+            }
 
-//             var heatmapInstance = h377.create({
-//                 container: document.querySelector('#heatmap'),
-//                  radius: 7,
-//             });
+            var heatmapInstance = h377.create({
+                container: document.querySelector('#heatmap'),
+                 radius: 7,
+            });
 
-//             var data = {
-//                 max: max,
-//                 data: points
-//             };
+            var data = {
+                max: max,
+                data: points
+            };
 
-//             heatmapInstance.setData(data);
+            heatmapInstance.setData(data);
 
-//             viewer._cesiumWidget._creditContainer.style.display = "none";
+            viewer._cesiumWidget._creditContainer.style.display = "none";
 
-//             var canvas = document.getElementsByClassName('heatmap-canvas');
-//             console.log(canvas);
-//             viewer.entities.add({
-//                 name: 'heatmap',
-//                 rectangle: {
-//                     height: 0,
-//                     heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-//                     coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
-//                     material: new Cesium.ImageMaterialProperty({
-//                         image: canvas[0],
-//                         transparent: true
-//                     })
+            var canvas = document.getElementsByClassName('heatmap-canvas');
+            console.log(canvas);
+            viewer.entities.add({
+                name: 'heatmap',
+                rectangle: {
+                    height: 0,
+                    heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+                    coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
+                    material: new Cesium.ImageMaterialProperty({
+                        image: canvas[0],
+                        transparent: true
+                    })
 
-//                 }
-//             });
+                }
+            });
 
-//  
+ 

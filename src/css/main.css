@@ -115,7 +115,7 @@ a {
     height: 100%;
 }
   .panel {
-
+    /*font-size: 1.4vh;*/
     position: absolute;
     min-width: 270px;  
    /* width:fit-content;*/
@@ -123,7 +123,7 @@ a {
     top: 0px;
     width: 30.0vw;
     z-index: 1;
-
+   /* min-height: 200px;*/
     display: inline-block;
     display: -moz-flex;
     -moz-flex-direction: column;
@@ -146,7 +146,7 @@ header {
 
 
    /*min-height: 200px;*/
-   margin-bottom:-1.5vh;
+  /* margin-bottom:-1.5vh;*/
 
    /*.*/
     border-radius: 1px;
@@ -164,18 +164,33 @@ header {
     /*font-size: 1.4vh;*/
     top: 50%;
     left:40%;
-  /*-ms-transform: translateY(-50%);*/
+  -ms-transform: translateY(-50%);
   transform: translate(-40%,-50%);
   word-wrap: break-word;
     /*top: 3%;*/
  /* height: auto;*/
    word-wrap: break-word;         /* All browsers since IE 5.5+ */
    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
-
+/*display: inline-block;*/
    
 }
+#name_text{
+      float:left;
+    top:17px;position: relative;word-wrap: break-word;
+  /*  top: 50%;
+    left:0%;
+  /*-ms-transform: translateY(-50%);*/
+/*  transform: translate(0%,-50%);
+  word-wrap: break-word;
+    top: 3vh;*/
+ /* height: auto;*/
+   word-wrap: break-word;         /* All browsers since IE 5.5+ */
+   overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+  /* display: inline-block;*/
+}
+
 h2{font-size:1.7vw;color:#ffffff;}
-h3{font-size:1.0vw;}
+h3{font-size:1.2vw;}
 h5{font-size:1.1vw;}
 h8#location.text-center{font-size:1.0vw;}
 p{font-size:0.9vw;}
@@ -464,7 +479,7 @@ float: left;
   margin-top: 0px;
   position: fixed;
   padding:0px;
-  top:11.2vh;
+  top:11.7vh;
   margin: 0 auto;
   left:0vw;
   width: 13.5vw;        
@@ -483,17 +498,18 @@ width:10%;
 .other
 {
     position: absolute;
-    top:11.2vh;
+    top:11.7vh;
     /*left:12.5vw;*/
     /*min-height: 33.2vh;*/
-    min-width: 15vw;
+    min-width: 14.5vw;
+    font-size: 0.9vh;
 }
 .j
 {
     /*margin-top: -5%;*/
    /* top:calc(40% - 3vh);*/
     /*bottom: calc(40% - 3vh);*/
-    top:11.2vh;
+    top:11.7vh;
     background: rgba(42, 42, 42, 0.7);
     border: 1px solid #444;
     padding: 5px 10px;
@@ -538,7 +554,7 @@ display:none;
 }
 
 #description {
-  font-size: 1.5vh;
+  font-size: 1.4vh;
 }
 p.desc{
   margin-top: 0.4rem;
@@ -549,7 +565,7 @@ p.desc{
 }
 
 #humidity, #wind, #visibility {
-  font-size: 1.9vh;
+  font-size: 1.5vh;
   padding-top: 0.2vh;
   padding-bottom: 0.2vh;
 }
@@ -564,7 +580,7 @@ p.temp {
 .humidity, .wind, .visibility {
   border-top: 1px solid white;
   border-bottom: 1px solid white;
-  font-size: 2.0vh;
+  font-size: 1.0vh;
   padding: 1.0vh;
 
 }
