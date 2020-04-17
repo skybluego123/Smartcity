@@ -93,8 +93,13 @@ a {
     color: #ffffff;
     text-decoration: none;
     background-color: transparent;
-    top: 3%;
-    font-size: 1.4vh;
+ /* transform: translateX(-40%);*/
+ /* position: absolute;*/
+}
+.dropdown-item{
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
 }
 
 
@@ -112,11 +117,14 @@ a {
   .panel {
 
     position: absolute;
-    min-width: 300px;  
+    min-width: 270px;  
    /* width:fit-content;*/
+    font-size: 1.3vh;
     top: 0px;
     width: 30.0vw;
     z-index: 1;
+
+    display: inline-block;
     display: -moz-flex;
     -moz-flex-direction: column;
     -moz-flex-wrap: nowrap;
@@ -136,13 +144,15 @@ a {
 
 header {
 
+
    /*min-height: 200px;*/
-   margin-bottom:-3vh;
+   margin-bottom:-1.5vh;
+
    /*.*/
     border-radius: 1px;
     background-color: rgba(42, 42, 42, 0.8);
     padding: 0;
-    font-size: 1.3vh;
+    font-size: 1.1vh;
    /* -moz-flex-shrink: 0;
     -webkit-flex-shrink: 0;
     -ms-flex-shrink: 0;
@@ -150,8 +160,18 @@ header {
   /*  min-height: fit-content;*/
 }
 #title_text{
+      float:right;
+    /*font-size: 1.4vh;*/
+    top: 50%;
+    left:40%;
+  /*-ms-transform: translateY(-50%);*/
+  transform: translate(-40%,-50%);
+  word-wrap: break-word;
+    /*top: 3%;*/
+ /* height: auto;*/
    word-wrap: break-word;         /* All browsers since IE 5.5+ */
    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+
    
 }
 h2{font-size:1.7vw;color:#ffffff;}
@@ -444,7 +464,7 @@ float: left;
   margin-top: 0px;
   position: fixed;
   padding:0px;
-  top:11.3vh;
+  top:11.2vh;
   margin: 0 auto;
   left:0vw;
   width: 13.5vw;        
@@ -463,7 +483,7 @@ width:10%;
 .other
 {
     position: absolute;
-    top:11.3vh;
+    top:11.2vh;
     /*left:12.5vw;*/
     /*min-height: 33.2vh;*/
     min-width: 15vw;
@@ -473,7 +493,7 @@ width:10%;
     /*margin-top: -5%;*/
    /* top:calc(40% - 3vh);*/
     /*bottom: calc(40% - 3vh);*/
-    top:11.3vh;
+    top:11.2vh;
     background: rgba(42, 42, 42, 0.7);
     border: 1px solid #444;
     padding: 5px 10px;

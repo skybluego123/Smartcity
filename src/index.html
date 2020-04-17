@@ -54,9 +54,8 @@
 <div id="cesiumContainer">
      <div class="panel">
     <header>
-    <!-- <h3 style="color:#ffffff">Dr Ham's Lab at Texas A&M University</h3>  -->
-    <h3 style="color:#ffffff">Smart City Digital Twin</h3> 
-     <span style="right:0px;top:20%; padding-right:3vw; float:right min-width:300px" id="title_text">
+      <span style="top:17px;position: relative;word-wrap: break-word;"><h3 style="color:#ffffff">Smart City Digital Twin</h3></span> 
+     <span id="title_text">
         <a href='http://people.tamu.edu/~yham/'>Dr. Youngjib Ham's Lab at Texas A&M University</a></span>
        <!--  <div id="biglist"></div> -->
         </header>
@@ -68,13 +67,15 @@
     <i class="fas fa-layer-group"></i><br /><span>Vulnerability</span></button>
   <button type="button"  data-box="div3" class="btn btn-secondary">
   <i class="fas fa-cloud"></i><br /><span>Weather</span></button>
-   <button id="btnGroupDrop1"  data-box="div4" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+   <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
     <i class="fas fa-wind"></i>
       <br /><span>Historical Event</span>
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-      <a class="dropdown-item" href="#">Dropdown link</a>
-      <a class="dropdown-item" href="#">Dropdown link</a>
+      <a class="dropdown-item" href="#">Rita</a>
+      <a class="dropdown-item" href="#">Allison</a>
+      <a class="dropdown-item" href="#">Harvey</a>
     </div>
    
 </div>
@@ -151,9 +152,9 @@
                         </div>            
                     </div>
                     <div class="row">
-                        <div id="humidity" class="humidity-data col-4 text-center">75&nbsp;</div>
                         <div id="wind" class="wind-data col-4 text-center">0</div>
                         <div id="visibility" class="degree-data col-4 text-center">34</div>
+                         <div id="humidity" class="humidity-data col-4 text-center">75&nbsp;</div>
                     </div>
                     <div class="row">
                         <!-- <div id="time" class="humidity-data col-12 text-center"> -->
@@ -182,7 +183,13 @@
 
 </div>
 
-    <div class="hide" id="div4"></div>
+   <!-- / <div class="hide" id="div4"> -->
+   <!--       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <a class="dropdown-item" href="#">Dropdown link</a>
+      <a class="dropdown-item" href="#">Dropdown link</a> -->
+    <!-- </div> -->
+
+    </div>
 
 </div>
 
@@ -248,10 +255,10 @@ document.getElementById('x').onchange = function () {
     }
 
 $('#button_group > .btn-secondary').on('click', function () {
-    console.log($(this).attr('data-box'))
+    // console.log($(this).attr('data-box'))
     var divID = $(this).attr('data-box');
     // if(divID=="div2")
-    console.log(document.getElementsByClassName(divID)[0].classList)
+  //  console.log(document.getElementsByClassName(divID)[0].classList)
     // console.log(divId)
    // document.getElementById(divID).classList.remove('hide');
     // $('#'+divId).classList.remove('hide');
@@ -259,13 +266,20 @@ $('#button_group > .btn-secondary').on('click', function () {
     $('.' + divID).removeClass('hide').siblings().addClass('hide');
 
 });
-$(window).on('load resize', function(){
-    $('.j').width($(this).width()*0.10);
-     // $('.j').css('top',$(this).height()*0.075+43+'px');
-     // $('.other').css('top',$(this).height()*0.075+43+'px');
-     // $('.Demage').css('top',$(this).height()*0.075+43+'px');
-    // $('.j').height($(this).width()*0.12);
-});
+// $(window).on('load resize', function(){
+//     $('.j').width($(this).width()*0.10);
+//      // $('.j').css('top',$(this).height()*0.075+43+'px');
+//      // $('.other').css('top',$(this).height()*0.075+43+'px');
+//      // $('.Demage').css('top',$(this).height()*0.075+43+'px');
+//     // $('.j').height($(this).width()*0.12);
+// });
 
+$('.dropdown-menu a').click(function () {           
+  //  $('button[data-toggle="dropdown"]').($(this).text());
+  let t=$(this).text();
+ $('button[data-toggle="dropdown"]').html('<i class="fas fa-wind"></i>'+
+      '<br /><span>'+t+'</span>');
+    console.log($(this).text())
+  });
      </script>
 

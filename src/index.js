@@ -50,7 +50,7 @@ $.ajax({
     data: {
       lat: 30.6173014,
       lon: -96.3403507,
-      units: 'standard',
+      units: 'metric',
       APPID: API_KEY
     }, 
     async: false,
@@ -59,6 +59,14 @@ $.ajax({
       weather_data1=data;
 }
 });
+
+
+function fetch_weather()
+{
+
+
+}
+
 
 function update_weather(data,currentTime){
       weather_data=data;
@@ -98,26 +106,29 @@ function update_weather(data,currentTime){
       }
 
       let windElem = document.getElementById("wind");
-      windElem.innerHTML = `${cur_wind.toFixed(2)}m/s`;
+      windElem.innerHTML = `${cur_wind.toFixed(1)}&nbsp;m/s`;
       // let time =document.getElementById("time");
       // time.innerHTML = `${Cesium.JulianDate.toDate(currentTime).toString().substring(4,25)}`;
       let tempElement = document.getElementById("temperature");
       tempElement.innerHTML = `<i id="icon-thermometer" class="wi wi-thermometer" style=" font-size: 0.9rem;
-  padding-bottom: 0.1rem;"></i><p class="temp">${cur_temp.toFixed(3)}&nbsp;<nobr>°F</nobr></p>` ;
-      let humidityElem = document.getElementById("humidity");
-      humidityElem.innerHTML = `${cur_humi}%`;
+  padding-bottom: 0.1rem;"></i><p class="temp">${cur_temp.toFixed(3)}&nbsp;<nobr>°C</nobr></p>` ;
+  
       let description = document.getElementById("description");
       description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p class="desc">${cur_desc}</p>`;
       let rainfall =document.getElementById("visibility");
-         rainfall.innerHTML=`${cur_rain}mm`
+         rainfall.innerHTML=`${parseFloat(cur_rain).toFixed(1)}&nbsp;mm`;
+      let humidityElem = document.getElementById("humidity");
+      humidityElem.innerHTML = `${cur_humi.toFixed(0)}&nbsp;%`;
     }
 
 
 function onTimelineScrubfunction(e) {
   var clock = e.clock;
   clock.currentTime = e.timeJulian;
-  clock.shouldAnimate = true;
+  //clock.shouldAnimate = true;
+  if(viewer.clock.shouldAnimate==true){
   update_weather(weather_data1,e.timeJulian);
+  }
 
 }
 viewer.clock.onTick.addEventListener(function(clock){
@@ -211,6 +222,7 @@ var myVar = setInterval(myTimer, 10000);
 function myTimer() {
   var cur_speed=Math.round(parseInt($('#wind').text()));
   //console.log(cur_speed);
+  if(viewer.clock.shouldAnimate==true){
       $.ajax({
     url: 'https://jvc8szgvya.execute-api.us-west-2.amazonaws.com/default/networkanalysis',
     data: {
@@ -235,22 +247,22 @@ function myTimer() {
     }
   }
 
-
+}
 }
 
 var myPos = { my: "center center", at: "center-390 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(37161)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(37161)
+//     })
+// );
 
-var tileset = viewer.scene.primitives.add(
-    new Cesium.Cesium3DTileset({
-        url: Cesium.IonResource.fromAssetId(36440)
-    })
-);
+// var tileset = viewer.scene.primitives.add(
+//     new Cesium.Cesium3DTileset({
+//         url: Cesium.IonResource.fromAssetId(36440)
+//     })
+// );
 
 
 var r= 0, g=255, b=0;
@@ -669,9 +681,36 @@ entity.billboard.heightReference =Cesium.HeightReference.CLAMP_TO_GROUND;
       }
   });
 
+  var fadeColor = new Cesium.CallbackProperty(function(){
+    r=slider.value;
+    g=255-slider.value;
+    return Cesium.Color.fromBytes(r, g, b, 255);
+}, false);
+
+    function ScaleCallback(target) {
+      var count=0;
+    return function callbackFunction() {
+       
+    var res;
+    for(let pole_entity of poles_entity){
+      if(count == target-1){
+      console.log("werwer")
+        res=0.8;
+      }
+      else
+        res=0.2;
+       //pole_entity.scale=0.2; 
+    count++;
+    }
+   // console.log(res);
+    return res;
+    };
+}
+
 var current_id="xx";
 var current_id1="xx";
 var current_c="0";
+
 var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
         handler.setInputAction(function(click) {
            // Get current mouth position
@@ -679,9 +718,27 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
             //pick current entity
             if(pick && pick.id){
               console.log(pick.id._name)
+              let nearest_target=vulnerable_objects[parseInt(pick.id._name)]['nearest_pole']
+              console.log(vulnerable_objects[parseInt(pick.id._name)]['nearest_pole'])
+
               object_indicator=pick.id._name;
+              initial_pole= nearest_target;
+              console.log(nearest_target)
+              let near_track=0;
+              for(let x of poles_entity)
+              {
+                if(near_track==nearest_target-1){
+                    x.model.scale=0.5;
+                }else
+                x.model.scale=0.2;
+                near_track++;
+
+              }
+
             }
          }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
+
+
 
 viewer.infoBox.frame.addEventListener('load', function() {
   viewer.infoBox.frame.contentDocument.body.addEventListener('click', function(e) {
@@ -755,7 +812,7 @@ viewer.infoBox.frame.addEventListener('load', function() {
   }, false);
 }, false);
 
-
+var initial_pole=-1;
 var poles;
 var poles_entity=[];
 CheckPowerI.addEventListener('change',function(){
@@ -765,7 +822,9 @@ fetch('http://backend.digitaltwincities.info/poles')
   .then(function(json){
     let objects = json['data'];
     poles=objects;
-    //console.log(poles)
+    
+    console.log(initial_pole)
+
     for(let object of objects){
       let entity = new Cesium.Entity();
       entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'],object['latitude'], 0);
@@ -774,8 +833,8 @@ fetch('http://backend.digitaltwincities.info/poles')
       entity.billboard = undefined; 
       entity.model=new Cesium.ModelGraphics({
       uri: './geoMappings/Utilitypole_3Dmodel.glb',
-      scale: 0.2,
-      color: fadeColor,//Cesium.Color.GREEN,
+      scale: 0.2,//new Cesium.CallbackProperty(ScaleCallback(initial_pole), false),
+      color: Cesium.Color.GREEN,
       heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
         });
       entity.addProperty("manual_id")
@@ -922,6 +981,19 @@ entity_example.polygon={
         material: Cesium.Color.RED.withAlpha(0.5),
         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND
 }
+
+
+$('.dropdown-menu a').click(function () {           
+  let t=$(this).text();
+$('button[data-toggle="dropdown"]').html('<i class="fas fa-wind"></i>'+
+      '<br /><span>'+t+'</span>');
+if(t=="Harvey")
+{
+
+}
+    // console.log($(this).text())
+  });
+
 
 
 // var dataSourcePromise=viewer.dataSources.add(Cesium.CzmlDataSource.load('./geoMappings/power.czml'));
@@ -3381,83 +3453,83 @@ inlet_lats=[
 
 
 
-lonmx=Math.max.apply(null, inlet_longs)
-lonmi=Math.min.apply(null, inlet_longs)
-latmx=Math.max.apply(null, inlet_lats)
-latmi=Math.min.apply(null, inlet_lats)
+// lonmx=Math.max.apply(null, inlet_longs)
+// lonmi=Math.min.apply(null, inlet_longs)
+// latmx=Math.max.apply(null, inlet_lats)
+// latmi=Math.min.apply(null, inlet_lats)
 
 
 
-            var len = 294;
-            var points = [];
-            var max = 100;
-            var width = 650;
-            var height = 550;
+//             var len = 294;
+//             var points = [];
+//             var max = 100;
+//             var width = 650;
+//             var height = 550;
 
 
-            // var latMin =  29.151095;
-            // var latMax =  29.766357;
-            // var lonMin = -95.851095;
-            // var lonMax = -94.366357;
+//             // var latMin =  29.151095;
+//             // var latMax =  29.766357;
+//             // var lonMin = -95.851095;
+//             // var lonMax = -94.366357;
             
-            var latMin = latmi;
-            var latMax = latmx;
-            var lonMin = lonmi;
-            var lonMax = lonmx;
+//             var latMin = latmi;
+//             var latMax = latmx;
+//             var lonMin = lonmi;
+//             var lonMax = lonmx;
             
 
-             var dataRaw = [];
-            for (var i = 0; i < inlet_longs.length; i=i+1) {
-                var tmp=Math.floor(Math.random() * 100)
-                var point = {
-                    lat: inlet_lats[i],
-                    lon: inlet_longs[i],
-                    value: tmp
-                };
+//              var dataRaw = [];
+//             for (var i = 0; i < inlet_longs.length; i=i+1) {
+//                 var tmp=Math.floor(Math.random() * 100)
+//                 var point = {
+//                     lat: inlet_lats[i],
+//                     lon: inlet_longs[i],
+//                     value: tmp
+//                 };
                 
-                dataRaw.push(point);
-            }
+//                 dataRaw.push(point);
+//             }
 
-            for (var i = 0; i < inlet_longs.length; i=i+1) {
-                var dataItem = dataRaw[i];
-                var point = {
-                    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
-                    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
-                    value: Math.floor(dataItem.value)
-                };
+//             for (var i = 0; i < inlet_longs.length; i=i+1) {
+//                 var dataItem = dataRaw[i];
+//                 var point = {
+//                     x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+//                     y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+//                     value: Math.floor(dataItem.value)
+//                 };
 
-                max = Math.max(max, dataItem.value);
-                points.push(point);
-            }
+//                 max = Math.max(max, dataItem.value);
+//                 points.push(point);
+//             }
 
-            var heatmapInstance = h377.create({
-                container: document.querySelector('#heatmap'),
-                 radius: 7,
-            });
+//             var heatmapInstance = h377.create({
+//                 container: document.querySelector('#heatmap'),
+//                  radius: 7,
+//             });
 
-            var data = {
-                max: max,
-                data: points
-            };
+//             var data = {
+//                 max: max,
+//                 data: points
+//             };
 
-            heatmapInstance.setData(data);
+//             heatmapInstance.setData(data);
 
-            viewer._cesiumWidget._creditContainer.style.display = "none";
+//             viewer._cesiumWidget._creditContainer.style.display = "none";
 
-            var canvas = document.getElementsByClassName('heatmap-canvas');
-            console.log(canvas);
-            viewer.entities.add({
-                name: 'heatmap',
-                rectangle: {
-                    height: 0,
-                    heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-                    coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
-                    material: new Cesium.ImageMaterialProperty({
-                        image: canvas[0],
-                        transparent: true
-                    })
+//             var canvas = document.getElementsByClassName('heatmap-canvas');
+//             console.log(canvas);
+//             viewer.entities.add({
+//                 name: 'heatmap',
+//                 rectangle: {
+//                     height: 0,
+//                     heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+//                     coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
+//                     material: new Cesium.ImageMaterialProperty({
+//                         image: canvas[0],
+//                         transparent: true
+//                     })
 
-                }
-            });
+//                 }
+//             });
 
- 
+//  
