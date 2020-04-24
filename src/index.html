@@ -73,9 +73,9 @@
       <br /><span>Historical Event</span>
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-      <a class="dropdown-item" href="#">Rita</a>
-      <a class="dropdown-item" href="#">Allison</a>
-      <a class="dropdown-item" href="#">Harvey</a>
+      <a class="dropdown-item" id="rita" href="#">Rita</a>
+      <a class="dropdown-item" id="allison" href="#">Allison</a>
+      <a class="dropdown-item" id="harvey" href="#">Harvey</a>
     </div>
    
 </div>
@@ -266,6 +266,15 @@ $('#button_group > .btn-secondary').on('click', function () {
     $('.' + divID).removeClass('hide').siblings().addClass('hide');
 
 });
+$('use.cesium-animation-buttonMain').prop('title', 'your new title');
+//g.cesium-animation-rectButton
+     $("g.cesium-animation-rectButton , g.cesium-animation-buttonToggled").click(function() {
+         console.log("v");
+         // this.title="ffff";
+     });
+
+// document.querySelectorAll(".cesium-viewer-animationContainer").title = 'your new title';
+
 // $(window).on('load resize', function(){
 //     $('.j').width($(this).width()*0.10);
 //      // $('.j').css('top',$(this).height()*0.075+43+'px');

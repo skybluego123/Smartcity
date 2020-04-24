@@ -8,7 +8,24 @@
 /*.btn-group button{
     background-color:green;
 }*/
-
+/*g.cesium-animation-rectButton:hover title {
+    border: #c0c0c0 1px dotted;
+    padding: 5px 20px 5px 5px;
+    display: block;
+    z-index: 100;
+    background: white;
+    left: 0px;
+    margin: 10px;
+    width: 250px;
+    position: absolute;
+    top: 10px;
+    text-decoration: none
+}*/
+/*g.cesium-animation-rectButton:hover
+{
+    opacity: 0.0;
+}
+*/
 .btn {
     font-size: 1.4vh;
 }
