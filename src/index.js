@@ -801,10 +801,12 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
         font-style: italic;\
         text-indent: 0;\
         border: thin silver solid;\
-        margin: 0.5em;\
-        padding: 0.5em;\
-        width:100%;\
-        min-width: 150px;\
+        margin: 0.1em;\
+        padding: 0.1em;\
+        width:100vw;\
+        position:fixed;\
+        max-height:40vh;\
+        height:fit-content;\
       }\
       .cesium-infoBox-description {\
         font-family: "Times New Roman", Times, serif;\
