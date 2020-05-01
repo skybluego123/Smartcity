@@ -512,18 +512,17 @@ latmx=Math.max.apply(null, inlet_lats)
 latmi=Math.min.apply(null, inlet_lats)
 
 
-
             var len = 294;
             var points = [];
             var max = 100;
             var width = 650;
-            var height = 550;
+            var height = 650;
 
 
-            var latMin =  29.151095;
-            var latMax =  29.766357;
-            var lonMin = -95.851095;
-            var lonMax = -94.366357;
+            // var latMin =  29.151095;
+            // var latMax =  29.766357;
+            // var lonMin = -95.851095;
+            // var lonMax = -95.4039;
             
             var latMin = latmi;
             var latMax = latmx;
@@ -557,7 +556,7 @@ latmi=Math.min.apply(null, inlet_lats)
 
             var heatmapInstance = h377.create({
                 container: document.querySelector('#heatmap'),
-                 radius: 7,
+                 radius: 10,
             });
 
             var data = {
@@ -571,16 +570,20 @@ latmi=Math.min.apply(null, inlet_lats)
 
             var canvas = document.getElementsByClassName('heatmap-canvas');
          //   console.log(canvas);
+
             viewer.entities.add({
                 name: 'heatmap',
                 rectangle: {
-                    height: 0,
-                    heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
+              //      height: 0,
+               //     heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
                     coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
-                    material: new Cesium.ImageMaterialProperty({
+                    material: //Cesium.Color.RED
+                    
+                    new Cesium.ImageMaterialProperty({
                         image: canvas[0],
                         transparent: true
                     })
+                    
 
                 }
             });
@@ -791,22 +794,15 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
             vulnerable_objects_entity[parseInt(pick.id._name)].description='\
       <style>\
       .rotate90 {\
-         -webkit-transform: rotate(90deg);\
-        -moz-transform: rotate(90deg);\
-        -o-transform: rotate(90deg);\
-        -ms-transform: rotate(90deg);\
-        transform: rotate(90deg);\
-        float: center;\
-        text-align: center;\
-        font-style: italic;\
         text-indent: 0;\
         border: thin silver solid;\
         margin: 0.1em;\
         padding: 0.1em;\
-        width:100vw;\
+        width:100px;\
+        height:200px;\
         position:fixed;\
-        max-height:40vh;\
-        height:fit-content;\
+        image-orientation: 0deg;\
+        overflow: hidden;\
       }\
       .cesium-infoBox-description {\
         font-family: "Times New Roman", Times, serif;\
