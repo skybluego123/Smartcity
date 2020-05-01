@@ -504,92 +504,6 @@ var power1= Cesium.Resource.fetchJson('http://backend.digitaltwincities.info/pol
     }
 //console.log(inlet_lats.length)
 
-
-
-lonmx=Math.max.apply(null, inlet_longs)
-lonmi=Math.min.apply(null, inlet_longs)
-latmx=Math.max.apply(null, inlet_lats)
-latmi=Math.min.apply(null, inlet_lats)
-
-
-            var len = 294;
-            var points = [];
-            var max = 100;
-            var width = 650;
-            var height = 650;
-
-
-            // var latMin =  29.151095;
-            // var latMax =  29.766357;
-            // var lonMin = -95.851095;
-            // var lonMax = -95.4039;
-            
-            var latMin = latmi;
-            var latMax = latmx;
-            var lonMin = lonmi;
-            var lonMax = lonmx;
-            
-
-             var dataRaw = [];
-            for (var i = 0; i < inlet_longs.length; i=i+1) {
-                var tmp=Math.floor(Math.random() * 100)
-                var point = {
-                    lat: inlet_lats[i],
-                    lon: inlet_longs[i],
-                    value: tmp
-                };
-                
-                dataRaw.push(point);
-            }
-
-            for (var i = 0; i < inlet_longs.length; i=i+1) {
-                var dataItem = dataRaw[i];
-                var point = {
-                    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
-                    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
-                    value: Math.floor(dataItem.value)
-                };
-
-                max = Math.max(max, dataItem.value);
-                points.push(point);
-            }
-
-            var heatmapInstance = h377.create({
-                container: document.querySelector('#heatmap'),
-                 radius: 10,
-            });
-
-            var data = {
-                max: max,
-                data: points
-            };
-
-            heatmapInstance.setData(data);
-
-            viewer._cesiumWidget._creditContainer.style.display = "none";
-
-            var canvas = document.getElementsByClassName('heatmap-canvas');
-         //   console.log(canvas);
-
-            viewer.entities.add({
-                name: 'heatmap',
-                rectangle: {
-              //      height: 0,
-               //     heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-                    coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
-                    material: //Cesium.Color.RED
-                    
-                    new Cesium.ImageMaterialProperty({
-                        image: canvas[0],
-                        transparent: true
-                    })
-                    
-
-                }
-            });
-
- 
-
 });
 
 
@@ -770,6 +684,26 @@ fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
 //     return res;
 //     };
 // }
+//     function ScaleCallback(target) {
+//       var count=0;
+//     return function callbackFunction() {
+       
+//     var res;
+//     for(let pole_entity of poles_entity){
+//       if(count == target-1){
+//     //  console.log("werwer")
+//         res=0.8;
+//       }
+//       else
+//         res=0.2;
+//        //pole_entity.scale=0.2; 
+//     count++;
+//     }
+//    // console.log(res);
+//     return res;
+//     };
+// }
+
 
 var current_id="xx";
 var current_id1="xx";
@@ -780,8 +714,9 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
            // Get current mouth position
             var pick = viewer.scene.pick(click.position);
             //pick current entity
-            if(pick && pick.id){
-              console.log(pick.id._name)
+           // console.log(typeof pick.id._name)
+            if(pick && pick.id && (typeof pick.id._name == 'number')){
+              
             let name=vulnerable_objects[parseInt(pick.id._name)]['cluster_id'];
             let cluster_obj=vulnerable_objects[parseInt(pick.id._name)]['cluster_objects'];
             let image_url = cluster_obj[0]['image'];
@@ -794,12 +729,17 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
             vulnerable_objects_entity[parseInt(pick.id._name)].description='\
       <style>\
       .rotate90 {\
+         -webkit-transform: rotate(90deg);\
+       -moz-transform: rotate(90deg);\
+       -o-transform: rotate(90deg);\
+       -ms-transform: rotate(90deg);\
+       transform: rotate(90deg);\
         text-indent: 0;\
         border: thin silver solid;\
         margin: 0.1em;\
         padding: 0.1em;\
-        width:100px;\
-        height:200px;\
+        width:300px;\
+        height:300px;\
         position:fixed;\
         image-orientation: 0deg;\
         overflow: hidden;\
@@ -874,11 +814,16 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
               initial_pole= nearest_target;
            //   console.log(nearest_target)
               let near_track=0;
+
+              for(let pole of poles_data.entities.values){
+                pole.model.silhouetteSize=0.0;
+              }
               let entity= poles_data.entities.values[nearest_target-1];
              // console.log(entity)
               entity.silhouetteColor=Cesium.Color.WHITE;
               entity.model.silhouetteSize=1.0;
             }
+          
          }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
 
 
@@ -986,8 +931,11 @@ Cesium.when(power4,function(dataSource){
   CheckPowerI.addEventListener('change', function() {
     if (CheckPowerI.checked) {
       viewer.dataSources.add(dataSource);
+    //  viewer.dataSources.add(dataSource);
     }else{
-      viewer.dataSources.remove(dataSource);      
+      viewer.dataSources.remove(dataSource);    
+    //  viewer.dataSources.add(dataSource);
+  
     }
   });  
 });
@@ -1037,9 +985,11 @@ Cesium.when(flood1,function(dataSource){
   CheckFloodI.addEventListener('change', function() {
     if (CheckFloodI.checked) {
       viewer.dataSources.add(dataSource);
+      viewer.entities.add(heatmapEntity);
     //  viewer.entities.add(entity_example);
     }else{
       viewer.dataSources.remove(dataSource);
+      viewer.entities.remove(heatmapEntity);
     //  viewer.entities.remove(entity_example);
     }
   });    
@@ -1243,20 +1193,20 @@ e.preventDefault();
 
 jQuery("#rita").click(function(e){
 //do something
-//if( weather_rita == undefined){
-// $.ajax({
-//     url: 'http://backend.digitaltwincities.info/rita',
-//     data: {
+
+$.ajax({
+    url: 'http://backend.digitaltwincities.info/rita',
+    data: {
       
-//     }, 
-//     async: false,
-//     dataType: 'json',
-//     success:function(data){
-//       weather_rita=data;
-//       console.log(weather_rita)
-// }
-// });
-//}
+    }, 
+    async: false,
+    dataType: 'json',
+    success:function(data){
+      weather_rita=data;
+      console.log(weather_rita)
+}
+});
+
 
 let start=new Cesium.JulianDate()
 for(let i =0;i<123;i++)
@@ -1291,3 +1241,248 @@ e.preventDefault();
 
 
 
+
+
+// lonmx=Math.max.apply(null, inlet_longs)
+// lonmi=Math.min.apply(null, inlet_longs)
+// latmx=Math.max.apply(null, inlet_lats)
+// latmi=Math.min.apply(null, inlet_lats)
+// console.log(lonmx)
+// console.log(lonmi)
+// console.log(latmx)
+// console.log(latmi)
+//     function HeatCallback(value) {
+     
+//     return function callbackFunction() {
+//        if(value > 50)
+//        {
+//           var len = 294;
+//             var points = [];
+//             var max = 100;
+//             var width = 650;
+//             var height = 650;
+
+
+//             var latMin =  29.651095;
+//             var latMax =  29.826357;
+//             var lonMin = -95.451095;
+//             var lonMax = -95.1039;
+            
+//             // var latMin = latmi;
+//             // var latMax = latmx;
+//             // var lonMin = lonmi;
+//             // var lonMax = lonmx;
+            
+
+//              var dataRaw = [];
+//             for (var i = 0; i < 400; i=i+1) {
+//                 var tmp=Math.floor(Math.random() * 100)
+//                 var point = {
+//                     lat: latMin + Math.random() * (latMax - latMin),
+//                     lon: lonMin + Math.random() * (lonMax - lonMin),
+//                     value: tmp
+//                 };
+                
+//                 dataRaw.push(point);
+//             }
+
+//             for (var i = 0; i < 400; i=i+1) {
+//                 var dataItem = dataRaw[i];
+//                 var point = {
+//                     x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+//                     y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+//                     value: Math.floor(dataItem.value)
+//                 };
+
+//                 max = Math.max(max, dataItem.value);
+//                 points.push(point);
+//             }
+
+//             var heatmapInstance = h377.create({
+//                 container: document.querySelector('#heatmap'),
+//                  radius: 10,
+//             });
+
+//             var data = {
+//                 max: max,
+//                 data: points
+//             };
+
+//             heatmapInstance.setData(data);
+
+//             viewer._cesiumWidget._creditContainer.style.display = "none";
+
+//             var canvas = document.getElementsByClassName('heatmap-canvas');
+//             console.log(canvas)
+//             let heat_m=new Cesium.ImageMaterialProperty();
+//             heat_m.image=canvas[0];
+//             heat_m.transparent=true;
+           
+//             //return heat_m;
+//        }
+//     return heat_m;
+
+//     };
+// }
+var myrange1_stop=0;
+$('#myRange1').change(function() {
+ myrange1_stop=$(this).val();
+if(parseInt(myrange1_stop)>40)
+{
+//viewer.entities.remove(heatmapEntity);
+//destroyObject(heatmapEntity);
+      var len = 294;
+            let points_ = [];
+            var max = 100;
+            var width = 650;
+            var height = 650;
+
+
+            var latMin =  29.651095;
+            var latMax =  29.826357;
+            var lonMin = -95.451095;
+            var lonMax = -95.1039;
+            
+            // var latMin = latmi;
+            // var latMax = latmx;
+            // var lonMin = lonmi;
+            // var lonMax = lonmx;
+            
+// var dataItem = {
+//   x: latMin + Math.random() * (latMax - latMin), // x coordinate of the datapoint, a number
+//   y: lonMin + Math.random() * (lonMax - lonMin), // y coordinate of the datapoint, a number
+//   value: Math.floor(Math.random() * 100) // the value at datapoint(x, y)
+// };
+// var dataPoint_ = {
+//    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+//    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+//   value: Math.floor(dataItem.value)
+// };
+
+
+// heatmapInstance.addData(dataPoint_);
+
+
+             let dataRaw_ = [];
+            for (var i = 0; i < 300; i=i+1) {
+                var tmp=Math.floor(Math.random() * 100)
+                var point = {
+                    lat: latMin + Math.random() * (latMax - latMin),
+                    lon: lonMin + Math.random() * (lonMax - lonMin),
+                    value: tmp
+                };
+                
+                dataRaw_.push(point);
+
+            }
+
+            for (var i = 0; i < 300; i=i+1) {
+                var dataItem = dataRaw_[i];
+                var point = {
+                    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+                    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+                    value: Math.floor(dataItem.value)
+                };
+
+            //    max = Math.max(max, dataItem.value);
+                points_.push(point);
+
+            }
+                      var data_ = {
+                max: max,
+                data: points_
+            };
+
+           
+
+            
+            setTimeout(function(){
+            heatmapInstance.setData(data_);
+            //heatmapInstance.addData(points_)
+            var currentData = heatmapInstance.getData();
+            console.log(currentData)
+
+            heatmapInstance.repaint();
+},1000)
+            
+            heatmapEntity.rectangle.material= new Cesium.ImageMaterialProperty({
+                        image: canvas[0],
+                        transparent: false
+                    })
+
+}
+
+});
+
+
+            var len = 294;
+            var points = [];
+            var max = 100;
+            var width = 650;
+            var height = 650;
+
+
+            var latMin =  29.651095;
+            var latMax =  29.826357;
+            var lonMin = -95.451095;
+            var lonMax = -95.1039;
+            
+            // var latMin = latmi;
+            // var latMax = latmx;
+            // var lonMin = lonmi;
+            // var lonMax = lonmx;
+            
+
+             var dataRaw = [];
+            for (var i = 0; i < 100; i=i+1) {
+                var tmp=Math.floor(Math.random() * 100)
+                var point = {
+                    lat: latMin + Math.random() * (latMax - latMin),
+                    lon: lonMin + Math.random() * (lonMax - lonMin),
+                    value: tmp
+                };
+                
+                dataRaw.push(point);
+            }
+
+            for (var i = 0; i < 100; i=i+1) {
+                var dataItem = dataRaw[i];
+                var point = {
+                    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+                    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+                    value: Math.floor(dataItem.value)
+                };
+
+                max = Math.max(max, dataItem.value);
+                points.push(point);
+            }
+
+            var heatmapInstance = h377.create({
+                container: document.querySelector('#heatmap'),
+                 radius: 10,
+            });
+
+            var data = {
+                max: max,
+                data: points
+            };
+
+            heatmapInstance.setData(data);
+
+            viewer._cesiumWidget._creditContainer.style.display = "none";
+
+            var canvas = document.getElementsByClassName('heatmap-canvas');
+         //   console.log(canvas);
+            var heatmapEntity=new Cesium.Entity();
+            heatmapEntity.name='heatmap';
+           // let heat_image=new Cesium.ImageMaterialProperty();
+          //  heatmapEntity.rectangle.material.image=new Cesium.CallbackProperty(HeatCallback(0), false)
+            heatmapEntity.rectangle={  
+              coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
+                    material: //Cesium.Color.RED
+                    new Cesium.ImageMaterialProperty({
+                        image: canvas[0],
+                        transparent: true
+                    })
+                 //   new Cesium.CallbackProperty(HeatCallback(0), false)
+                  }
