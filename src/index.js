@@ -26,7 +26,7 @@ var now = viewer.clock.startTime;
 var res=new Cesium.JulianDate();
 
 viewer.clock.shouldAnimate=false;
-viewer.clock.multiplier = 2000.0;
+viewer.clock.multiplier = 1500.0;
 $('#time_default').on('click', function(){
 viewer.clock.currentTime = now.clone();
 Cesium.JulianDate.addDays(now,4.0,res);
@@ -159,7 +159,7 @@ function onTimelineScrubfunction(e) {
 
 }
 viewer.clock.onTick.addEventListener(function(clock){
-  update_weather(weather_data1,clock.currentTime);
+  //update_weather(weather_data1,clock.currentTime);
   if(event_indicator=="Rita"){
     update_weather_hist(weather_rita,clock.currentTime)
   }
@@ -169,6 +169,10 @@ viewer.clock.onTick.addEventListener(function(clock){
   if(event_indicator=="Allison"){
     update_weather_hist(weather_allison,clock.currentTime)
   }
+  if(event_indicator=="Ike"){
+    update_weather_hist(weather_ike,clock.currentTime)
+  }
+
 
 });
 
@@ -263,7 +267,7 @@ $('#myRange').change(function() {
 
 });
 
-var myVar = setInterval(myTimer, 10000);
+var myVar = setInterval(myTimer, 8000);
 function myTimer() {
   var cur_speed=Math.round(parseInt($('#wind').text()));
   //console.log(cur_speed);
@@ -1096,6 +1100,7 @@ function update_weather_hist(data,currentTime){
 var weather_harvey;
 var weather_allison;
 var weather_rita;
+var weather_ike;
 var event_indicator;
 $('.dropdown-menu a').click(function () {           
   let t=$(this).text();
@@ -1212,6 +1217,45 @@ let start=new Cesium.JulianDate()
 for(let i =0;i<123;i++)
 {
   let dt_time=weather_rita['data'][i]['dt']
+  let tmp_date= new Cesium.JulianDate()
+  Cesium.JulianDate.fromDate(new Date(dt_time * 1000), tmp_date)
+
+  if(i==0){
+    start=tmp_date;
+  }
+}
+
+Cesium.JulianDate.addDays(start,4.0,res);
+viewer.timeline.zoomTo(start, res);
+viewer.timeline.updateFromClock();
+viewer.clock.currentTime=start.clone();
+viewer.clock.shouldAnimate=true;
+
+//console.log(weather_harvey['data'][0]['dt'])
+e.preventDefault();
+});
+
+jQuery("#ike").click(function(e){
+//do something
+
+$.ajax({
+    url: 'http://backend.digitaltwincities.info/ike',
+    data: {
+      
+    }, 
+    async: false,
+    dataType: 'json',
+    success:function(data){
+      weather_ike=data;
+      console.log(weather_ike)
+}
+});
+
+
+let start=new Cesium.JulianDate()
+for(let i =0;i<128;i++)
+{
+  let dt_time=weather_ike['data'][i]['dt']
   let tmp_date= new Cesium.JulianDate()
   Cesium.JulianDate.fromDate(new Date(dt_time * 1000), tmp_date)
 
