@@ -316,11 +316,11 @@ font-size:0.9vw;
     line-height: 150%;
     font-size: small;
     width:40%;
-    -webkit-transform: rotate(90deg);
+  /*  -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+    transform: rotate(90deg);*/
 }
 
 

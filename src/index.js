@@ -147,7 +147,7 @@ function onTimelineScrubfunction(e) {
   var clock = e.clock;
   clock.currentTime = e.timeJulian;
   //clock.shouldAnimate = true;
-  console.log( e.timeJulian);
+ // console.log( e.timeJulian);
   if(viewer.clock.shouldAnimate==true){
   //update_weather(weather_data1,e.timeJulian);
   }
@@ -733,11 +733,6 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
             vulnerable_objects_entity[parseInt(pick.id._name)].description='\
       <style>\
       .rotate90 {\
-         -webkit-transform: rotate(90deg);\
-       -moz-transform: rotate(90deg);\
-       -o-transform: rotate(90deg);\
-       -ms-transform: rotate(90deg);\
-       transform: rotate(90deg);\
         text-indent: 0;\
         border: thin silver solid;\
         margin: 0.1em;\
@@ -1071,7 +1066,7 @@ function update_weather_hist(data,currentTime){
       let cur_humi=(pair_humi[wind_track][0]+pair_humi[wind_track][1])/2
       let cur_desc=weather_desc[wind_track]
       let cur_rain='0';
-      console.log(cur_humi)
+    //  console.log(cur_humi)
       if(cur_desc=='Rain')
       {
         cur_rain=weather_data['data'][wind_track]['rain']['3h']
@@ -1090,10 +1085,10 @@ function update_weather_hist(data,currentTime){
       let rainfall =document.getElementById("visibility");
          rainfall.innerHTML=`${parseFloat(cur_rain).toFixed(1)}&nbsp;mm`;
       let humidityElem = document.getElementById("humidity");
-      console.log(humidityElem.innerHTML)
+ //     console.log(humidityElem.innerHTML)
      // humidityElem.innerHTML = `${cur_humi.toFixed(0)}&nbsp;%`;
        humidityElem.innerHTML = `${cur_humi}&nbsp;%`;
-       console.log(humidityElem.innerHTML)
+   //    console.log(humidityElem.innerHTML)
     }
 
 
@@ -1118,7 +1113,8 @@ console.log(event_indicator)
 
 jQuery("#harvey").click(function(e){
 //do something
-//if(weather_harvey.length == 0 || weather_harvey == undefined){
+if(weather_harvey == undefined){
+  console.log("first load")
 $.ajax({
     url: 'http://backend.digitaltwincities.info/harvey',
     data: {
@@ -1131,7 +1127,7 @@ $.ajax({
      
 }
 });
-//}
+}
 let start=new Cesium.JulianDate()
 for(let i =0;i<160;i++)
 {
@@ -1160,7 +1156,7 @@ e.preventDefault();
 
 jQuery("#allison").click(function(e){
 //do something
-//if(weather_allison.length == 0 || weather_allison == undefined){
+if( weather_allison == undefined){
 $.ajax({
     url: 'http://backend.digitaltwincities.info/allison',
     data: {
@@ -1173,7 +1169,7 @@ $.ajax({
     //  console.log(weather_allison)
 }
 });
-//}
+}
 let start=new Cesium.JulianDate()
 for(let i =0;i<153;i++)
 {
@@ -1198,7 +1194,7 @@ e.preventDefault();
 
 jQuery("#rita").click(function(e){
 //do something
-
+if( weather_rita == undefined){
 $.ajax({
     url: 'http://backend.digitaltwincities.info/rita',
     data: {
@@ -1211,7 +1207,7 @@ $.ajax({
       console.log(weather_rita)
 }
 });
-
+}
 
 let start=new Cesium.JulianDate()
 for(let i =0;i<123;i++)
@@ -1237,7 +1233,7 @@ e.preventDefault();
 
 jQuery("#ike").click(function(e){
 //do something
-
+if( weather_ike == undefined){
 $.ajax({
     url: 'http://backend.digitaltwincities.info/ike',
     data: {
@@ -1250,7 +1246,7 @@ $.ajax({
       console.log(weather_ike)
 }
 });
-
+}
 
 let start=new Cesium.JulianDate()
 for(let i =0;i<128;i++)
