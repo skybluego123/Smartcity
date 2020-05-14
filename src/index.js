@@ -267,11 +267,14 @@ $('#myRange').change(function() {
 
 });
 
-var myVar = setInterval(myTimer, 8000);
+var myVar = setInterval(myTimer, 3000);
+
+
 function myTimer() {
-  var cur_speed=Math.round(parseInt($('#wind').text()));
-  //console.log(cur_speed);
+ 
   if(viewer.clock.shouldAnimate==true){
+     var cur_speed=Math.round(parseInt($('#wind').text()));
+      console.log(cur_speed);
       $.ajax({
     url: 'https://jvc8szgvya.execute-api.us-west-2.amazonaws.com/default/networkanalysis',
     data: {
@@ -283,22 +286,20 @@ function myTimer() {
       power_demage=data;
     },
   })
- for(var x = 0; x < poles_data.entities.values.length; x++) {
+let damaged_poles = new Set(power_demage['failedpoles']);
+console.log("damaged poles: "+damaged_poles.size)
 
- // for(let x of poles_data.entities.value)
-  //{
-     poles_data.entities.values[x].model.color=Cesium.Color.GREEN;
-    for(let y of power_demage['failedpoles'])
-    {
-      //poles_data.entities.values[y-1].model.color=Cesium.Color.RED;
-      if(poles_data.entities.values[x].manual_id==y)
-     {
-        poles_data.entities.values[x].model.color=Cesium.Color.RED;
+
+ for(var x = 0; x < poles_data.entities.values.length; x++) {
+  poles_data.entities.values[x].model.color=Cesium.Color.GREEN;
+    if(damaged_poles.has(x+1)){
+      poles_data.entities.values[x].model.color=Cesium.Color.RED;
       }
-    }
+     
   }
 
 }
+
 }
 
 var myPos = { my: "center center", at: "center-390 center", of: window };
