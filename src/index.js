@@ -159,7 +159,7 @@ function onTimelineScrubfunction(e) {
 
 }
 viewer.clock.onTick.addEventListener(function(clock){
-  //update_weather(weather_data1,clock.currentTime);
+  update_weather(weather_data1,clock.currentTime);
   if(event_indicator=="Rita"){
     update_weather_hist(weather_rita,clock.currentTime)
   }
@@ -245,24 +245,12 @@ $('#myRange').change(function() {
     },
   })
  
-    // for(let y of power_demage['failedpoles'])
-    // {
-    //   poles_data.entities.values[y-1].model.color=Cesium.Color.RED;
-    // }
- 
+ let damaged_poles = new Set(power_demage['failedpoles']);
    for(var x = 0; x < poles_data.entities.values.length; x++) {
-
- // for(let x of poles_data.entities.value)
-  //{
-     poles_data.entities.values[x].model.color=Cesium.Color.GREEN;
-    for(let y of power_demage['failedpoles'])
-    {
-      //poles_data.entities.values[y-1].model.color=Cesium.Color.RED;
-      if(poles_data.entities.values[x].manual_id==y)
-     {
-       poles_data.entities.values[x].model.color=Cesium.Color.RED;
+    poles_data.entities.values[x].model.color=Cesium.Color.GREEN;
+      if(damaged_poles.has(x+1)){
+      poles_data.entities.values[x].model.color=Cesium.Color.RED;
       }
-    }
   }
 
 });
@@ -292,8 +280,15 @@ console.log("damaged poles: "+damaged_poles.size)
 
  for(var x = 0; x < poles_data.entities.values.length; x++) {
   poles_data.entities.values[x].model.color=Cesium.Color.GREEN;
+  poles_data.entities.values[x].billboard=undefined;
     if(damaged_poles.has(x+1)){
       poles_data.entities.values[x].model.color=Cesium.Color.RED;
+     // poles_data.entities.values[x].billboard=new Cesium.BillboardGraphics();
+      poles_data.entities.values[x].billboard=new Cesium.BillboardGraphics();
+      poles_data.entities.values[x].billboard.image= pinBuilder.fromUrl(url1, Cesium.Color.RED, 48);
+      //poles_data.entities.values[x].billboard.image=url1;
+      poles_data.entities.values[x].billboard.verticalOrigin=Cesium.VerticalOrigin.BOTTOM;
+   //   poles_data.entities.values[x].billboard.heightReference =Cesium.HeightReference.CLAMP_TO_GROUND;
       }
      
   }
@@ -525,85 +520,10 @@ var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3
 var vulnerable_objects;
 var object_indicator;
 var url =Cesium.buildModuleUrl("./images/power.png");
+var url1 =Cesium.buildModuleUrl("./images/vul.png");
 
 
 var entity_array=[]
-
-// fetch("./geoMappings/dStormInlet_L5457_ver3.json")
-//   .then(response => response.json())
-//   .then(function(json){
-//     let inlets=json['features'];
-//     console.log("fetch json")
-//     for(let inlet of inlets)
-//     {
-//       let inlet_long = inlet['geometry']['coordinates'][0];
-//       let inlet_lat = inlet['geometry']['coordinates'][1];
-//       inlet_longs.push(inlet_long)
-//       inlet_lats.push(inlet_lat)
-
-//     }
-  
-// let target_long=inlet_longs[40]
-// let target_lat=inlet_lats[40]
-
-// //draw_polygon(inlet_longs,inlet_lats,target_long,target_lat)
-// for(let i =0;i<40;i++)
-//   {
-//     let poss_arr=[inlet_longs[i]-0.00005,inlet_lats[i]-0.00005,
-//               inlet_longs[i]+0.00005, inlet_lats[i]-0.00005,
-//               inlet_longs[i]+0.00009, inlet_lats[i]+0.00009,
-//               inlet_longs[i]-0.00005, inlet_lats[i]+0.00005,
-//               inlet_longs[i]-0.00007, inlet_lats[i]+0.00007
-//           ];
-
-// let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
-
-
-//     let entity_example=new Cesium.Entity();
-//     entity_example.polygon={
-//         hierarchy:new Cesium.CallbackProperty(getCallback(inlet_longs[i],inlet_lats[i]), false),//new Cesium.PolygonHierarchy(poss),//getCallback(inlet_longs[i],inlet_lats[i]),
-//         material: Cesium.Color.RED.withAlpha(0.5),
-//         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-//         show: true
-//     }
-//     entity_array.push(entity_example);
-//     viewer.entities.add(entity_example);
-//   }
-
-//   });
-
-  
-// function draw_polygon(center_long,center_lat,target_long,target_lat)
-// 
-// for(let i =0;i<40;i++)
-//   {
-//     let poss_arr=[inlet_longs[i]-0.00005,inlet_lats[i]-0.00005,
-//               inlet_longs[i]+0.00005, inlet_lats[i]-0.00005,
-//               inlet_longs[i]+0.00009, inlet_lats[i]+0.00009,
-//               inlet_longs[i]-0.00005, inlet_lats[i]+0.00005,
-//               inlet_longs[i]-0.00007, inlet_lats[i]+0.00007
-//           ];
-
-// let poss=Cesium.Cartesian3.fromDegreesArray(poss_arr);
-
-
-//     let entity_example=new Cesium.Entity();
-//     entity_example.polygon={
-//         hierarchy:new Cesium.CallbackProperty(getCallback(inlet_longs[i],inlet_lats[i]), false),//new Cesium.PolygonHierarchy(poss),//getCallback(inlet_longs[i],inlet_lats[i]),
-//         material: Cesium.Color.RED.withAlpha(0.5),
-//         heightReference : Cesium.HeightReference.CLAMP_TO_GROUND,
-//         show: true
-//     }
-//     entity_array.push(entity_example);
-//     viewer.entities.add(entity_example);
-//   }
-    
-//     entity_array.push(entity_example);
-//     viewer.entities.add(entity_example);
-//   }
-//  // console.log(entity_array.length)
-
-
 
 
 function toRad(Value) 
@@ -655,59 +575,16 @@ fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
       let image_date= cluster_obj[0]['createdDate'];
       let object_type=cluster_obj[0]['classification'];
       entity.billboard= new Cesium.BillboardGraphics();
+     // entity.billboard= new Cesium.Billboard();
       //entity.billboard.image= pinBuilder.fromText('!', Cesium.Color.BLACK, 48).toDataURL()
       entity.billboard.image= pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48);
+     // entity.billboard.image= url1;
       entity.billboard.heightReference =Cesium.HeightReference.CLAMP_TO_GROUND;
       //entity.billboard.verticalOrigin=Cesium.VerticalOrigin.BOTTOM
       vulnerable_objects_entity.push(entity)
     var updated=viewer.entities.add(entity);
       }
   });
-
-//   var fadeColor = new Cesium.CallbackProperty(function(){
-//     r=slider.value;
-//     g=255-slider.value;
-//     return Cesium.Color.fromBytes(r, g, b, 255);
-// }, false);
-
-//     function ScaleCallback(target) {
-//       var count=0;
-//     return function callbackFunction() {
-       
-//     var res;
-//     for(let pole_entity of poles_entity){
-//       if(count == target-1){
-//     //  console.log("werwer")
-//         res=0.8;
-//       }
-//       else
-//         res=0.2;
-//        //pole_entity.scale=0.2; 
-//     count++;
-//     }
-//    // console.log(res);
-//     return res;
-//     };
-// }
-//     function ScaleCallback(target) {
-//       var count=0;
-//     return function callbackFunction() {
-       
-//     var res;
-//     for(let pole_entity of poles_entity){
-//       if(count == target-1){
-//     //  console.log("werwer")
-//         res=0.8;
-//       }
-//       else
-//         res=0.2;
-//        //pole_entity.scale=0.2; 
-//     count++;
-//     }
-//    // console.log(res);
-//     return res;
-//     };
-// }
 
 
 var current_id="xx";
@@ -1011,21 +888,6 @@ Cesium.when(flood1,function(dataSource){
 //         }
 //     });
 // }
-// function timeConverter(UNIX_timestamp){
-//   var a = new Date(UNIX_timestamp * 1000);
-//   var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-//   var year = a.getFullYear();
-//   var month = months[a.getMonth()];
-//   var date = a.getDate();
-//   var hour = a.getHours();
-//   var min = "0"+a.getMinutes();
-//   var sec = "0"+a.getSeconds();
-//   var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-//   return time;
-// }
-
-//console.log(timeConverter(0));
-
 function update_weather_hist(data,currentTime){
       weather_data=data;
       let weather_desc=[]
@@ -1280,91 +1142,6 @@ e.preventDefault();
 //     //window.alert(error);
 // });
 
-
-
-
-
-// lonmx=Math.max.apply(null, inlet_longs)
-// lonmi=Math.min.apply(null, inlet_longs)
-// latmx=Math.max.apply(null, inlet_lats)
-// latmi=Math.min.apply(null, inlet_lats)
-// console.log(lonmx)
-// console.log(lonmi)
-// console.log(latmx)
-// console.log(latmi)
-//     function HeatCallback(value) {
-     
-//     return function callbackFunction() {
-//        if(value > 50)
-//        {
-//           var len = 294;
-//             var points = [];
-//             var max = 100;
-//             var width = 650;
-//             var height = 650;
-
-
-//             var latMin =  29.651095;
-//             var latMax =  29.826357;
-//             var lonMin = -95.451095;
-//             var lonMax = -95.1039;
-            
-//             // var latMin = latmi;
-//             // var latMax = latmx;
-//             // var lonMin = lonmi;
-//             // var lonMax = lonmx;
-            
-
-//              var dataRaw = [];
-//             for (var i = 0; i < 400; i=i+1) {
-//                 var tmp=Math.floor(Math.random() * 100)
-//                 var point = {
-//                     lat: latMin + Math.random() * (latMax - latMin),
-//                     lon: lonMin + Math.random() * (lonMax - lonMin),
-//                     value: tmp
-//                 };
-                
-//                 dataRaw.push(point);
-//             }
-
-//             for (var i = 0; i < 400; i=i+1) {
-//                 var dataItem = dataRaw[i];
-//                 var point = {
-//                     x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
-//                     y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
-//                     value: Math.floor(dataItem.value)
-//                 };
-
-//                 max = Math.max(max, dataItem.value);
-//                 points.push(point);
-//             }
-
-//             var heatmapInstance = h377.create({
-//                 container: document.querySelector('#heatmap'),
-//                  radius: 10,
-//             });
-
-//             var data = {
-//                 max: max,
-//                 data: points
-//             };
-
-//             heatmapInstance.setData(data);
-
-//             viewer._cesiumWidget._creditContainer.style.display = "none";
-
-//             var canvas = document.getElementsByClassName('heatmap-canvas');
-//             console.log(canvas)
-//             let heat_m=new Cesium.ImageMaterialProperty();
-//             heat_m.image=canvas[0];
-//             heat_m.transparent=true;
-           
-//             //return heat_m;
-//        }
-//     return heat_m;
-
-//     };
-// }
 var myrange1_stop=0;
 $('#myRange1').change(function() {
  myrange1_stop=$(this).val();

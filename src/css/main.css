@@ -499,7 +499,7 @@ float: left;
   margin-top: 0px;
   position: fixed;
   padding:0px;
-  top:10.8vh;
+  top:10.3vh;
   margin: 0 auto;
   left:0vw;
   width: 13.5vw;        
@@ -518,7 +518,7 @@ width:10%;
 .other
 {
     position: absolute;
-    top:10.8vh;
+    top:10.3vh;
     /*left:12.5vw;*/
     /*min-height: 33.2vh;*/
     min-width: 14.5vw;
@@ -529,7 +529,7 @@ width:10%;
     /*margin-top: -5%;*/
    /* top:calc(40% - 3vh);*/
     /*bottom: calc(40% - 3vh);*/
-    top:10.8vh;
+    top:10.3vh;
     background: rgba(42, 42, 42, 0.7);
     border: 1px solid #444;
     padding: 5px 10px;
