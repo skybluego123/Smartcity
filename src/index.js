@@ -1120,7 +1120,7 @@ $.ajax({
 }
 
 let start=new Cesium.JulianDate()
-for(let i =0;i<128;i++)
+for(let i =0;i<34;i++)
 {
   let dt_time=weather_ike['data'][i]['dt']
   let tmp_date= new Cesium.JulianDate()
@@ -1160,14 +1160,19 @@ if(parseInt(myrange1_stop)>40)
       var len = 294;
             let points_ = [];
             var max = 100;
-            var width = 1000;
-            var height = 1000;
+            var width = 500;
+            var height = 300;
 
 
-            var latMin =  29.701095;
-            var latMax =  29.796357;
-            var lonMin = -95.418095;
-            var lonMax = -95.3039;
+             var latMin =  29.701095;
+            // var latMax =  29.796357;
+            // var lonMin = -95.418095;
+            // var lonMax = -95.3039;
+            
+            // var latMin =  29.7014586;
+            var latMax =  29.7863407;
+            var lonMin = -95.4127836
+            var lonMax = -95.3352546;
             
             // var latMin = latmi;
             // var latMax = latmx;
@@ -1196,6 +1201,9 @@ if(parseInt(myrange1_stop)>40)
                     lat: poles_lats[i],
                     lon: poles_longs[i],
                     value: tmp
+                    //  lat: latMin + Math.random() * (latMax - latMin),
+                    // lon: lonMin + Math.random() * (lonMax - lonMin),
+                    // value: tmp
                 };
                 
                 dataRaw_.push(point);
@@ -1241,17 +1249,17 @@ if(parseInt(myrange1_stop)>40)
 });
 
 
-            var len = 294;
+      var len = 294;
             var points = [];
             var max = 100;
             var width = 650;
             var height = 650;
 
 
-            var latMin =  29.551095;
+            var latMin =  29.651095;
             var latMax =  29.826357;
             var lonMin = -95.451095;
-            var lonMax = -95.167839;
+            var lonMax = -95.1039;
             
             // var latMin = latmi;
             // var latMax = latmx;
@@ -1261,7 +1269,7 @@ if(parseInt(myrange1_stop)>40)
 
              var dataRaw = [];
             for (var i = 0; i < 100; i=i+1) {
-                var tmp=50//Math.floor(Math.random() * 100)
+                var tmp=Math.floor(Math.random() * 100)
                 var point = {
                     lat: latMin + Math.random() * (latMax - latMin),
                     lon: lonMin + Math.random() * (lonMax - lonMin),
@@ -1274,8 +1282,8 @@ if(parseInt(myrange1_stop)>40)
             for (var i = 0; i < 100; i=i+1) {
                 var dataItem = dataRaw[i];
                 var point = {
-                    y: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
-                    x: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+                    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+                    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
                     value: Math.floor(dataItem.value)
                 };
 
@@ -1303,8 +1311,7 @@ if(parseInt(myrange1_stop)>40)
             heatmapEntity.name='heatmap';
            // let heat_image=new Cesium.ImageMaterialProperty();
           //  heatmapEntity.rectangle.material.image=new Cesium.CallbackProperty(HeatCallback(0), false)
-            heatmapEntity.rectangle={ 
-              rotation:90.0, 
+            heatmapEntity.rectangle={  
               coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
                     material: //Cesium.Color.RED
                     new Cesium.ImageMaterialProperty({
