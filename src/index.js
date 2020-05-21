@@ -476,11 +476,17 @@ var updateP = document.getElementById('updateobj');
 var inlet_longs=[]
 var inlet_lats=[]
 
+
+var poles_longs=[]
+var poles_lats=[]
+
 var power1= Cesium.Resource.fetchJson('http://backend.digitaltwincities.info/poles').then(function (dataSource) {
     console.log('Successfully loaded!');
     objects=dataSource['data']    
     for(let object of objects){
       let entity = new Cesium.Entity();
+      poles_longs.push(object['longitude'])
+      poles_lats.push(object['latitude'])
       entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'],object['latitude'], 0);
       entity.name = object['id'];
       var manual_id = object['manual_id'];
@@ -831,8 +837,10 @@ Cesium.when(power5,function(dataSource){
   CheckPowerI.addEventListener('change', function() {
     if (CheckPowerI.checked) {
       viewer.dataSources.add(dataSource);
+      viewer.entities.add(heatmapEntity);
     }else{
-      viewer.dataSources.remove(dataSource);      
+      viewer.dataSources.remove(dataSource);  
+      viewer.entities.remove(heatmapEntity);    
     }
   }); 
 });
@@ -862,11 +870,11 @@ Cesium.when(flood1,function(dataSource){
   CheckFloodI.addEventListener('change', function() {
     if (CheckFloodI.checked) {
       viewer.dataSources.add(dataSource);
-      viewer.entities.add(heatmapEntity);
+    //  viewer.entities.add(heatmapEntity);
     //  viewer.entities.add(entity_example);
     }else{
       viewer.dataSources.remove(dataSource);
-      viewer.entities.remove(heatmapEntity);
+      //viewer.entities.remove(heatmapEntity);
     //  viewer.entities.remove(entity_example);
     }
   });    
@@ -1143,7 +1151,7 @@ e.preventDefault();
 // });
 
 var myrange1_stop=0;
-$('#myRange1').change(function() {
+$('#myRange').change(function() {
  myrange1_stop=$(this).val();
 if(parseInt(myrange1_stop)>40)
 {
@@ -1152,14 +1160,14 @@ if(parseInt(myrange1_stop)>40)
       var len = 294;
             let points_ = [];
             var max = 100;
-            var width = 650;
-            var height = 650;
+            var width = 1000;
+            var height = 1000;
 
 
-            var latMin =  29.651095;
-            var latMax =  29.826357;
-            var lonMin = -95.451095;
-            var lonMax = -95.1039;
+            var latMin =  29.701095;
+            var latMax =  29.796357;
+            var lonMin = -95.418095;
+            var lonMax = -95.3039;
             
             // var latMin = latmi;
             // var latMax = latmx;
@@ -1182,11 +1190,11 @@ if(parseInt(myrange1_stop)>40)
 
 
              let dataRaw_ = [];
-            for (var i = 0; i < 300; i=i+1) {
+            for (var i = 0; i < 488; i=i+1) {
                 var tmp=Math.floor(Math.random() * 100)
                 var point = {
-                    lat: latMin + Math.random() * (latMax - latMin),
-                    lon: lonMin + Math.random() * (lonMax - lonMin),
+                    lat: poles_lats[i],
+                    lon: poles_longs[i],
                     value: tmp
                 };
                 
@@ -1194,7 +1202,7 @@ if(parseInt(myrange1_stop)>40)
 
             }
 
-            for (var i = 0; i < 300; i=i+1) {
+            for (var i = 0; i < 488; i=i+1) {
                 var dataItem = dataRaw_[i];
                 var point = {
                     x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
@@ -1212,7 +1220,7 @@ if(parseInt(myrange1_stop)>40)
             };
 
            
-
+ //heatmapInstance.repaint();
             
             setTimeout(function(){
             heatmapInstance.setData(data_);
@@ -1222,7 +1230,7 @@ if(parseInt(myrange1_stop)>40)
 
             heatmapInstance.repaint();
 },1000)
-            
+            heatmapEntity.rectangle.stRotation=Cesium.Math.toRadians(90);
             heatmapEntity.rectangle.material= new Cesium.ImageMaterialProperty({
                         image: canvas[0],
                         transparent: false
@@ -1240,10 +1248,10 @@ if(parseInt(myrange1_stop)>40)
             var height = 650;
 
 
-            var latMin =  29.651095;
+            var latMin =  29.551095;
             var latMax =  29.826357;
             var lonMin = -95.451095;
-            var lonMax = -95.1039;
+            var lonMax = -95.167839;
             
             // var latMin = latmi;
             // var latMax = latmx;
@@ -1253,7 +1261,7 @@ if(parseInt(myrange1_stop)>40)
 
              var dataRaw = [];
             for (var i = 0; i < 100; i=i+1) {
-                var tmp=Math.floor(Math.random() * 100)
+                var tmp=50//Math.floor(Math.random() * 100)
                 var point = {
                     lat: latMin + Math.random() * (latMax - latMin),
                     lon: lonMin + Math.random() * (lonMax - lonMin),
@@ -1266,8 +1274,8 @@ if(parseInt(myrange1_stop)>40)
             for (var i = 0; i < 100; i=i+1) {
                 var dataItem = dataRaw[i];
                 var point = {
-                    x: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
-                    y: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
+                    y: Math.floor((dataItem.lat - latMin) / (latMax - latMin) * width),
+                    x: Math.floor((dataItem.lon - lonMin) / (lonMax - lonMin) * height),
                     value: Math.floor(dataItem.value)
                 };
 
@@ -1277,7 +1285,7 @@ if(parseInt(myrange1_stop)>40)
 
             var heatmapInstance = h377.create({
                 container: document.querySelector('#heatmap'),
-                 radius: 10,
+                 radius: 4,
             });
 
             var data = {
@@ -1295,7 +1303,8 @@ if(parseInt(myrange1_stop)>40)
             heatmapEntity.name='heatmap';
            // let heat_image=new Cesium.ImageMaterialProperty();
           //  heatmapEntity.rectangle.material.image=new Cesium.CallbackProperty(HeatCallback(0), false)
-            heatmapEntity.rectangle={  
+            heatmapEntity.rectangle={ 
+              rotation:90.0, 
               coordinates: Cesium.Rectangle.fromDegrees(lonMin, latMin, lonMax, latMax),
                     material: //Cesium.Color.RED
                     new Cesium.ImageMaterialProperty({
