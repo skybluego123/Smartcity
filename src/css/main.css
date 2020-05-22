@@ -180,7 +180,7 @@ header {
       float:right;
     font-size: 1.3vh;
     top: 0%;
-    left:60%;
+    left:55%;
    /* left:40%;
   -ms-transform: translateY(-50%);
   transform: translate(-40%,-50%);*/
@@ -315,7 +315,8 @@ font-size:0.9vw;
     color: #fff;
     line-height: 150%;
     font-size: small;
-    width:40%;
+/* //   width:40%;*/
+
   /*  -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -o-transform: rotate(90deg);
