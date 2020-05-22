@@ -1120,7 +1120,7 @@ $.ajax({
 }
 
 let start=new Cesium.JulianDate()
-for(let i =0;i<34;i++)
+for(let i =0;i<33;i++)
 {
   let dt_time=weather_ike['data'][i]['dt']
   let tmp_date= new Cesium.JulianDate()
