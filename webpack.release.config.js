@@ -28,7 +28,10 @@ module.exports = [{
     },
     node: {
         // Resolve node module use of fs
-        fs: "empty"
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
+        
     },
     resolve: {
         alias: {

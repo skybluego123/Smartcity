@@ -1,12 +1,57 @@
 // Create Functions - always write functions - can help in splitting the files
 require('cesium/Widgets/widgets.css');
 require('./css/main.css');
+
+const https = require('https')
+console.log("Hey there");
 // Please create meaningful names for the variables
-var h377 = require('heatmap.js/build/heatmap.js');
+// promisify the request module
+function requestAsync(url) {
+  return new Promise(function (resolve, reject) {
+    https.get(url, function (err, response, body) {
+      if (err) {
+        reject(err);
+      } else if (response.statusCode !== 200) {
+        reject(new Error("response.statusCode = " + response.statusCode));
+      } else {
+        resolve(body);
+      }
+    });
+  });
+}
+
+
+function getData(endpoints) {
+
+  return Promise.all(endpoints.map(function (url) {
+    return requestAsync(url);
+  }));
+}
+
+function loadInitialData() {
+  console.log('Hey')
+  let endpoints = ['http://backend.digitaltwincities.info/poles',
+    'https://function.digitaltwincities.info/lambda/localize',
+    'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40',
+    'http://backend.digitaltwincities.info/rita'];    // multiple endpoints to retrieve data from
+  getData(endpoints).then(function (results) {
+    var poles = JSON.parse(arrays[0])
+    var vulnerable_objects = JSON.parse(arrays[1])
+    var current_weather = JSON.parse(arrays[2])
+    var weather_rita = JSON.parse(arrays[3])
+    processPoles()
+    processLocalizedResults()
+    addListeners()
+  }).catch(function (err) {
+
+  });
+
+}
+
+
 var Cesium = require('cesium/Cesium');
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzYyNDZmZi1lYTdhLTQwMDgtOGRhZC03ZDE5YTlkYmVkMGMiLCJpZCI6NDAxOSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTYzODc1OX0.Kb7k51vZGYR5F7btrBIAuSan3ZNyKY_AWrFv1cLFUFk';
-var numClicks = 0;
-var toolbar = document.getElementById('toolbar');
+
 var viewer = new Cesium.Viewer('cesiumContainer', {
   terrainProvider: Cesium.createWorldTerrain({
     requestWaterMask: true
@@ -23,7 +68,7 @@ var res = new Cesium.JulianDate();
 
 viewer.clock.shouldAnimate = false;
 viewer.clock.multiplier = 1500.0;
-// Write comments on what exactly each function is doing - helps in maintaining the code
+
 $('#time_default').on('click', function () {
   viewer.clock.currentTime = now.clone();
   Cesium.JulianDate.addDays(now, 4.0, res);
@@ -33,6 +78,10 @@ $('#time_default').on('click', function () {
   viewer.clock.shouldAnimate = false;
 });
 
+// Calling init function initializes the code - please follow this kind of coding
+
+// Write comments on what exactly each function is doing - helps in maintaining the code
+
 var weather_data;
 
 var pair_time = []
@@ -40,39 +89,8 @@ var pair_wind = []
 var pair_temp = []
 var pair_humi = []
 var weather_desc = []
-var API_KEY = '49406c4e8b6ee455d1904676a313aa40'
-
-// Please make meaningful variable names
-var weather_data1;
-// Use promise.all instead of separate ajax calls - https://stackoverflow.com/questions/41154140/express-multiple-async-requests-from-different-endpoints
-// Follow this stackoverflow and create a map of links and call them parallely
-$.ajax({
-  url: 'http://api.openweathermap.org/data/2.5/forecast',
-  data: {
-    lat: 30.6173014,
-    lon: -96.3403507,
-    units: 'metric',
-    APPID: API_KEY
-  },
-  async: false,
-  dataType: 'json',
-  success: function (data) {
-    weather_data1 = data;
-  }
-});
 
 // Why Rita is called here
-$.ajax({
-  url: 'http://backend.digitaltwincities.info/rita',
-  data: {
-
-  },
-  async: false,
-  dataType: 'json',
-  success: function (data) {
-    weather_rita = data;
-  }
-});
 
 // Please write what this function does and how it is achieved
 function update_weather(data, currentTime) {
@@ -109,7 +127,7 @@ function update_weather(data, currentTime) {
 
   let windElem = document.getElementById("wind");
   windElem.innerHTML = `${cur_wind.toFixed(1)}&nbsp;m/s`;
- 
+
   let tempElement = document.getElementById("temperature");
   tempElement.innerHTML = `<i id="icon-thermometer" class="wi wi-thermometer" style=" font-size: 0.9rem;
   padding-bottom: 0.1rem;"></i><p class="temp">${cur_temp.toFixed(3)}&nbsp;<nobr>°C</nobr></p>`;
@@ -134,24 +152,25 @@ function onTimelineScrubfunction(e) {
   }
 
 }
-viewer.clock.onTick.addEventListener(function (clock) {
-  update_weather(weather_data1, clock.currentTime);
-  if (event_indicator == "Rita") {
-    update_weather_hist(weather_rita, clock.currentTime)
-  }
-  if (event_indicator == "Harvey") {
-    update_weather_hist(weather_harvey, clock.currentTime)
-  }
-  if (event_indicator == "Allison") {
-    update_weather_hist(weather_allison, clock.currentTime)
-  }
-  if (event_indicator == "Ike") {
-    update_weather_hist(weather_ike, clock.currentTime)
-  }
+function addListeners() {
+  viewer.clock.onTick.addEventListener(function (clock) {
+    update_weather(current_weather, clock.currentTime);
+    if (event_indicator == "Rita") {
+      update_weather_hist(weather_rita, clock.currentTime)
+    }
+    if (event_indicator == "Harvey") {
+      update_weather_hist(weather_harvey, clock.currentTime)
+    }
+    if (event_indicator == "Allison") {
+      update_weather_hist(weather_allison, clock.currentTime)
+    }
+    if (event_indicator == "Ike") {
+      update_weather_hist(weather_ike, clock.currentTime)
+    }
 
 
-});
-
+  });
+}
 // Please dont have any lines outside functions, create a function called init where all the init codes reside
 viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
 
@@ -441,30 +460,24 @@ viewer.scene.camera.setView({
 });
 
 var CheckFloodI = document.getElementById('x');
-var CheckPowerI = document.getElementById('y');  
+var CheckPowerI = document.getElementById('y');
 var updateP = document.getElementById('updateobj');
 var inlet_longs = []
 var inlet_lats = []
 
-
-var poles_longs = []
-var poles_lats = []
-
 // Move to promise.all
-var power1 = Cesium.Resource.fetchJson('http://backend.digitaltwincities.info/poles').then(function (dataSource) {
-  console.log('Successfully loaded!');
-  objects = dataSource['data']
+function processPoles() {
+  let objects = poles['data']
   for (let object of objects) {
     let entity = new Cesium.Entity();
-    poles_longs.push(object['longitude'])
-    poles_lats.push(object['latitude'])
+
     entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 0);
     entity.name = object['id'];
-    var manual_id = object['manual_id'];
+    let manual_id = object['manual_id'];
     entity.billboard = undefined;
     entity.model = new Cesium.ModelGraphics({
       uri: './geoMappings/Utilitypole_3Dmodel.glb',
-      scale: 0.2,//new Cesium.CallbackProperty(ScaleCallback(initial_pole), false),
+      scale: 0.2,
       color: Cesium.Color.GREEN,
       silhouetteColor: Cesium.Color.WHITE,
       silhouetteSize: 0.0,
@@ -475,13 +488,13 @@ var power1 = Cesium.Resource.fetchJson('http://backend.digitaltwincities.info/po
     entity.silhouetteColor = Cesium.Color.WHITE;
     entity.silhouetteSize = 0.4;
     poles_data.entities.add(entity);
+    // Why the object lat and lon is added to inlet lats and lons ???
     inlet_longs.push(parseFloat(object['longitude']))
     inlet_lats.push(parseFloat(object['latitude']))
-    //console.log()
-  }
-  //console.log(inlet_lats.length)
 
-});
+  }
+
+};
 
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
@@ -500,31 +513,25 @@ var url = Cesium.buildModuleUrl('./images/exclaimation.png')
 var object_loc;
 var vulnerable_objects_entity = []
 // Use promise all
-fetch('https://bz4knl8hyc.execute-api.us-west-2.amazonaws.com/default/localize')
-  .then(response => response.json())
-  .then(function (json) {
-    let objects = json['objects'];
-    vulnerable_objects = objects;
 
-    for (let object of objects) {
-      let entity = new Cesium.Entity();
-      entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'], object['cluster_latitude'], 0);
-      entity.name = object['cluster_id'];
-      let lat = object['cluster_latitude'];
-      let lon = object['cluster_longitude'];
-      let name = object['cluster_id'];
-      let cluster_obj = object['cluster_objects'];
-      let image_url = cluster_obj[0]['image'];
-      let image_date = cluster_obj[0]['createdDate'];
-      let object_type = cluster_obj[0]['classification'];
-      entity.billboard = new Cesium.BillboardGraphics();
+function processLocalizedResults() {
+  let objects = vulnerable_objects['objects'];
+  vulnerable_objects = objects;
 
-      entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48);
-      entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
-      vulnerable_objects_entity.push(entity)
-      var updated = viewer.entities.add(entity);
-    }
-  });
+  for (let object of objects) {
+    let entity = new Cesium.Entity();
+    entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'], object['cluster_latitude'], 0);
+    entity.name = object['cluster_id'];
+
+    let cluster_obj = object['cluster_objects'];
+
+    entity.billboard = new Cesium.BillboardGraphics();
+
+    entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48);
+    entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
+    vulnerable_objects_entity.push(entity)
+  }
+};
 
 
 var current_id = "xx";
@@ -657,7 +664,7 @@ viewer.infoBox.frame.addEventListener('load', function () {
       var tmp = 1;
       for (let object_image of object_clusters) {
         let ima = new Image();
-      
+
         ima.src = object_image['image'];
         ima.height = 250;
         ima.width = 200;
