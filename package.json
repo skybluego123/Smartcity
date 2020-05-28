@@ -31,7 +31,7 @@
     "build": "node_modules/.bin/webpack --config webpack.config.js",
     "start": "node_modules/.bin/webpack-dev-server --host 0.0.0.0 --config webpack.config.js",
     "release": "node_modules/.bin/webpack --config webpack.release.config.js",
-    "serve-release": "node_modules/.bin/webpack-dev-server --config webpack.release.config.js --content-base /dist"
+    "serve-release": "node_modules/.bin/webpack-dev-server --host 0.0.0.0 --config webpack.release.config.js --content-base /dist"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
