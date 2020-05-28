@@ -1,9 +1,10 @@
 const path = require('path');
-
+const express = require('express');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 // The path to the cesium source code
 const cesiumSource = 'node_modules/cesium/Source';
@@ -71,12 +72,16 @@ module.exports = [{
         new CopyWebpackPlugin([{from: path.join(cesiumSource, cesiumWorkers), to: 'Workers'}]),
         new CopyWebpackPlugin([{from: path.join(cesiumSource, 'Assets'), to: 'Assets'}]),
         new CopyWebpackPlugin([{from: path.join(cesiumSource, 'Widgets'), to: 'Widgets'}]),
+        new CopyWebpackPlugin([{from: path.join(cesiumSource, 'ThirdParty'), to: 'ThirdParty'}]),
         new webpack.DefinePlugin({
             // Define relative base path in cesium for loading assets
             CESIUM_BASE_URL: JSON.stringify('')
         }),
         // Uglify js files
         new UglifyJsPlugin(),
+        // new CompressionPlugin(),
+        // new webpack.optimize.AggressiveMergingPlugin(),
+        // new webpack.optimize.DedupePlugin(),
         // Split cesium into a seperate bundle
         new webpack.optimize.CommonsChunkPlugin({
             name: 'cesium',
@@ -84,5 +89,18 @@ module.exports = [{
                 return module.context && module.context.indexOf('cesium') !== -1;
             }
         })
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        port: 80,
+        host: process.env.HOST || '0.0.0.0',
+        disableHostCheck: true,
+       // public: 'smartcity-dev.us-west-2.elasticbeanstalk.com',
+        setup (app) {
+            app.use('/images',
+              express.static(path.join(__dirname, 'src', 'images')));
+              app.use('/geoMappings',
+              express.static(path.join(__dirname, 'src', 'geoMappings')));
+          }
+    }
 }];
