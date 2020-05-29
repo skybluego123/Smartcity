@@ -2,52 +2,20 @@
 require('cesium/Widgets/widgets.css');
 require('./css/main.css');
 
-const https = require('https')
-console.log("Hey there");
-// Please create meaningful names for the variables
-// promisify the request module
-function requestAsync(url) {
-  return new Promise(function (resolve, reject) {
-    https.get(url, function (err, response, body) {
-      if (err) {
-        reject(err);
-      } else if (response.statusCode !== 200) {
-        reject(new Error("response.statusCode = " + response.statusCode));
-      } else {
-        resolve(body);
-      }
-    });
-  });
-}
-
-
-function getData(endpoints) {
-
-  return Promise.all(endpoints.map(function (url) {
-    return requestAsync(url);
-  }));
-}
-
-function loadInitialData() {
-  console.log('Hey')
-  let endpoints = ['http://backend.digitaltwincities.info/poles',
-    'https://function.digitaltwincities.info/lambda/localize',
-    'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40',
-    'http://backend.digitaltwincities.info/rita'];    // multiple endpoints to retrieve data from
-  getData(endpoints).then(function (results) {
-    var poles = JSON.parse(arrays[0])
-    var vulnerable_objects = JSON.parse(arrays[1])
-    var current_weather = JSON.parse(arrays[2])
-    var weather_rita = JSON.parse(arrays[3])
-    processPoles()
-    processLocalizedResults()
-    addListeners()
-  }).catch(function (err) {
-
-  });
-
-}
-
+let urls = ['http://backend.digitaltwincities.info/poles',
+  'https://function.digitaltwincities.info/lambda/localize',
+  'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40',
+];    // multiple endpoints to retrieve data from
+let promises = urls.map(url => fetch(url).then(y => y.json()));
+var poles, vulnerable_objects, current_weather;
+Promise.all(promises).then(results => {
+  poles = results[0]
+  vulnerable_objects = results[1]
+  current_weather = results[2]
+  processPoles()
+  processLocalizedResults()
+  addListeners()
+});
 
 var Cesium = require('cesium/Cesium');
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzYyNDZmZi1lYTdhLTQwMDgtOGRhZC03ZDE5YTlkYmVkMGMiLCJpZCI6NDAxOSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTYzODc1OX0.Kb7k51vZGYR5F7btrBIAuSan3ZNyKY_AWrFv1cLFUFk';
@@ -68,7 +36,10 @@ var res = new Cesium.JulianDate();
 
 viewer.clock.shouldAnimate = false;
 viewer.clock.multiplier = 1500.0;
-
+viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
+viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
+viewer.animation.viewModel.timeFormatter = localeTimeFormatter
+viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
 $('#time_default').on('click', function () {
   viewer.clock.currentTime = now.clone();
   Cesium.JulianDate.addDays(now, 4.0, res);
@@ -83,16 +54,21 @@ $('#time_default').on('click', function () {
 // Write comments on what exactly each function is doing - helps in maintaining the code
 
 var weather_data;
-
+// let should be used inside functions for local variables and var should only be used for global storing of values
 var pair_time = []
 var pair_wind = []
 var pair_temp = []
 var pair_humi = []
 var weather_desc = []
 
-// Why Rita is called here
-
 // Please write what this function does and how it is achieved
+
+/*
+  This function updates weather
+  Input -
+  Output - 
+*/
+
 function update_weather(data, currentTime) {
   weather_data = data;
   for (var i = 0; i < 38; i++) {
@@ -172,7 +148,7 @@ function addListeners() {
   });
 }
 // Please dont have any lines outside functions, create a function called init where all the init codes reside
-viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
+
 
 // Date formatting to a global form
 function localeDateTimeFormatter(datetime, viewModel, ignoredate) {
@@ -195,11 +171,6 @@ function localeDateTimeFormatter(datetime, viewModel, ignoredate) {
 function localeTimeFormatter(time, viewModel) {
   return localeDateTimeFormatter(time, viewModel, true);
 }
-
-viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
-viewer.animation.viewModel.timeFormatter = localeTimeFormatter
-viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
-
 
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
@@ -461,7 +432,6 @@ viewer.scene.camera.setView({
 
 var CheckFloodI = document.getElementById('x');
 var CheckPowerI = document.getElementById('y');
-var updateP = document.getElementById('updateobj');
 var inlet_longs = []
 var inlet_lats = []
 
@@ -709,7 +679,8 @@ viewer.infoBox.frame.addEventListener('load', function () {
 }, false);
 
 var poles_data = new Cesium.CustomDataSource();
-
+console.log(poles_data)
+console.log("bla")
 CheckPowerI.addEventListener('change', function () {
   if (CheckPowerI.checked) {
     viewer.dataSources.add(poles_data);

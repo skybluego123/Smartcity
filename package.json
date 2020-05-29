@@ -20,6 +20,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.7",
     "html-webpack-plugin": "^2.30.1",
+    "http": "0.0.1-security",
     "https": "^1.0.0",
     "json-loader": "^0.5.7",
     "strip-pragma-loader": "^1.0.0",
