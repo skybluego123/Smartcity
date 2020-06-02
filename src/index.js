@@ -510,7 +510,11 @@ function processLocalizedResults() {
     entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48);
     entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
     vulnerable_objects_entity.push(entity)
+//<<<<<<< HEAD
     var updated=viewer.entities.add(entity);
+//=======
+ //   viewer.entities.add(entity);
+//>>>>>>> aea0d842675ee2acf04ac1c01dac7a23dc2a52a2
   }
 };
 
