@@ -12,8 +12,10 @@ Promise.all(promises).then(results => {
   poles = results[0]
   vulnerable_objects = results[1]
   current_weather = results[2]
+  console.log(vulnerable_objects)
   processPoles()
   processLocalizedResults()
+  //console.log(vulnerable_objects_entity)
   addListeners()
 });
 
@@ -238,6 +240,10 @@ $('#myRange').change(function () {
   }
   console.log(temp_poles)
   //heatmap here
+  if(heat!=null)
+  {
+   heat.destory() 
+  }
   const bbox = [-95.451095, 29.651095, -95.1039, 29.826357]
 
   const getHeat = require('cesiumjs-heat').default
@@ -252,10 +258,12 @@ $('#myRange').change(function () {
     },
     bbox
   )
-
+//heat.show=false;
+//myFunction(heat);
+//console.log(heat);
 });
-
-
+//heat.show=false;
+myStopFunction();
 // Please create meaningful function names
 function myFunction(heat) {
   myVar = setTimeout(() => heat.destory(), 10000);
@@ -263,6 +271,8 @@ function myFunction(heat) {
 function myStopFunction() {
   clearTimeout(myVar);
 }
+
+
 setInterval(myTimer, 3000);
 
 // This function will be called every 3s - Instead when the user clicks on the clock, do the timer for 3s
@@ -500,6 +510,7 @@ function processLocalizedResults() {
     entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48);
     entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
     vulnerable_objects_entity.push(entity)
+    var updated=viewer.entities.add(entity);
   }
 };
 
