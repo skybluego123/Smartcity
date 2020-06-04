@@ -235,7 +235,7 @@ $('#myRange').change(function () {
 
   for (var i = 0; i < temp_lats.length; i++) {
 
-    temp_poles.push({ x: temp_longs[i], y: temp_lats[i], value: 50 })
+    temp_poles.push({ x: temp_longs[i], y: temp_lats[i], value: Math.floor(Math.random() * 89) + 1   })
 
   }
   console.log(temp_poles)
@@ -256,21 +256,42 @@ $('#myRange').change(function () {
       max: 100,
       data: temp_poles
     },
-    bbox
+    bbox,
+    {
+       radius: 1,
+  maxOpacity: .5,
+  minOpacity: 0,
+  blur: .75,
+  gradient: {
+    // enter n keys between 0 and 1 here
+    // for gradient color customization
+    '.6': 'blue',
+    '.8': 'red',
+    '.9': 'white'
+  }
+}
+  ,{
+    enabled: true,  
+    min: 6375000,   
+    max: 10000000,  
+    maxRadius:  5,
+    minRadius:  2,
+  }
+    
   )
 //heat.show=false;
 //myFunction(heat);
 //console.log(heat);
 });
 //heat.show=false;
-myStopFunction();
-// Please create meaningful function names
-function myFunction(heat) {
-  myVar = setTimeout(() => heat.destory(), 10000);
-}
-function myStopFunction() {
-  clearTimeout(myVar);
-}
+// myStopFunction();
+// // Please create meaningful function names
+// function myFunction(heat) {
+//   myVar = setTimeout(() => heat.destory(), 10000);
+// }
+// function myStopFunction() {
+//   clearTimeout(myVar);
+// }
 
 
 setInterval(myTimer, 3000);
