@@ -4,7 +4,11 @@ require('./css/main.css');
 
 let urls = ['http://backend.digitaltwincities.info/poles',
   'https://function.digitaltwincities.info/lambda/localize',
-  'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40',
+  'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40'
+  // 'http://backend.digitaltwincities.info/ike',
+  // 'http://backend.digitaltwincities.info/harvey',
+  // 'http://backend.digitaltwincities.info/allison',
+  // 'http://backend.digitaltwincities.info/rita'
 ];    // multiple endpoints to retrieve data from
 let promises = urls.map(url => fetch(url).then(y => y.json()));
 var poles, vulnerable_objects, current_weather;
@@ -12,10 +16,13 @@ Promise.all(promises).then(results => {
   poles = results[0]
   vulnerable_objects = results[1]
   current_weather = results[2]
+  // weather_ike=results[3]
+  // weather_harvey=results[4]
+  // weather_allison=results[5]
+  // weather_=results[6]
   console.log(vulnerable_objects)
   processPoles()
   processLocalizedResults()
-  //console.log(vulnerable_objects_entity)
   addListeners()
 });
 
@@ -23,33 +30,36 @@ var Cesium = require('cesium/Cesium');
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzYyNDZmZi1lYTdhLTQwMDgtOGRhZC03ZDE5YTlkYmVkMGMiLCJpZCI6NDAxOSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTYzODc1OX0.Kb7k51vZGYR5F7btrBIAuSan3ZNyKY_AWrFv1cLFUFk';
 
 var viewer = new Cesium.Viewer('cesiumContainer', {
+  requestRenderMode : true,
+  maximumRenderTimeChange : Infinity,
   terrainProvider: Cesium.createWorldTerrain({
     requestWaterMask: true
-
   }),
   timeline: true,
   animation: true,
   shadows: true
 });
-
+//viewer.scene.requestRender();
+viewer.scene.debugShowFramesPerSecond = true;
 var pinBuilder = new Cesium.PinBuilder();
 var now = viewer.clock.startTime;
 var res = new Cesium.JulianDate();
 
+viewer.scene.globe.maximumScreenSpaceError = 18;
 viewer.clock.shouldAnimate = false;
 viewer.clock.multiplier = 1500.0;
 viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
 viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
 viewer.animation.viewModel.timeFormatter = localeTimeFormatter
 viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
-$('#time_default').on('click', function () {
-  viewer.clock.currentTime = now.clone();
-  Cesium.JulianDate.addDays(now, 4.0, res);
-  viewer.timeline.updateFromClock();
-  viewer.timeline.zoomTo(now, res);
-  now = viewer.clock.currentTime;
-  viewer.clock.shouldAnimate = false;
-});
+// $('#time_default').on('click', function () {
+//   viewer.clock.currentTime = now.clone();
+//   Cesium.JulianDate.addDays(now, 4.0, res);
+//   viewer.timeline.updateFromClock();
+//   viewer.timeline.zoomTo(now, res);
+//   now = viewer.clock.currentTime;
+//   viewer.clock.shouldAnimate = false;
+// });
 
 // Calling init function initializes the code - please follow this kind of coding
 
@@ -73,7 +83,7 @@ var weather_desc = []
 
 function update_weather(data, currentTime) {
   weather_data = data;
-  for (var i = 0; i < 38; i++) {
+  for (let i = 0; i < 38; i++) {
     weather_desc.push(data['list'][i]['weather'][0]['main'])
     pair_humi.push([weather_data['list'][i]['main']['humidity'], data['list'][i + 1]['main']['humidity']])
     pair_wind.push([weather_data['list'][i]['wind']['speed'], weather_data['list'][i + 1]['wind']['speed']])
@@ -82,7 +92,7 @@ function update_weather(data, currentTime) {
 
   }
   var wind_track = 0;
-  for (var i = 0; i < 38; i++) {
+  for (let i = 0; i < 38; i++) {
     let before = pair_time[i][0];
     let after = pair_time[i][1];
 
@@ -120,7 +130,7 @@ function update_weather(data, currentTime) {
 
 
 function onTimelineScrubfunction(e) {
-  var clock = e.clock;
+  let clock = e.clock;
   clock.currentTime = e.timeJulian;
   if (viewer.clock.shouldAnimate == true) {
   }
@@ -131,12 +141,15 @@ function onTimelineScrubfunction(e) {
 
 }
 function addListeners() {
+
   viewer.clock.onTick.addEventListener(function (clock) {
     update_weather(current_weather, clock.currentTime);
     if (event_indicator == "Rita") {
+
       update_weather_hist(weather_rita, clock.currentTime)
     }
     if (event_indicator == "Harvey") {
+   //   console.log(weather_harvey);
       update_weather_hist(weather_harvey, clock.currentTime)
     }
     if (event_indicator == "Allison") {
@@ -221,7 +234,7 @@ $('#myRange').change(function () {
   })
 
   let damaged_poles = new Set(power_demage['failedpoles']);
-  for (var x = 0; x < poles_data.entities.values.length; x++) {
+  for (let x = 0; x < poles_data.entities.values.length; x++) {
     poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
@@ -233,7 +246,7 @@ $('#myRange').change(function () {
   }
 
 
-  for (var i = 0; i < temp_lats.length; i++) {
+  for (let i = 0; i < temp_lats.length; i++) {
 
     temp_poles.push({ x: temp_longs[i], y: temp_lats[i], value: Math.floor(Math.random() * 89) + 1   })
 
@@ -258,14 +271,15 @@ $('#myRange').change(function () {
     },
     bbox,
     {
-       radius: 1,
-  maxOpacity: .5,
+      container: document.getElementById('heatmapContainer'),
+       radius: 10,
+  maxOpacity: .4,
   minOpacity: 0,
   blur: .75,
   gradient: {
     // enter n keys between 0 and 1 here
     // for gradient color customization
-    '.6': 'blue',
+    '.4': 'blue',
     '.8': 'red',
     '.9': 'white'
   }
@@ -274,32 +288,38 @@ $('#myRange').change(function () {
     enabled: true,  
     min: 6375000,   
     max: 10000000,  
-    maxRadius:  5,
-    minRadius:  2,
+    maxRadius:  7,
+    minRadius:  5
   }
     
   )
-//heat.show=false;
-//myFunction(heat);
-//console.log(heat);
+
 });
-//heat.show=false;
-// myStopFunction();
-// // Please create meaningful function names
-// function myFunction(heat) {
-//   myVar = setTimeout(() => heat.destory(), 10000);
-// }
-// function myStopFunction() {
-//   clearTimeout(myVar);
-// }
+
+//Solved
+//Please create meaningful function names
+var state_i;
+function start_load_network() {
+  state_i = setInterval(wind_networkanalysis, 3000);
+}
+function stop_load_network() {
+  clearTimeout(state_i);
+}
+Cesium.knockout.getObservable(viewer.animation.viewModel.clockViewModel, 'shouldAnimate').subscribe(function(value) {
+    console.log(value)
+    if(value==true)
+      start_load_network();
+    else
+      stop_load_network();
+});
 
 
-setInterval(myTimer, 3000);
-
-// This function will be called every 3s - Instead when the user clicks on the clock, do the timer for 3s
-function myTimer() {
-
-  if (viewer.clock.shouldAnimate == true) {
+// Solved. 
+//This function will be called every 3s - Instead when the user clicks on the clock, do the timer for 3s
+function wind_networkanalysis() {
+  let tmp_longs=[]
+  let tmp_lats=[]
+  let tmp_poles=[]
     var cur_speed = Math.round(parseInt($('#wind').text()));
     console.log(cur_speed);
     $.ajax({
@@ -317,16 +337,76 @@ function myTimer() {
     console.log("damaged poles: " + damaged_poles.size)
 
 
-    for (var x = 0; x < poles_data.entities.values.length; x++) {
-      poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
-      poles_data.entities.values[x].billboard = undefined;
-      if (damaged_poles.has(x + 1)) {
-        poles_data.entities.values[x].model.color = Cesium.Color.RED;
-      }
+    // for (let x = 0; x < poles_data.entities.values.length; x++) {
+    //   poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+    //   poles_data.entities.values[x].billboard = undefined;
+    //   if (damaged_poles.has(x + 1)) {
+    //     poles_data.entities.values[x].model.color = Cesium.Color.RED;
+    //   }
+
+    // }
+
+  //let damaged_poles = new Set(power_demage['failedpoles']);
+  for (let x = 0; x < poles_data.entities.values.length; x++) {
+    poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+    if (damaged_poles.has(x + 1)) {
+      poles_data.entities.values[x].model.color = Cesium.Color.RED;
+      //   console.log(inlet_longs[x+1]);
+      tmp_longs.push(inlet_longs[x + 1])
+      tmp_lats.push(inlet_lats[x + 1])
 
     }
+  }
+
+
+  for (let i = 0; i < tmp_lats.length; i++) {
+
+    tmp_poles.push({ x: tmp_longs[i], y: tmp_lats[i], value: Math.floor(Math.random() * 89) + 1   })
 
   }
+  console.log(tmp_poles)
+  //heatmap here
+  if(heat!=null)
+  {
+   heat.destory() 
+  }
+  const bbox = [-95.451095, 29.651095, -95.1039, 29.826357]
+
+  const getHeat = require('cesiumjs-heat').default
+  const CesiumHeat = getHeat(Cesium)
+  heat = new CesiumHeat(
+    viewer,
+    {
+      autoMaxMin: true,
+      min: 0,
+      max: 100,
+      data: tmp_poles
+    },
+    bbox,
+    {
+       radius: 30,
+  maxOpacity: .5,
+  minOpacity: 0,
+  blur: .75,
+  gradient: {
+    // enter n keys between 0 and 1 here
+    // for gradient color customization
+    '.6': 'blue',
+    '.8': 'red',
+    '.9': 'white'
+  }
+}
+  ,{
+    enabled: true,  
+    min: 6375000,   
+    max: 10000000,  
+    maxRadius:  30,
+    minRadius:  3,
+  }
+    
+  )
+
+
 
 }
 
@@ -383,11 +463,12 @@ function map_create(img_id) {
     cur.lastIndexOf("-") + 1,
     cur.lastIndexOf("-") + 2
   )
+   console.log(res_img)
 
   let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
   let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
-  let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['latitude'];
-  let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img]['longitude'];
+  let observer_lat = vulnerable_objects[object_indicator]['cluster_objects'][res_img-1]['latitude'];
+  let observer_lon = vulnerable_objects[object_indicator]['cluster_objects'][res_img-1]['longitude'];
   var baltimore = new google.maps.LatLng(object_lat, object_lon);
   var baltimore1 = new google.maps.LatLng(observer_lat, observer_lon);
   var panorama = new google.maps.StreetViewPanorama(
@@ -679,7 +760,7 @@ viewer.infoBox.frame.addEventListener('load', function () {
         document.getElementById("dialog1").appendChild(ima);
         tmp = tmp + 1;
       }
-      var track = 0
+      var track = 1
       current_id1 = 'i' + object_id + '-' + track.toString();
       let wWidth = $(window).width();
       let wHeight = $(window).height();
@@ -715,8 +796,7 @@ viewer.infoBox.frame.addEventListener('load', function () {
 }, false);
 
 var poles_data = new Cesium.CustomDataSource();
-console.log(poles_data)
-console.log("bla")
+
 CheckPowerI.addEventListener('change', function () {
   if (CheckPowerI.checked) {
     viewer.dataSources.add(poles_data);
@@ -730,7 +810,7 @@ CheckPowerI.addEventListener('change', function () {
 
 power4.then(function (dataSource) {
   var entities = dataSource.entities.values;
-  for (var i = 0; i < entities.length; i++) {
+  for (let i = 0; i < entities.length; i++) {
     var entity = entities[i];
     entity.polygon.material = new Cesium.Material(Cesium.Color.YELLOW);
     entity.polygon.outline = false;
@@ -750,7 +830,7 @@ Cesium.when(power4, function (dataSource) {
 
 power5.then(function (dataSource) {
   var entities = dataSource.entities.values;
-  for (var i = 0; i < entities.length; i++) {
+  for (let i = 0; i < entities.length; i++) {
     var entity = entities[i];
     entity.billboard = undefined;
     entity.polyline.clampToGround = true;
@@ -770,7 +850,7 @@ Cesium.when(power5, function (dataSource) {
 
 flood1.then(function (dataSource) {
   var entities = dataSource.entities.values;
-  for (var i = 0; i < entities.length; i++) {
+  for (let i = 0; i < entities.length; i++) {
     let entity = entities[i];
     let Coordinate = "";
 
@@ -803,7 +883,7 @@ function update_weather_hist(data, currentTime) {
   let pair_temp = []
   let pair_time = []
 
-  for (var i = 0; i < weather_data['data'].length - 1; i++) {
+  for (let i = 0; i < weather_data['data'].length - 1; i++) {
     //  let dt_time=weather_harvey['data'][i]['dt']
     // Cesium.JulianDate.fromDate(new Date(weather_data['data'][i]['dt'] * 1000), tmp_date)
     weather_desc.push(data['data'][i]['weather'][0]['main'])
@@ -815,7 +895,7 @@ function update_weather_hist(data, currentTime) {
   }
 
   var wind_track = 0;
-  for (var i = 0; i < weather_data['data'].length - 1; i++) {
+  for (let i = 0; i < weather_data['data'].length - 1; i++) {
     let before = pair_time[i][0];
     let after = pair_time[i][1];
 
@@ -870,26 +950,12 @@ $('.dropdown-menu a').click(function () {
   console.log(event_indicator)
 });
 
-// The same code is ued for all the hurricanes, why cant we use an if condition to get the url to fetch the information
-jQuery("#harvey").click(function (e) {
-  if (weather_harvey == undefined) {
-    console.log("first load")
-    $.ajax({
-      url: 'http://backend.digitaltwincities.info/harvey',
-      data: {
+function extract_weather(weather_info,weather_name)
+{
 
-      },
-      async: false,
-      dataType: 'json',
-      success: function (data) {
-        weather_harvey = data;
-
-      }
-    });
-  }
   let start = new Cesium.JulianDate()
-  for (let i = 0; i < weather_harvey['count']; i++) {
-    let dt_time = weather_harvey['data'][i]['dt']
+  for (let i = 0; i < weather_info['count']; i++) {
+    let dt_time = weather_info['data'][i]['dt']
     let tmp_date = new Cesium.JulianDate()
     Cesium.JulianDate.fromDate(new Date(dt_time * 1000), tmp_date)
 
@@ -905,7 +971,29 @@ jQuery("#harvey").click(function (e) {
   viewer.clock.currentTime = start.clone();
   viewer.clock.shouldAnimate = true;
 
-  e.preventDefault();
+ // e.preventDefault();
+
+}
+
+
+// The same code is ued for all the hurricanes, why cant we use an if condition to get the url to fetch the information
+jQuery("#harvey").click(function (e) {
+  if (weather_harvey == undefined) {
+    $.ajax({
+      url: 'http://backend.digitaltwincities.info/harvey',
+      data: {
+
+      },
+      async: false,
+      dataType: 'json',
+      success: function (data) {
+        weather_harvey = data;
+
+      }
+    });
+  }
+  extract_weather(weather_harvey,'harvey');
+
 });
 
 
@@ -923,23 +1011,8 @@ jQuery("#allison").click(function (e) {
       }
     });
   }
-  let start = new Cesium.JulianDate()
-  for (let i = 0; i < weather_allison['count']; i++) {
-    let dt_time = weather_allison['data'][i]['dt']
-    let tmp_date = new Cesium.JulianDate()
-    Cesium.JulianDate.fromDate(new Date(dt_time * 1000), tmp_date)
-
-    if (i == 0) {
-      start = tmp_date;
-    }
-  }
-
-  Cesium.JulianDate.addDays(start, 4.0, res);
-  viewer.timeline.zoomTo(start, res);
-  viewer.timeline.updateFromClock();
-  viewer.clock.currentTime = start.clone();
-  viewer.clock.shouldAnimate = true;
-  e.preventDefault();
+  extract_weather(weather_allison);
+ 
 });
 
 jQuery("#rita").click(function (e) {
@@ -953,28 +1026,12 @@ jQuery("#rita").click(function (e) {
       dataType: 'json',
       success: function (data) {
         weather_rita = data;
-        console.log(weather_rita)
+        
       }
     });
   }
+extract_weather(weather_rita);
 
-  let start = new Cesium.JulianDate()
-  for (let i = 0; i < weather_rita['count']; i++) {
-    let dt_time = weather_rita['data'][i]['dt']
-    let tmp_date = new Cesium.JulianDate()
-    Cesium.JulianDate.fromDate(new Date(dt_time * 1000), tmp_date)
-
-    if (i == 0) {
-      start = tmp_date;
-    }
-  }
-
-  Cesium.JulianDate.addDays(start, 4.0, res);
-  viewer.timeline.zoomTo(start, res);
-  viewer.timeline.updateFromClock();
-  viewer.clock.currentTime = start.clone();
-  viewer.clock.shouldAnimate = true;
-  e.preventDefault();
 });
 
 jQuery("#ike").click(function (e) {
@@ -991,23 +1048,6 @@ jQuery("#ike").click(function (e) {
       }
     });
   }
+extract_weather(weather_ike);
 
-  let start = new Cesium.JulianDate()
-  for (let i = 0; i < weather_ike['count']; i++) {
-    let dt_time = weather_ike['data'][i]['dt']
-    let tmp_date = new Cesium.JulianDate()
-    Cesium.JulianDate.fromDate(new Date(dt_time * 1000), tmp_date)
-
-    if (i == 0) {
-      start = tmp_date;
-    }
-  }
-
-  Cesium.JulianDate.addDays(start, 4.0, res);
-  viewer.timeline.zoomTo(start, res);
-  viewer.timeline.updateFromClock();
-  viewer.clock.currentTime = start.clone();
-  viewer.clock.shouldAnimate = true;
-
-  e.preventDefault();
 });
