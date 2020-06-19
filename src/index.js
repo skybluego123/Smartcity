@@ -296,6 +296,8 @@ $('#myRange').change(function () {
 
 });
 
+
+//ccc
 //Solved
 //Please create meaningful function names
 var state_i;
