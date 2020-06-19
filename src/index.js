@@ -289,7 +289,7 @@ $('#myRange').change(function () {
     min: 6375000,   
     max: 10000000,  
     maxRadius:  7,
-    minRadius:  5
+    minRadius:  7
   }
     
   )
@@ -402,8 +402,8 @@ function wind_networkanalysis() {
     enabled: true,  
     min: 6375000,   
     max: 10000000,  
-    maxRadius:  30,
-    minRadius:  3,
+    maxRadius:  7,
+    minRadius:  7,
   }
     
   )
