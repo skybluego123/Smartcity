@@ -83,7 +83,7 @@ var weather_desc = []
 
 function update_weather(data, currentTime) {
   weather_data = data;
-  for (let i = 0; i < 38; i++) {
+  for (let i = 0; i < 39; i++) {
     weather_desc.push(data['list'][i]['weather'][0]['main'])
     pair_humi.push([weather_data['list'][i]['main']['humidity'], data['list'][i + 1]['main']['humidity']])
     pair_wind.push([weather_data['list'][i]['wind']['speed'], weather_data['list'][i + 1]['wind']['speed']])
@@ -92,7 +92,7 @@ function update_weather(data, currentTime) {
 
   }
   var wind_track = 0;
-  for (let i = 0; i < 38; i++) {
+  for (let i = 0; i < 39; i++) {
     let before = pair_time[i][0];
     let after = pair_time[i][1];
 
@@ -134,10 +134,10 @@ function onTimelineScrubfunction(e) {
   clock.currentTime = e.timeJulian;
   if (viewer.clock.shouldAnimate == true) {
   }
-  if (event_indicator == "Rita") {
-    console.log(weather_rita)
-    update_weather_hist(weather_rita, e.timeJulian)
-  }
+  //if (event_indicator == "Rita") {
+   // console.log(weather_rita)
+ //   update_weather_hist(weather_rita, e.timeJulian)
+  ///}
 
 }
 function addListeners() {
