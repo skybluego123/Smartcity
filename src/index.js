@@ -239,8 +239,8 @@ $('#myRange').change(function () {
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
       //   console.log(inlet_longs[x+1]);
-      temp_longs.push(inlet_longs[x + 1])
-      temp_lats.push(inlet_lats[x + 1])
+      temp_longs.push(inlet_longs[x])
+      temp_lats.push(inlet_lats[x])
 
     }
   }
@@ -354,8 +354,8 @@ function wind_networkanalysis() {
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
       //   console.log(inlet_longs[x+1]);
-      tmp_longs.push(inlet_longs[x + 1])
-      tmp_lats.push(inlet_lats[x + 1])
+      tmp_longs.push(inlet_longs[x])
+      tmp_lats.push(inlet_lats[x])
 
     }
   }
