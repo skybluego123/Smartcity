@@ -20,7 +20,8 @@ Promise.all(promises).then(results => {
   // weather_harvey=results[4]
   // weather_allison=results[5]
   // weather_=results[6]
-  console.log(vulnerable_objects)
+  //console.log(vulnerable_objects)
+  initializes_settings()
   processPoles()
   processLocalizedResults()
   addListeners()
@@ -39,19 +40,26 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
   animation: true,
   shadows: true
 });
-//viewer.scene.requestRender();
+
+var myPos = { my: "center center", at: "center-390 center", of: window };
+var myPos_right = { my: "center center", at: "center+370 center", of: window };
+
 viewer.scene.debugShowFramesPerSecond = true;
 var pinBuilder = new Cesium.PinBuilder();
 var now = viewer.clock.startTime;
 var res = new Cesium.JulianDate();
-
-viewer.scene.globe.maximumScreenSpaceError = 18;
-viewer.clock.shouldAnimate = false;
-viewer.clock.multiplier = 1500.0;
-viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
-viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
-viewer.animation.viewModel.timeFormatter = localeTimeFormatter
-viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
+var CheckFloodI = document.getElementById('x');
+var CheckPowerI = document.getElementById('y');
+var pole_longs = []
+var pole_lats = []
+var weather_data;
+// viewer.scene.globe.maximumScreenSpaceError = 18;
+// viewer.clock.shouldAnimate = false;
+// viewer.clock.multiplier = 1500.0;
+// viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
+// viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
+// viewer.animation.viewModel.timeFormatter = localeTimeFormatter
+// viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
 // $('#time_default').on('click', function () {
 //   viewer.clock.currentTime = now.clone();
 //   Cesium.JulianDate.addDays(now, 4.0, res);
@@ -65,23 +73,21 @@ viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(tim
 
 // Write comments on what exactly each function is doing - helps in maintaining the code
 
-var weather_data;
-// let should be used inside functions for local variables and var should only be used for global storing of values
-var pair_time = []
-var pair_wind = []
-var pair_temp = []
-var pair_humi = []
-var weather_desc = []
+// var weather_data;
 
 // Please write what this function does and how it is achieved
 
 /*
   This function updates weather
-  Input -
-  Output - 
+  Input: json data and time
+  Output: update html element associated with weather
 */
-
 function update_weather(data, currentTime) {
+  let pair_time = []
+let pair_wind = []
+let pair_temp = []
+let pair_humi = []
+let weather_desc = []
   weather_data = data;
   for (let i = 0; i < 39; i++) {
     weather_desc.push(data['list'][i]['weather'][0]['main'])
@@ -145,7 +151,6 @@ function addListeners() {
   viewer.clock.onTick.addEventListener(function (clock) {
     update_weather(current_weather, clock.currentTime);
     if (event_indicator == "Rita") {
-
       update_weather_hist(weather_rita, clock.currentTime)
     }
     if (event_indicator == "Harvey") {
@@ -159,11 +164,9 @@ function addListeners() {
       update_weather_hist(weather_ike, clock.currentTime)
     }
 
-
   });
 }
 // Please dont have any lines outside functions, create a function called init where all the init codes reside
-
 
 // Date formatting to a global form
 function localeDateTimeFormatter(datetime, viewModel, ignoredate) {
@@ -238,9 +241,9 @@ $('#myRange').change(function () {
     poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
-      //   console.log(inlet_longs[x+1]);
-      temp_longs.push(inlet_longs[x])
-      temp_lats.push(inlet_lats[x])
+      //   console.log(pole_longs[x+1]);
+      temp_longs.push(pole_longs[x])
+      temp_lats.push(pole_lats[x])
 
     }
   }
@@ -296,8 +299,6 @@ $('#myRange').change(function () {
 
 });
 
-
-//ccc
 //Solved
 //Please create meaningful function names
 var state_i;
@@ -338,24 +339,13 @@ function wind_networkanalysis() {
     let damaged_poles = new Set(power_demage['failedpoles']);
     console.log("damaged poles: " + damaged_poles.size)
 
-
-    // for (let x = 0; x < poles_data.entities.values.length; x++) {
-    //   poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
-    //   poles_data.entities.values[x].billboard = undefined;
-    //   if (damaged_poles.has(x + 1)) {
-    //     poles_data.entities.values[x].model.color = Cesium.Color.RED;
-    //   }
-
-    // }
-
-  //let damaged_poles = new Set(power_demage['failedpoles']);
   for (let x = 0; x < poles_data.entities.values.length; x++) {
     poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
-      //   console.log(inlet_longs[x+1]);
-      tmp_longs.push(inlet_longs[x])
-      tmp_lats.push(inlet_lats[x])
+      //   console.log(pole_longs[x+1]);
+      tmp_longs.push(pole_longs[x])
+      tmp_lats.push(pole_lats[x])
 
     }
   }
@@ -411,21 +401,6 @@ function wind_networkanalysis() {
 
 
 }
-
-// Move inside function
-var myPos = { my: "center center", at: "center-390 center", of: window };
-var myPos_right = { my: "center center", at: "center+370 center", of: window };
-var tileset = viewer.scene.primitives.add(
-  new Cesium.Cesium3DTileset({
-    url: Cesium.IonResource.fromAssetId(37161)
-  })
-);
-
-var tileset = viewer.scene.primitives.add(
-  new Cesium.Cesium3DTileset({
-    url: Cesium.IonResource.fromAssetId(36440)
-  })
-);
 
 var myVar = '';
 function getAddr(latitude, longtitude) {
@@ -534,7 +509,9 @@ function img_dialog(img_id) {
   );
 }
 
-viewer.scene.globe.depthTestAgainstTerrain = true;
+// Move to promise.all
+function initializes_settings(){
+  viewer.scene.globe.depthTestAgainstTerrain = true;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.364808777523, 29.736084676987729, 953);
 var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 
@@ -544,12 +521,28 @@ viewer.scene.camera.setView({
   endTransform: Cesium.Matrix4.IDENTITY
 });
 
-var CheckFloodI = document.getElementById('x');
-var CheckPowerI = document.getElementById('y');
-var inlet_longs = []
-var inlet_lats = []
+var tileset = viewer.scene.primitives.add(
+  new Cesium.Cesium3DTileset({
+    url: Cesium.IonResource.fromAssetId(37161)
+  })
+);
 
-// Move to promise.all
+var tileset = viewer.scene.primitives.add(
+  new Cesium.Cesium3DTileset({
+    url: Cesium.IonResource.fromAssetId(36440)
+  })
+);
+
+viewer.scene.globe.maximumScreenSpaceError = 18;
+viewer.clock.shouldAnimate = false;
+viewer.clock.multiplier = 1500.0;
+viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
+viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
+viewer.animation.viewModel.timeFormatter = localeTimeFormatter
+viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
+
+} 
+
 function processPoles() {
   let objects = poles['data']
   for (let object of objects) {
@@ -573,8 +566,8 @@ function processPoles() {
     entity.silhouetteSize = 0.4;
     poles_data.entities.add(entity);
     // Why the object lat and lon is added to inlet lats and lons ???
-    inlet_longs.push(parseFloat(object['longitude']))
-    inlet_lats.push(parseFloat(object['latitude']))
+    pole_longs.push(parseFloat(object['longitude']))
+    pole_lats.push(parseFloat(object['latitude']))
 
   }
 
@@ -588,10 +581,6 @@ var vulnerable_objects;
 var object_indicator;
 var url = Cesium.buildModuleUrl("./images/power.png");
 var url1 = Cesium.buildModuleUrl("./images/vul.png");
-
-function toRad(Value) {
-  return Value * Math.PI / 180;
-}
 
 var url = Cesium.buildModuleUrl('./images/exclaimation.png')
 var object_loc;
@@ -614,11 +603,8 @@ function processLocalizedResults() {
     entity.billboard.image = pinBuilder.fromUrl(url, Cesium.Color.BLACK, 48);
     entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
     vulnerable_objects_entity.push(entity)
-//<<<<<<< HEAD
-    var updated=viewer.entities.add(entity);
-//=======
- //   viewer.entities.add(entity);
-//>>>>>>> aea0d842675ee2acf04ac1c01dac7a23dc2a52a2
+    let updated=viewer.entities.add(entity);
+
   }
 };
 
