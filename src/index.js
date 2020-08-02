@@ -422,7 +422,7 @@ function getAddr(latitude, longtitude) {
 
 //Generate the dialog box
 function map_create(img_id) {
-  console.log("img_id" + img_id)
+  //console.log("img_id" + img_id)
   var mapOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     center: baltimore,
@@ -435,12 +435,12 @@ function map_create(img_id) {
     cur.lastIndexOf("i") + 1,
     cur.lastIndexOf("-")
   ));
-  console.log(res_obj)
+  //console.log(res_obj)
   res_img = cur.substring(
     cur.lastIndexOf("-") + 1,
     cur.lastIndexOf("-") + 2
   )
-   console.log(res_img)
+   //console.log(res_img)
 
   let object_lat = vulnerable_objects[object_indicator]['cluster_latitude'];
   let object_lon = vulnerable_objects[object_indicator]['cluster_longitude'];
@@ -583,7 +583,7 @@ var url = Cesium.buildModuleUrl("./images/power.png");
 var url1 = Cesium.buildModuleUrl("./images/vul.png");
 
 var url = Cesium.buildModuleUrl('./images/exclaimation.png')
-var object_loc;
+//var object_loc;
 var vulnerable_objects_entity = []
 // Use promise all
 
@@ -912,13 +912,11 @@ function update_weather_hist(data, currentTime) {
   let tempElement = document.getElementById("temperature");
   tempElement.innerHTML = `<i id="icon-thermometer" class="wi wi-thermometer" style=" font-size: 0.9rem;
   padding-bottom: 0.1rem;"></i><p class="temp">${cur_temp.toFixed(3)}&nbsp;<nobr>°C</nobr></p>`;
-
   let description = document.getElementById("description");
   description.innerHTML = `<i id="icon-desc" class="wi wi-owm-200"></i><p class="desc">${cur_desc}</p>`;
   let rainfall = document.getElementById("visibility");
   rainfall.innerHTML = `${parseFloat(cur_rain).toFixed(1)}&nbsp;mm`;
   let humidityElem = document.getElementById("humidity");
-  //     console.log(humidityElem.innerHTML)
   // humidityElem.innerHTML = `${cur_humi.toFixed(0)}&nbsp;%`;
   humidityElem.innerHTML = `${cur_humi}&nbsp;%`;
   //    console.log(humidityElem.innerHTML)
@@ -963,20 +961,17 @@ function extract_weather(weather_info,weather_name)
 
 }
 
-
 // The same code is ued for all the hurricanes, why cant we use an if condition to get the url to fetch the information
 jQuery("#harvey").click(function (e) {
   if (weather_harvey == undefined) {
     $.ajax({
       url: 'http://backend.digitaltwincities.info/harvey',
       data: {
-
       },
       async: false,
       dataType: 'json',
       success: function (data) {
         weather_harvey = data;
-
       }
     });
   }
