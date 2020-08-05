@@ -5,10 +5,6 @@ require('./css/main.css');
 let urls = ['http://backend.digitaltwincities.info/poles',
   'https://function.digitaltwincities.info/lambda/localize',
   'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40'
-  // 'http://backend.digitaltwincities.info/ike',
-  // 'http://backend.digitaltwincities.info/harvey',
-  // 'http://backend.digitaltwincities.info/allison',
-  // 'http://backend.digitaltwincities.info/rita'
 ];    // multiple endpoints to retrieve data from
 let promises = urls.map(url => fetch(url).then(y => y.json()));
 var poles, vulnerable_objects, current_weather;
@@ -16,11 +12,6 @@ Promise.all(promises).then(results => {
   poles = results[0]
   vulnerable_objects = results[1]
   current_weather = results[2]
-  // weather_ike=results[3]
-  // weather_harvey=results[4]
-  // weather_allison=results[5]
-  // weather_=results[6]
-  //console.log(vulnerable_objects)
   initializes_settings()
   processPoles()
   processLocalizedResults()
@@ -53,27 +44,12 @@ var CheckPowerI = document.getElementById('y');
 var pole_longs = []
 var pole_lats = []
 var weather_data;
-// viewer.scene.globe.maximumScreenSpaceError = 18;
-// viewer.clock.shouldAnimate = false;
-// viewer.clock.multiplier = 1500.0;
-// viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
-// viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
-// viewer.animation.viewModel.timeFormatter = localeTimeFormatter
-// viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
-// $('#time_default').on('click', function () {
-//   viewer.clock.currentTime = now.clone();
-//   Cesium.JulianDate.addDays(now, 4.0, res);
-//   viewer.timeline.updateFromClock();
-//   viewer.timeline.zoomTo(now, res);
-//   now = viewer.clock.currentTime;
-//   viewer.clock.shouldAnimate = false;
-// });
+viewer.scene.globe.maximumScreenSpaceError = 18;
+
 
 // Calling init function initializes the code - please follow this kind of coding
 
 // Write comments on what exactly each function is doing - helps in maintaining the code
-
-// var weather_data;
 
 // Please write what this function does and how it is achieved
 
@@ -235,10 +211,21 @@ $('#myRange').change(function () {
       power_demage = data;
     },
   })
+  let wood_arr=new Array(61);
+  for(let i=426;i<487;i++)
+      wood_arr[i]=i;
+  let wood_set=new Set(wood_arr)
 
   let damaged_poles = new Set(power_demage['failedpoles']);
   for (let x = 0; x < poles_data.entities.values.length; x++) {
-    poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+    //poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+    if (wood_set.has(x)) {
+      poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
+    //poles_data.entities.values[x].model.scale=
+    }else{
+      poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+    }
+
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
       //   console.log(pole_longs[x+1]);
@@ -324,7 +311,7 @@ function wind_networkanalysis() {
   let tmp_lats=[]
   let tmp_poles=[]
     var cur_speed = Math.round(parseInt($('#wind').text()));
-    console.log(cur_speed);
+    //console.log(cur_speed);
     $.ajax({
       url: 'https://jvc8szgvya.execute-api.us-west-2.amazonaws.com/default/networkanalysis',
       data: {
@@ -337,10 +324,23 @@ function wind_networkanalysis() {
       },
     })
     let damaged_poles = new Set(power_demage['failedpoles']);
-    console.log("damaged poles: " + damaged_poles.size)
-
+    //console.log("damaged poles: " + damaged_poles.size)
+    let wood_arr=new Array(61);
+      for(let i=426;i<487;i++)
+        wood_arr[i]=i;
+    let wood_set=new Set(wood_arr)
+ 
+  
   for (let x = 0; x < poles_data.entities.values.length; x++) {
-    poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+    //poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+    if (wood_set.has(x)) {
+      poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
+    //poles_data.entities.values[x].model.scale=
+    }else{
+      poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+    }
+
+
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
       //   console.log(pole_longs[x+1]);
@@ -565,11 +565,25 @@ function processPoles() {
     entity.silhouetteColor = Cesium.Color.WHITE;
     entity.silhouetteSize = 0.4;
     poles_data.entities.add(entity);
-    // Why the object lat and lon is added to inlet lats and lons ???
+    
     pole_longs.push(parseFloat(object['longitude']))
     pole_lats.push(parseFloat(object['latitude']))
 
   }
+  let wood_arr=new Array(61);
+  for(let i=426;i<487;i++)
+      wood_arr[i]=i;
+  let wood_set=new Set(wood_arr)
+  //console.log(wood_set);
+  for(let x=0;x<poles_data.entities.values.length;x++)
+  {
+    if (wood_set.has(x)) {
+    poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
+    //poles_data.entities.values[x].model.scale=
+    }
+  
+  }
+
 
 };
 
@@ -788,7 +802,7 @@ var poles_data = new Cesium.CustomDataSource();
 CheckPowerI.addEventListener('change', function () {
   if (CheckPowerI.checked) {
     viewer.dataSources.add(poles_data);
-    console.log("add")
+    //console.log("add")
 
   } else {
     viewer.dataSources.remove(poles_data);
