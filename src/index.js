@@ -43,6 +43,7 @@ var CheckFloodI = document.getElementById('x');
 var CheckPowerI = document.getElementById('y');
 var pole_longs = []
 var pole_lats = []
+var pole_tmp=[]
 var weather_data;
 viewer.scene.globe.maximumScreenSpaceError = 18;
 
@@ -229,8 +230,8 @@ $('#myRange').change(function () {
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
       //   console.log(pole_longs[x+1]);
-      temp_longs.push(pole_longs[x])
-      temp_lats.push(pole_lats[x])
+      temp_longs.push(pole_tmp[x].long)
+      temp_lats.push(pole_tmp[x].lat)
 
     }
   }
@@ -326,14 +327,14 @@ function wind_networkanalysis() {
     let damaged_poles = new Set(power_demage['failedpoles']);
     //console.log("damaged poles: " + damaged_poles.size)
     let wood_arr=new Array(61);
-      for(let i=426;i<487;i++)
+      for(let i=427;i<487;i++)
         wood_arr[i]=i;
     let wood_set=new Set(wood_arr)
  
   
   for (let x = 0; x < poles_data.entities.values.length; x++) {
     //poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
-    if (wood_set.has(x)) {
+    if (wood_set.has(x+1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
     //poles_data.entities.values[x].model.scale=
     }else{
@@ -344,8 +345,8 @@ function wind_networkanalysis() {
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
       //   console.log(pole_longs[x+1]);
-      tmp_longs.push(pole_longs[x])
-      tmp_lats.push(pole_lats[x])
+      tmp_longs.push(pole_tmp[x].long)
+      tmp_lats.push(pole_tmp[x].lat)
 
     }
   }
@@ -543,6 +544,19 @@ viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(tim
 
 } 
 
+function compare_qty(a, b){
+        // a should come before b in the sorted order
+        if(a.manual_id < b.manual_id){
+                return -1;
+        // a should come after b in the sorted order
+        }else if(a.manual_id > b.manual_id){
+                return 1;
+        // a and b are the same
+        }else{
+                return 0;
+        }
+}
+
 function processPoles() {
   let objects = poles['data']
   for (let object of objects) {
@@ -564,23 +578,87 @@ function processPoles() {
     entity.manual_id = manual_id;
     entity.silhouetteColor = Cesium.Color.WHITE;
     entity.silhouetteSize = 0.4;
-    poles_data.entities.add(entity);
     
+    entity.description='  <style>\
+ .cesium-infoBox-description {\
+        font-family: "Times New Roman", Times, serif;\
+        font-size: 6px;\
+        padding: 4px 10px;\
+        margin-right: 4px;\
+        color: #edffff;\
+      }\
+      .cesium-infoBox-defaultTable tr:nth-child(odd) {\
+        background-color: rgba(38, 38, 38, 1.0);\
+        font-size:small;\
+      }\
+      .cesium-infoBox-defaultTable tr:nth-child(even) {\
+        background-color: rgba(38, 38, 38, 1.0);\
+        font-size:small;\
+      }\
+      .cesium-infoBox-defaultTable th {\
+        font-weight: normal;\
+        padding: 4px;\
+        vertical-align: middle;\
+        text-align: center;\
+        font-size:small;\
+      }\
+      .cesium-infoBox-defaultTable td {\
+        padding: 4px;\
+        vertical-align: middle;\
+        text-align: center;\
+        font-size:small;\
+      }\
+      .cesium-infoBox-visible {\
+        transform: translate(0, 0);\
+        visibility: visible;\
+        opacity: 0;\
+        transition: opacity 0.2s ease-out, transform 0.2s ease-out;\
+      }\
+    </style>\
+     <br style = "line-height:1;"><br>\
+    <table class="cesium-infoBox-defaultTable">\
+      <tr>\
+        <td>Object id</td>\
+        <td>'+ entity.manual_id + '</td>\
+      </tr>\
+    </table>\
+    <br style = "line-height:8;"><br>\
+    '
+    let obj = {};
+    obj["lat"] = parseFloat(object['latitude'])
+    obj["long"] = parseFloat(object['longitude'])
+    obj["manual_id"] = object['manual_id'];
+    pole_tmp.push(obj);
     pole_longs.push(parseFloat(object['longitude']))
     pole_lats.push(parseFloat(object['latitude']))
-
+    poles_data.entities.add(entity);
   }
-  let wood_arr=new Array(61);
+ // for(int d=0;d<poles_data.entities.values.length;d++){
+
+
+  //}
+  //console.log(pole_tmp)
+  poles_data.entities.values.sort(compare_qty)
+  pole_tmp.sort(compare_qty)
+  //console.log(poles_data.entities.values.sort(compare_qty));
+  //console.log(poles_data.entities.values)
+  //pole_lats.sort();
+  //pole_lats.sort();
+
+  let wood_arr=new Array(62);
   for(let i=426;i<487;i++)
       wood_arr[i]=i;
   let wood_set=new Set(wood_arr)
-  //console.log(wood_set);
-  for(let x=0;x<poles_data.entities.values.length;x++)
+  console.log(wood_set);
+
+  for(let x=427;x<poles_data.entities.values.length;x++)
   {
-    if (wood_set.has(x)) {
+   // if (wood_set.has(x)) {
+    //console.log(Cesium.Cartographic.fromCartesian(poles_data.entities.values[x].position))
+    //console.log(pos)
     poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
     //poles_data.entities.values[x].model.scale=
-    }
+   // }
   
   }
 
