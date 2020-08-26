@@ -70,7 +70,7 @@
 
    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class="fas fa-wind"></i>
-      <br /><span>Historical Event</span>
+      <br /><span style="top: -4px;position: relative;margin-top: 0px;">Historical Event</span>
     </button>
     <div class="dropdown-menu " aria-labelledby="btnGroupDrop1">
       <a class="dropdown-item " id="rita" href="#">Rita</a>
@@ -95,33 +95,38 @@
 
 <div id="divWrap">
     <div class="j hide div1" >
-        <label class="container_t">flood<input type="checkbox"  name="flood object" id="x"/><span class="checkmark"></span>
+        <div id="boxWrap">
+        <label class="container_t">
+            <p>flood</p> 
+            <input type="checkbox"  name="flood object" id="x"/><span class="checkmark"></span>
         </label>
 
-        <label class="container_t">blackout<input type="checkbox"  name="power object" id="y"/><span class="checkmark"></span>
+        <label class="container_t">
+            <p>blackout</p>
+        <input type="checkbox"  name="power object" id="y"/><span class="checkmark"></span>
         </label>
-
+        </div>
 
         <fieldset class="scheduler-border"> 
         <!-- <legend class="scheduler-border">Map legend</legend> -->
              <ul class = "inside" id="legend_list" style="list-style-type:none">            
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <label for="myid1"><span>Reported object</span></label>
-                    <li data-type='power object' class='hide'>
-                    <span style="color:#FFFF00">&#8213;</span>
-                    <label for="myid2">Wire</label></li>
+                    <i class="fas fa-exclamation-triangle" style="padding-left: 0.6rem"></i>
+                    <label for="myid1" style="margin-left: 1.0rem"><span>Reported object</span></label>
+                    <li data-type='power object' class='hide' style="padding-left: 0.6rem">
+                    <span style="color:#FFFF00;"">&#8213;</span>
+                    <label for="myid2" style="">Wire</label></li>
                     <li data-type='power object' class='hide'>
                     <i class="fas fa-square-full" style="color:#FFFF00"></i>
-                    <label for="myid2">Substation</label></li>
+                    <label for="myid2" style="margin-left: 0.9rem">Substation</label></li>
                     <li data-type='power object' class='hide'>
-                    <span style="color:#a77428;padding-left: 5px;padding-right:5px">&#8607;</span>
-                    <label for="myid2">Wood Utility pole</label></li>
+                    <span style="color:#a77428;padding-left:0.66rem;padding-right:0.12rem ">&#8607;</span>
+                    <label for="myid2" style="margin-left: 0.9rem">Wood Utility pole</label></li>
                      <li data-type='power object' class='hide'>
-                    <span style="color:#30DA51;padding-left: 5px;padding-right:5px">&#8607;</span>
-                    <label for="myid2">Steel Utility pole</label></li>
+                    <span style="color:#30DA51;padding-left: 0.65rem;;padding-right:0.12rem">&#8607;</span>
+                    <label for="myid2" style="margin-left: 0.9rem">Steel Utility pole</label></li>
                     <li data-type='flood object' class='hide'>
-                    <span style="color:#FFFFFF">&#8855;</span>
-                    <label for="myid2">Inlet</label></li>
+                    <span style="color:#FFFFFF" style="margin-left: 0.6rem">&#8855;</span>
+                    <label for="myid2" style="margin-left: 0.9rem">Inlet</label></li>
             </ul>
 
         </fieldset>
