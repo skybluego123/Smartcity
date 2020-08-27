@@ -110,23 +110,28 @@
         <fieldset class="scheduler-border"> 
         <!-- <legend class="scheduler-border">Map legend</legend> -->
              <ul class = "inside" id="legend_list" style="list-style-type:none">            
-                    <i class="fas fa-exclamation-triangle" style="padding-left: 0.6rem"></i>
-                    <label for="myid1" style="margin-left: 1.0rem"><span>Reported object</span></label>
-                    <li data-type='power object' class='hide' style="padding-left: 0.6rem">
-                    <span style="color:#FFFF00;"">&#8213;</span>
-                    <label for="myid2" style="">Wire</label></li>
+                    <i class="fas fa-exclamation-triangle" style="font-size:1.0rem; padding-left: 0.6rem;"></i>
+                    <label for="myid1" style="margin-left: 0.5rem;font-size:1.0rem"><span>Reported object</span></label>
+
+                    <!-- <div  data-type='power object' class='hide' style="padding-left: 0.6rem"> -->
+                    <li>
+                    <span  data-type='power object' class='hide' style="color:#FFFF00;padding-left: 0.7rem;">&#8213;</span>
+                    <label data-type='power object' class='hide' for="myid2" style="padding-left: 0.65rem;">Wire</label></li>
+                    <!-- </div> -->
+
                     <li data-type='power object' class='hide'>
-                    <i class="fas fa-square-full" style="color:#FFFF00"></i>
-                    <label for="myid2" style="margin-left: 0.9rem">Substation</label></li>
+                    <i class="fas fa-square-full" style="color:#FFFF00;padding-left: 0.7rem"></i>
+                    <label for="myid2" style="padding-left: 0.7rem"> Substation</label></li>
+
                     <li data-type='power object' class='hide'>
-                    <span style="color:#a77428;padding-left:0.66rem;padding-right:0.12rem ">&#8607;</span>
-                    <label for="myid2" style="margin-left: 0.9rem">Wood Utility pole</label></li>
+                    <span style="color:#a77428;padding-left:0.7rem;padding-right:0.12rem; font-size: x-large;">&#8607;</span>
+                    <label for="myid2" style="margin-left: 0.7rem">Wood Utility pole</label></li>
                      <li data-type='power object' class='hide'>
-                    <span style="color:#30DA51;padding-left: 0.65rem;;padding-right:0.12rem">&#8607;</span>
-                    <label for="myid2" style="margin-left: 0.9rem">Steel Utility pole</label></li>
+                    <span style="color:#30DA51;padding-left: 0.7rem;;padding-right:0.12rem; font-size: x-large;">&#8607;</span>
+                    <label for="myid2" style="margin-left: 0.7rem">Steel Utility pole</label></li>
                     <li data-type='flood object' class='hide'>
                     <span style="color:#FFFFFF" style="margin-left: 0.6rem">&#8855;</span>
-                    <label for="myid2" style="margin-left: 0.9rem">Inlet</label></li>
+                    <label for="myid2" style="margin-left: 0.7rem">Inlet</label></li>
             </ul>
 
         </fieldset>

@@ -1,31 +1,11 @@
+ul li{
 
-
-/*  @media (min-width: 768px)
- .container-md, .container-sm {
-    max-width: 720px;
-
-}*/
-/*.btn-group button{
-    background-color:green;
-}*/
-/*g.cesium-animation-rectButton:hover title {
-    border: #c0c0c0 1px dotted;
-    padding: 5px 20px 5px 5px;
-    display: block;
-    z-index: 100;
-    background: white;
-    left: 0px;
-    margin: 10px;
-    width: 250px;
-    position: absolute;
-    top: 10px;
-    text-decoration: none
-}*/
-/*g.cesium-animation-rectButton:hover
-{
-    opacity: 0.0;
+  font-size: 1.0rem;
 }
-*/
+/*li span{
+font-size: 0.8rem;
+
+}*/
 .btn {
     font-size: 1.4vh;
 }
@@ -330,7 +310,7 @@ font-size:0.9vw;
 #legend_list{
 
   font-size: 0.7rem;
-/*  text-align: center;*/
+  /*text-align: center;*/
 }
 
 #heightSliderLabel, #heightValue {
@@ -542,14 +522,14 @@ width:10%;
     border: 1px solid #444;
     padding: 5px 12px;
     color: #fff;
-    line-height: 250%;
+    line-height: 270%;
     font-size: 1.0vh;
     width:10vw;
     position:fixed;
     z-index : 1;
 
     /*min-width: 249px;*/
-    min-width: 10.5rem;
+    min-width: 14.5rem;
     /*////min-height: */
 
 }
