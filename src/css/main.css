@@ -112,13 +112,14 @@ a {
     height: 100%;
 }
   .panel {
+     background-color: rgba(42, 42, 42, 0.8);
     /*font-size: 1.4vh;*/
     position: absolute;
-    min-width: 270px;  
-   /* width:fit-content;*/
     font-size: 1.3vh;
     top: 0px;
-    width: 30.0vw;
+    /*min-*/
+    min-height: 10vh;
+    min-width: 30.0vw;
     z-index: 1;
    /* min-height: 200px;*/
     display: inline-block;
@@ -137,6 +138,10 @@ a {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+     border-radius: 1px;
+    /*background-color: rgba(42, 42, 42, 0.8);*/
+    padding: 0;
+    font-size: 1.1vh;
 }
 
 header {
@@ -147,7 +152,7 @@ header {
 
    /*.*/
     border-radius: 1px;
-    background-color: rgba(42, 42, 42, 0.8);
+    /*background-color: rgba(42, 42, 42, 0.8);*/
     padding: 0;
     font-size: 1.1vh;
    /* -moz-flex-shrink: 0;
@@ -310,7 +315,7 @@ font-size:0.9vw;
 #legend_list{
 
   font-size: 0.7rem;
-  /*text-align: center;*/
+/*  text-align: center;*/
 }
 
 #heightSliderLabel, #heightValue {
@@ -635,15 +640,33 @@ p.temp {
     bottom: 0;
 }
 
+@media (max-width: 768px) {
+  .btn-group {
+    font-size:4px;
+    /*padding:4px 6px;*/
+  }
+}
 
-        #loadingDiv {
-            position:absolute;;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background-color:#000;
-        }
+@media (min-width: 768px) {
+  .btn-group {
+    font-size:12px;
+    /*padding:6px 12px;*/
+  }
+}
+
+@media (min-width: 992px) {
+  .btn-group {
+    font-size:14px;
+    /*padding:8px 12px;*/
+  }
+}
+
+@media (min-width: 1200px) {
+  .btn-group {
+    /*padding:10px 16px;*/
+    font-size:18px;
+  }
+}
 .cesium-infoBox{ font-family: "Lato", sans-serif;display:block;top:5vh;position: fixed;right:0;width:16vw;height:100vh;background:rgba(38,38,38,.95);color:#edffff;border:2px solid #444;border-right:none;border-top-left-radius:7px;border-bottom-left-radius:7px;box-shadow:0 0 10px 1px #000;transform:translate(100%,0);visibility:hidden;opacity:0;overflow:hidden;transition:visibility 0s .2s,opacity .2s ease-in,transform .2s ease-in}
 .cesium-infoBox-visible{transform:translate(0,0);visibility:visible;opacity:1;transition:opacity .2s ease-out,transform .2s ease-out}
 .cesium-infoBox-title{ font-family: "Lato", sans-serif;display:block;height:20px;padding:5px 30px 5px 25px;background:rgba(84,84,84,1);border-top-left-radius:7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;box-sizing:content-box}
