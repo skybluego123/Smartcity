@@ -48,14 +48,14 @@ var weather_data;
 viewer.scene.globe.maximumScreenSpaceError = 20;
 
 
-var frame = viewer.infoBox.frame;
-frame.addEventListener('load', function () {
-    var cssLink = frame.contentDocument.createElement('link');
-    cssLink.href = Cesium.buildModuleUrl('Path/To/Your/CSS/File.css');
-    cssLink.rel = 'stylesheet';
-    cssLink.type = 'text/css';
-    frame.contentDocument.head.appendChild(cssLink);
-}, false);
+// var frame = viewer.infoBox.frame;
+// frame.addEventListener('load', function () {
+//     var cssLink = frame.contentDocument.createElement('link');
+//     cssLink.href = Cesium.buildModuleUrl('Path/To/Your/CSS/File.css');
+//     cssLink.rel = 'stylesheet';
+//     cssLink.type = 'text/css';
+//     frame.contentDocument.head.appendChild(cssLink);
+// }, false);
 // Calling init function initializes the code - please follow this kind of coding
 
 // Write comments on what exactly each function is doing - helps in maintaining the code
