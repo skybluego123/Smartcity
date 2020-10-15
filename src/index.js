@@ -701,7 +701,6 @@ var url = Cesium.buildModuleUrl("./images/power.png");
 var url1 = Cesium.buildModuleUrl("./images/vul.png");
 
 var url = Cesium.buildModuleUrl('./images/exclaimation.png')
-//var object_loc;
 var vulnerable_objects_entity = []
 // Use promise all
 
