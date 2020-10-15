@@ -35,7 +35,7 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 var myPos = { my: "center center", at: "center-390 center", of: window };
 var myPos_right = { my: "center center", at: "center+370 center", of: window };
 
-viewer.scene.debugShowFramesPerSecond = true;
+// viewer.scene.debugShowFramesPerSecond = true;
 var pinBuilder = new Cesium.PinBuilder();
 var now = viewer.clock.startTime;
 var res = new Cesium.JulianDate();
@@ -45,9 +45,17 @@ var pole_longs = []
 var pole_lats = []
 var pole_tmp=[]
 var weather_data;
-viewer.scene.globe.maximumScreenSpaceError = 18;
+viewer.scene.globe.maximumScreenSpaceError = 20;
 
 
+var frame = viewer.infoBox.frame;
+frame.addEventListener('load', function () {
+    var cssLink = frame.contentDocument.createElement('link');
+    cssLink.href = Cesium.buildModuleUrl('Path/To/Your/CSS/File.css');
+    cssLink.rel = 'stylesheet';
+    cssLink.type = 'text/css';
+    frame.contentDocument.head.appendChild(cssLink);
+}, false);
 // Calling init function initializes the code - please follow this kind of coding
 
 // Write comments on what exactly each function is doing - helps in maintaining the code
@@ -242,7 +250,7 @@ $('#myRange').change(function () {
     temp_poles.push({ x: temp_longs[i], y: temp_lats[i], value: Math.floor(Math.random() * 89) + 1   })
 
   }
-  console.log(temp_poles)
+
   //heatmap here
   if(heat!=null)
   {
@@ -270,8 +278,8 @@ $('#myRange').change(function () {
   gradient: {
     // enter n keys between 0 and 1 here
     // for gradient color customization
-    '.4': 'blue',
-    '.8': 'red',
+    '.5': 'blue',
+    '.7': 'red',
     '.9': 'white'
   }
 }
@@ -279,8 +287,8 @@ $('#myRange').change(function () {
     enabled: true,  
     min: 6375000,   
     max: 10000000,  
-    maxRadius:  7,
-    minRadius:  7
+    maxRadius:  20,
+    minRadius:  20
   }
     
   )
@@ -297,7 +305,7 @@ function stop_load_network() {
   clearTimeout(state_i);
 }
 Cesium.knockout.getObservable(viewer.animation.viewModel.clockViewModel, 'shouldAnimate').subscribe(function(value) {
-    console.log(value)
+  //console.log(value)
     if(value==true)
       start_load_network();
     else
@@ -333,10 +341,9 @@ function wind_networkanalysis() {
  
   
   for (let x = 0; x < poles_data.entities.values.length; x++) {
-    //poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+
     if (wood_set.has(x+1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
-    //poles_data.entities.values[x].model.scale=
     }else{
       poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     }
@@ -344,7 +351,6 @@ function wind_networkanalysis() {
 
     if (damaged_poles.has(x + 1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.RED;
-      //   console.log(pole_longs[x+1]);
       tmp_longs.push(pole_tmp[x].long)
       tmp_lats.push(pole_tmp[x].lat)
 
@@ -357,7 +363,7 @@ function wind_networkanalysis() {
     tmp_poles.push({ x: tmp_longs[i], y: tmp_lats[i], value: Math.floor(Math.random() * 89) + 1   })
 
   }
-  console.log(tmp_poles)
+  //console.log(tmp_poles)
   //heatmap here
   if(heat!=null)
   {
@@ -404,22 +410,28 @@ function wind_networkanalysis() {
 }
 
 var myVar = '';
+
 function getAddr(latitude, longtitude) {
-  $.ajax({
-    url: 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode',
-    data: {
-      'f': 'pjson',
-      'featureTypes': '',
-      'location': latitude + ',' + longtitude,
-    },
-    async: false,
-    dataType: 'json',
-    success: function (data) {
-      myVar = data;
-    },
-  })
+  console.log(latitude)
+ console.log(longtitude)
+   $.ajax({
+     url: 'https://utility.arcgis.com/usrsvcs/appservices/AMDuJkDYKxfMS7u3/rest/services/World/GeocodeServer/reverseGeocode?',
+   data: {
+       'f': 'pjson',
+       'featureTypes': '',
+       'location': latitude + ',' + longtitude,
+     },
+     async: false,
+     dataType: 'json',
+     success: function (data) {
+       myVar = data;
+     },
+   })
+   console.log(myVar)
+
   return myVar;
 }
+
 
 //Generate the dialog box
 function map_create(img_id) {
@@ -490,7 +502,7 @@ function img_dialog(img_id) {
   let wHeight = $(window).height();
   let dWidth = wWidth * 0.4;
   let dHeight = wHeight * 0.4;
-  console.log("img_dialog called")
+ // console.log("img_dialog called")
   $("#dialog2").dialog('close');
   $("#dialog2").dialog({
     width: dWidth,
@@ -563,8 +575,13 @@ function processPoles() {
     let entity = new Cesium.Entity();
 
     entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 0);
-    entity.name = object['id'];
+    entity.name = object['manual_id']; //object['id'];
     let manual_id = object['manual_id'];
+    let age=object['age']
+    let angle=object['angle']
+    let lat=object['latitude']
+    let lon=object['longitude']
+    let id=object['id']
     entity.billboard = undefined;
     entity.model = new Cesium.ModelGraphics({
       uri: './geoMappings/Utilitypole_3Dmodel.glb',
@@ -616,10 +633,27 @@ function processPoles() {
       }\
     </style>\
      <br style = "line-height:1;"><br>\
+     <h2 style="text-align:center;">Information about one utility pole</h2>\
     <table class="cesium-infoBox-defaultTable">\
       <tr>\
         <td>Object id</td>\
         <td>'+ entity.manual_id + '</td>\
+      </tr>\
+      <tr>\
+        <td>Age</td>\
+        <td>'+ age + '</td>\
+      </tr>\
+      <tr>\
+        <td>Angle</td>\
+        <td>'+angle+ '</td>\
+      </tr>\
+       <tr>\
+        <td>Coordinate</td>\
+        <th>'+ lat + '   ' + lon + '</th>\
+      </tr>\
+       <tr>\
+        <td>ID</td>\
+        <th>'+ id +'</th>\
       </tr>\
     </table>\
     <br style = "line-height:8;"><br>\
@@ -640,26 +674,18 @@ function processPoles() {
   //console.log(pole_tmp)
   poles_data.entities.values.sort(compare_qty)
   pole_tmp.sort(compare_qty)
-  //console.log(poles_data.entities.values.sort(compare_qty));
-  //console.log(poles_data.entities.values)
-  //pole_lats.sort();
-  //pole_lats.sort();
+
 
   let wood_arr=new Array(62);
   for(let i=426;i<487;i++)
       wood_arr[i]=i;
   let wood_set=new Set(wood_arr)
-  console.log(wood_set);
+//  console.log(wood_set);
 
   for(let x=427;x<poles_data.entities.values.length;x++)
   {
-   // if (wood_set.has(x)) {
-    //console.log(Cesium.Cartographic.fromCartesian(poles_data.entities.values[x].position))
-    //console.log(pos)
+
     poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
-    //poles_data.entities.values[x].model.scale=
-   // }
-  
   }
 
 
@@ -718,7 +744,10 @@ handler.setInputAction(function (click) {
     let lat = vulnerable_objects[parseInt(pick.id._name)]['cluster_latitude'];
     let lon = vulnerable_objects[parseInt(pick.id._name)]['cluster_longitude'];
     let nearest_target = vulnerable_objects[parseInt(pick.id._name)]['nearest_pole']
-    var test = getAddr(lon, lat);
+   
+    let result=getAddr(lon, lat);
+    console.log(result)
+ 
     vulnerable_objects_entity[parseInt(pick.id._name)].description = '\
       <style>\
       .rotate90 {\
@@ -787,7 +816,7 @@ handler.setInputAction(function (click) {
       </tr>\
       <tr>\
         <td>Address</td>\
-        <th>'+ test['address']['Match_addr'] + '</th>\
+        <th>'+ result['address']['Match_addr']+ '</th>\
       </tr>\
       <tr>\
         <td>Analysis Results</td>\
@@ -928,8 +957,10 @@ Cesium.when(power5, function (dataSource) {
   });
 });
 
-flood1.then(function (dataSource) {
-  var entities = dataSource.entities.values;
+Cesium.when(flood1, function (dataSource) {
+  CheckFloodI.addEventListener('change', function () {
+    if (CheckFloodI.checked) {
+        var entities = dataSource.entities.values;
   for (let i = 0; i < entities.length; i++) {
     let entity = entities[i];
     let Coordinate = "";
@@ -942,11 +973,6 @@ flood1.then(function (dataSource) {
     });
 
   }
-});
-
-Cesium.when(flood1, function (dataSource) {
-  CheckFloodI.addEventListener('change', function () {
-    if (CheckFloodI.checked) {
       viewer.dataSources.add(dataSource);
 
     } else {
