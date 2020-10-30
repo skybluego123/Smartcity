@@ -571,10 +571,36 @@ function compare_qty(a, b){
 
 function processPoles() {
   let objects = poles['data']
+  let objects_tmp=poles['data']
+  let objects_angle=objects_tmp.filter(function(x){ return x.angle >= 20});
+
+  console.log(objects_angle)
+
+  for (let object of objects_angle) {
+    let entity = new Cesium.Entity();
+    entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 50);
+    entity.description=false;
+    entity.billboard = new Cesium.BillboardGraphics();
+    entity.billboard.image = pinBuilder.fromUrl(url,Cesium.Color.DARKRED, 48);
+    //entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
+    poles_data.entities.add(entity);
+  }
+
   for (let object of objects) {
     let entity = new Cesium.Entity();
 
-    entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 0);
+  entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 0);
+
+
+  var heading = 0;
+  var pitch = Cesium.Math.toRadians(object['angle']);
+  var roll = 0;
+  var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+  var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+    Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 0),
+    hpr
+  );
+  entity.orientation=orientation;
     entity.name = object['manual_id']; //object['id'];
     let manual_id = object['manual_id'];
     let age=object['age']
@@ -667,11 +693,7 @@ function processPoles() {
     pole_lats.push(parseFloat(object['latitude']))
     poles_data.entities.add(entity);
   }
- // for(int d=0;d<poles_data.entities.values.length;d++){
 
-
-  //}
-  //console.log(pole_tmp)
   poles_data.entities.values.sort(compare_qty)
   pole_tmp.sort(compare_qty)
 
@@ -710,7 +732,7 @@ function processLocalizedResults() {
 
   for (let object of objects) {
     let entity = new Cesium.Entity();
-    entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'], object['cluster_latitude'], 0);
+    entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'], object['cluster_latitude'], 35);
     entity.name = object['cluster_id'];
 
     let cluster_obj = object['cluster_objects'];
@@ -723,6 +745,10 @@ function processLocalizedResults() {
     let updated=viewer.entities.add(entity);
 
   }
+
+
+
+
 };
 
 
@@ -923,6 +949,7 @@ power4.then(function (dataSource) {
     entity.polygon.material = new Cesium.Material(Cesium.Color.YELLOW);
     entity.polygon.outline = false;
     entity.polygon.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
+
   }
 });
 
@@ -940,9 +967,33 @@ power5.then(function (dataSource) {
   var entities = dataSource.entities.values;
   for (let i = 0; i < entities.length; i++) {
     var entity = entities[i];
+    //console.log(entity.polyline.positions)
     entity.billboard = undefined;
-    entity.polyline.clampToGround = true;
-    entity.polyline.material = new Cesium.Material(Cesium.Color.YELLOW);
+    entity.polylineVolume = new Cesium.PolylineVolumeGraphics({
+
+positions: entity.polyline.positions,
+
+shape: [
+
+new Cesium.Cartesian2( 0.2, 0.1),
+
+new Cesium.Cartesian2( 0.2, 0.0),
+
+new Cesium.Cartesian2(-0.2, 0.1),
+
+new Cesium.Cartesian2(-0.2, 0.0)
+
+],
+
+material: Cesium.Color.YELLOW
+
+});
+
+entity.polyline.material = Cesium.Color.YELLOW;
+entity.polylineVolume.material = Cesium.Color.YELLOW;
+entity.polylineVolume.clampToGround = true;
+   // entity.polyline.material = Cesium.Material.fromType('Color'); 
+   // entity.polyline.material.uniforms.color =Cesium.Color.LIGHTGOLDENRODYELLOW;// new Cesium.Material(Cesium.Color.YELLOW);
   }
 });
 
