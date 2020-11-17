@@ -12,6 +12,7 @@ Promise.all(promises).then(results => {
   poles = results[0]
   vulnerable_objects = results[1]
   current_weather = results[2]
+
   initializes_settings()
   processPoles()
   processLocalizedResults()
@@ -256,6 +257,7 @@ $('#myRange').change(function () {
   {
    heat.destory() 
   }
+  
   const bbox = [-95.451095, 29.651095, -95.1039, 29.826357]
 
   const getHeat = require('cesiumjs-heat').default
@@ -580,6 +582,7 @@ function processPoles() {
     let entity = new Cesium.Entity();
     entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 50);
     entity.description=false;
+    //entity.description=''
     entity.billboard = new Cesium.BillboardGraphics();
     entity.billboard.image = pinBuilder.fromUrl(url,Cesium.Color.DARKRED, 48);
     //entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
@@ -605,6 +608,12 @@ function processPoles() {
     let manual_id = object['manual_id'];
     let age=object['age']
     let angle=object['angle']
+    let update_angle=object['updated_angle']
+    
+    if (update_angle != undefined){
+         angle=update_angle
+         console.log(angle)
+     }
     let lat=object['latitude']
     let lon=object['longitude']
     let id=object['id']
@@ -619,8 +628,8 @@ function processPoles() {
     });
     entity.addProperty("manual_id")
     entity.manual_id = manual_id;
-    entity.silhouetteColor = Cesium.Color.WHITE;
-    entity.silhouetteSize = 0.4;
+    //entity.model.silhouetteColor = Cesium.Color.WHITE;
+    //entity.model.silhouetteSize = 0.0;
     
     entity.description='  <style>\
  .cesium-infoBox-description {\
@@ -760,7 +769,9 @@ var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 handler.setInputAction(function (click) {
   var pick = viewer.scene.pick(click.position);
   if (pick && pick.id && (typeof pick.id._name == 'number')) {
-
+    console.log(pick.id._name)
+    console.log(vulnerable_objects)
+    console.log(vulnerable_objects[pick.id._name])
     let name = vulnerable_objects[parseInt(pick.id._name)]['cluster_id'];
     let cluster_obj = vulnerable_objects[parseInt(pick.id._name)]['cluster_objects'];
     let image_url = cluster_obj[0]['image'];
@@ -771,8 +782,8 @@ handler.setInputAction(function (click) {
     let nearest_target = vulnerable_objects[parseInt(pick.id._name)]['nearest_pole']
    
     let result=getAddr(lon, lat);
-    console.log(result)
- 
+    //console.log(result)
+    console.log(nearest_target)
     vulnerable_objects_entity[parseInt(pick.id._name)].description = '\
       <style>\
       .rotate90 {\
@@ -856,12 +867,15 @@ handler.setInputAction(function (click) {
     initial_pole = nearest_target;
     let near_track = 0;
 
-    for (let pole of poles_data.entities.values) {
-      pole.model.silhouetteSize = 0.0;
-    }
+    // for (let pole of poles_data.entities.values) {
+    //   console.log(pole)
+    //   console.log(pole.model)
+    //   pole.model.silhouetteSize = 0.0;
+    // }
     let entity = poles_data.entities.values[nearest_target - 1];
-    entity.silhouetteColor = Cesium.Color.WHITE;
-    entity.model.silhouetteSize = 1.0;
+    console.log(entity)
+    entity.model.silhouetteColor = Cesium.Color.WHITE;
+    entity.model.silhouetteSize = 1.5;
   }
 
 }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
