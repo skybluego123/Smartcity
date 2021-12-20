@@ -570,16 +570,14 @@ var tileset = viewer.scene.primitives.add(
 var tileset = viewer.scene.primitives.add(
   new Cesium.Cesium3DTileset({
     url: Cesium.IonResource.fromAssetId(706934),
-    maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 4096
+    maximumScreenSpaceError: 2
   })
 );
 //replot on mean-sea level
 var tileset = viewer.scene.primitives.add(
   new Cesium.Cesium3DTileset({
     url: Cesium.IonResource.fromAssetId(706970),
-    maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 4096
+    maximumScreenSpaceError: 2
   })
 );
 
@@ -760,8 +758,6 @@ function processPoles() {
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
-var flood2 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5655.geojson');
-var flood3 = Cesium.GeoJsonDataSource.load('./geoMappings/dGravityMain_L5655.geojson');
 
 var vulnerable_objects;
 var object_indicator;
@@ -1076,74 +1072,6 @@ Cesium.when(flood1, function (dataSource) {
   }
       viewer.dataSources.add(dataSource);
 
-    } else {
-      viewer.dataSources.remove(dataSource);
-    }
-  });
-});
-
-Cesium.when(flood2, function (dataSource) {
-  CheckFloodI.addEventListener('change', function () {
-    if (CheckFloodI.checked) {
-        var entities = dataSource.entities.values;
-  for (let i = 0; i < entities.length; i++) {
-    let entity = entities[i];
-    let Coordinate = "";
-
-    entity.billboard = undefined;
-    entity.point = new Cesium.PointGraphics({
-      color: Cesium.Color.BLUE,
-      pixelSize: 13,
-      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
-    });
-
-  }
-      viewer.dataSources.add(dataSource);
-
-    } else {
-      viewer.dataSources.remove(dataSource);
-    }
-  });
-});
-
-flood3.then(function (dataSource) {
-  var entities = dataSource.entities.values;
-  for (let i = 0; i < entities.length; i++) {
-    var entity = entities[i];
-    //console.log(entity.polyline.positions)
-    entity.billboard = undefined;
-    entity.polylineVolume = new Cesium.PolylineVolumeGraphics({
-
-positions: entity.polyline.positions,
-
-shape: [
-
-new Cesium.Cartesian2( 0.2, 0.1),
-
-new Cesium.Cartesian2( 0.2, 0.0),
-
-new Cesium.Cartesian2(-0.2, 0.1),
-
-new Cesium.Cartesian2(-0.2, 0.0)
-
-],
-
-material: Cesium.Color.GREEN
-
-});
-
-entity.polyline.material = Cesium.Color.GREEN;
-entity.polylineVolume.material = Cesium.Color.GREEN;
-entity.polylineVolume.clampToGround = true;
-   // entity.polyline.material = Cesium.Material.fromType('Color'); 
-   // entity.polyline.material.uniforms.color =Cesium.Color.LIGHTGOLDENRODYELLOW;// new Cesium.Material(Cesium.Color.YELLOW);
-  }
-});
-
-Cesium.when(flood3, function (dataSource) {
-  CheckFloodI.addEventListener('change', function () {
-    if (CheckFloodI.checked) {
-      viewer.dataSources.add(dataSource);
     } else {
       viewer.dataSources.remove(dataSource);
     }

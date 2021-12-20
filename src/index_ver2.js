@@ -21,17 +21,13 @@ Promise.all(promises).then(results => {
 
 var Cesium = require('cesium/Cesium');
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzYyNDZmZi1lYTdhLTQwMDgtOGRhZC03ZDE5YTlkYmVkMGMiLCJpZCI6NDAxOSwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTUzOTYzODc1OX0.Kb7k51vZGYR5F7btrBIAuSan3ZNyKY_AWrFv1cLFUFk';
-// add additional access token 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5Y2U5NWU1Ny1iMmY4LTRkYjMtYThjMi1kMDVmYTY1ZWM1YjMiLCJpZCI6Nzc0OCwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU1MDM2NDcxMH0.xYWY-C0FJjqSkRhRN9UMAzLKxg17whGjUhqihBKkHTs'
+
 var viewer = new Cesium.Viewer('cesiumContainer', {
   requestRenderMode : true,
   maximumRenderTimeChange : Infinity,
   terrainProvider: Cesium.createWorldTerrain({
-    requestWaterMask: true,
-    requestVertexNormals : true
+    requestWaterMask: true
   }),
-  // terrainProvider: new Cesium.CesiumTerrainProvider({
-  //   url: Cesium.IonResource.fromAssetId(1),
-  // }),
   timeline: true,
   animation: true,
   shadows: true
@@ -215,7 +211,7 @@ $('#myRange').change(function () {
   myrange_stop = $(this).val();
 
   $.ajax({
-    url: 'https://function.digitaltwincities.info/analysis/networkanalysis',
+    url: 'https://jvc8szgvya.execute-api.us-west-2.amazonaws.com/default/networkanalysis',
     data: {
       'windspeed': myrange_stop
     },
@@ -237,11 +233,11 @@ $('#myRange').change(function () {
       poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
     //poles_data.entities.values[x].model.scale=
     }else{
-      // poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+      poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     }
 
     if (damaged_poles.has(x + 1)) {
-      // poles_data.entities.values[x].model.color = Cesium.Color.RED;
+      poles_data.entities.values[x].model.color = Cesium.Color.RED;
       //   console.log(pole_longs[x+1]);
       temp_longs.push(pole_tmp[x].long)
       temp_lats.push(pole_tmp[x].lat)
@@ -278,24 +274,23 @@ $('#myRange').change(function () {
     {
       container: document.getElementById('heatmapContainer'),
        radius: 10,
-  maxOpacity: .5,
+  maxOpacity: .4,
   minOpacity: 0,
   blur: .75,
   gradient: {
     // enter n keys between 0 and 1 here
     // for gradient color customization
-    '.2': 'blue',
-    '.4': 'green',
-    '.8': 'yellow',
-    '.9': 'red'
+    '.5': 'blue',
+    '.7': 'red',
+    '.9': 'white'
   }
 }
   ,{
     enabled: true,  
     min: 6375000,   
     max: 10000000,  
-    maxRadius:  45,
-    minRadius:  10
+    maxRadius:  20,
+    minRadius:  20
   }
     
   )
@@ -329,7 +324,7 @@ function wind_networkanalysis() {
     var cur_speed = Math.round(parseInt($('#wind').text()));
     //console.log(cur_speed);
     $.ajax({
-      url: 'https://function.digitaltwincities.info/analysis/networkanalysis',
+      url: 'https://jvc8szgvya.execute-api.us-west-2.amazonaws.com/default/networkanalysis',
       data: {
         'windspeed': cur_speed
       },
@@ -352,12 +347,12 @@ function wind_networkanalysis() {
     if (wood_set.has(x+1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
     }else{
-      // poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+      poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     }
 
 
     if (damaged_poles.has(x + 1)) {
-      // poles_data.entities.values[x].model.color = Cesium.Color.RED;
+      poles_data.entities.values[x].model.color = Cesium.Color.RED;
       tmp_longs.push(pole_tmp[x].long)
       tmp_lats.push(pole_tmp[x].lat)
 
@@ -390,25 +385,24 @@ function wind_networkanalysis() {
     },
     bbox,
     {
-       radius: 10,
-  maxOpacity: .4,
+       radius: 30,
+  maxOpacity: .5,
   minOpacity: 0,
   blur: .75,
   gradient: {
     // enter n keys between 0 and 1 here
     // for gradient color customization
-    '.2': 'blue',
-    '.4': 'green',
-    '.8': 'yellow',
-    '.9': 'red'
+    '.6': 'blue',
+    '.8': 'red',
+    '.9': 'white'
   }
 }
   ,{
     enabled: true,  
     min: 6375000,   
     max: 10000000,  
-    maxRadius:  45,
-    minRadius:  10,
+    maxRadius:  7,
+    minRadius:  7,
   }
     
   )
@@ -533,8 +527,7 @@ function img_dialog(img_id) {
 // Move to promise.all
 function initializes_settings(){
   viewer.scene.globe.depthTestAgainstTerrain = true;
-var initialPosition = Cesium.Cartesian3.fromDegrees(-95.38198382732189,29.726144216291395, 953);
-// var initialPosition = Cesium.Cartesian3.fromDegrees(-95.364808777523, 29.736084676987729, 953);
+var initialPosition = Cesium.Cartesian3.fromDegrees(-95.364808777523, 29.736084676987729, 953);
 var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
 
 viewer.scene.camera.setView({
@@ -542,12 +535,6 @@ viewer.scene.camera.setView({
   orientation: initialOrientation,
   endTransform: Cesium.Matrix4.IDENTITY
 });
-
-// var tileset = viewer.scene.primitives.add(
-//   new Cesium.Cesium3DTileset({
-//     url: Cesium.IonResource.fromAssetId(16947),
-//   })
-// );
 
 var tileset = viewer.scene.primitives.add(
   new Cesium.Cesium3DTileset({
@@ -558,28 +545,6 @@ var tileset = viewer.scene.primitives.add(
 var tileset = viewer.scene.primitives.add(
   new Cesium.Cesium3DTileset({
     url: Cesium.IonResource.fromAssetId(36440)
-  })
-);
-
-var tileset = viewer.scene.primitives.add(
-  new Cesium.Cesium3DTileset({
-    url: Cesium.IonResource.fromAssetId(96188)
-  })
-);
-//replot on mean-sea level
-var tileset = viewer.scene.primitives.add(
-  new Cesium.Cesium3DTileset({
-    url: Cesium.IonResource.fromAssetId(706934),
-    maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 4096
-  })
-);
-//replot on mean-sea level
-var tileset = viewer.scene.primitives.add(
-  new Cesium.Cesium3DTileset({
-    url: Cesium.IonResource.fromAssetId(706970),
-    maximumScreenSpaceError: 16,
-    maximumMemoryUsage: 4096
   })
 );
 
@@ -760,8 +725,6 @@ function processPoles() {
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
-var flood2 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5655.geojson');
-var flood3 = Cesium.GeoJsonDataSource.load('./geoMappings/dGravityMain_L5655.geojson');
 
 var vulnerable_objects;
 var object_indicator;
@@ -1076,74 +1039,6 @@ Cesium.when(flood1, function (dataSource) {
   }
       viewer.dataSources.add(dataSource);
 
-    } else {
-      viewer.dataSources.remove(dataSource);
-    }
-  });
-});
-
-Cesium.when(flood2, function (dataSource) {
-  CheckFloodI.addEventListener('change', function () {
-    if (CheckFloodI.checked) {
-        var entities = dataSource.entities.values;
-  for (let i = 0; i < entities.length; i++) {
-    let entity = entities[i];
-    let Coordinate = "";
-
-    entity.billboard = undefined;
-    entity.point = new Cesium.PointGraphics({
-      color: Cesium.Color.BLUE,
-      pixelSize: 13,
-      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
-    });
-
-  }
-      viewer.dataSources.add(dataSource);
-
-    } else {
-      viewer.dataSources.remove(dataSource);
-    }
-  });
-});
-
-flood3.then(function (dataSource) {
-  var entities = dataSource.entities.values;
-  for (let i = 0; i < entities.length; i++) {
-    var entity = entities[i];
-    //console.log(entity.polyline.positions)
-    entity.billboard = undefined;
-    entity.polylineVolume = new Cesium.PolylineVolumeGraphics({
-
-positions: entity.polyline.positions,
-
-shape: [
-
-new Cesium.Cartesian2( 0.2, 0.1),
-
-new Cesium.Cartesian2( 0.2, 0.0),
-
-new Cesium.Cartesian2(-0.2, 0.1),
-
-new Cesium.Cartesian2(-0.2, 0.0)
-
-],
-
-material: Cesium.Color.GREEN
-
-});
-
-entity.polyline.material = Cesium.Color.GREEN;
-entity.polylineVolume.material = Cesium.Color.GREEN;
-entity.polylineVolume.clampToGround = true;
-   // entity.polyline.material = Cesium.Material.fromType('Color'); 
-   // entity.polyline.material.uniforms.color =Cesium.Color.LIGHTGOLDENRODYELLOW;// new Cesium.Material(Cesium.Color.YELLOW);
-  }
-});
-
-Cesium.when(flood3, function (dataSource) {
-  CheckFloodI.addEventListener('change', function () {
-    if (CheckFloodI.checked) {
-      viewer.dataSources.add(dataSource);
     } else {
       viewer.dataSources.remove(dataSource);
     }

@@ -83,7 +83,7 @@ module.exports = [{
     // development server options
     devServer: {
         contentBase: path.join(__dirname, "dist"),
-        port: 80,
+        port: 8080,
         host: process.env.HOST || '0.0.0.0',
         disableHostCheck: true,
        // public: 'smartcity-dev.us-west-2.elasticbeanstalk.com',
