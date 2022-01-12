@@ -232,7 +232,7 @@ $('#myRange').change(function () {
 
   let damaged_poles = new Set(power_demage['failedpoles']);
   for (let x = 0; x < poles_data.entities.values.length; x++) {
-  
+    //poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     if (wood_set.has(x)) {
       poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
     //poles_data.entities.values[x].model.scale=
@@ -242,6 +242,7 @@ $('#myRange').change(function () {
 
     if (damaged_poles.has(x + 1)) {
       // poles_data.entities.values[x].model.color = Cesium.Color.RED;
+      //   console.log(pole_longs[x+1]);
       temp_longs.push(pole_tmp[x].long)
       temp_lats.push(pole_tmp[x].lat)
 
@@ -569,7 +570,10 @@ var tileset = viewer.scene.primitives.add(
 var tileset = viewer.scene.primitives.add(
   new Cesium.Cesium3DTileset({
     url: Cesium.IonResource.fromAssetId(706934),
-    maximumScreenSpaceError: 1,
+    dynamicScreenSpaceError : true,
+    dynamicScreenSpaceErrorDensity : 0.5,
+    dynamicScreenSpaceErrorFactor : 4.0,
+    dynamicScreenSpaceErrorHeightFalloff : 0.25,
     maximumMemoryUsage: 16384
   })
 );
@@ -577,13 +581,15 @@ var tileset = viewer.scene.primitives.add(
 var tileset = viewer.scene.primitives.add(
   new Cesium.Cesium3DTileset({
     url: Cesium.IonResource.fromAssetId(706970),
-    maximumScreenSpaceError: 1,
+    dynamicScreenSpaceError : true,
+    dynamicScreenSpaceErrorDensity : 0.5,
+    dynamicScreenSpaceErrorFactor : 4.0,
+    dynamicScreenSpaceErrorHeightFalloff : 0.25,
     maximumMemoryUsage: 16384
   })
 );
 
-
-viewer.scene.globe.maximumScreenSpaceError = 16;
+// viewer.scene.globe.maximumScreenSpaceError = 18;
 viewer.clock.shouldAnimate = false;
 viewer.clock.multiplier = 1500.0;
 viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
@@ -769,7 +775,6 @@ var url = Cesium.buildModuleUrl("./images/power.png");
 var url1 = Cesium.buildModuleUrl("./images/vul.png");
 
 var url = Cesium.buildModuleUrl('./images/exclaimation.png')
-// var url = Cesium.buildModuleUrl('./images/reported_object_ver1.png')
 var vulnerable_objects_entity = []
 // Use promise all
 
