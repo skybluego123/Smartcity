@@ -91,16 +91,14 @@
   "proxyConfiguration": null,
   "volumes": [
     {
-      "fsxWindowsFileServerVolumeConfiguration": null,
+      "name": "efs",
       "efsVolumeConfiguration": {
         "transitEncryptionPort": null,
         "fileSystemId": "fs-c352a469",
         "authorizationConfig": {
           "iam": null,
           "accessPointId": null
-        },
-        "name": "efs",
-        "dockerVolumeConfiguration": null
+        }
       }
     }
   ]
