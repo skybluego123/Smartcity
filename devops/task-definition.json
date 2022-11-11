@@ -26,13 +26,8 @@
       "mountPoints": [
         {
           "readOnly": null,
-          "containerPath": "/usr/src/app/src/images",
+          "containerPath": "/usr/src/app/src/",
           "sourceVolume": "efs"
-        },
-        {
-          "readOnly": null,
-          "containerPath": "/usr/src/app/src/geoMappings",
-          "sourceVolume": "geo"
         }
       ],
       "workingDirectory": null,
@@ -105,25 +100,6 @@
           "accessPointId": null
         },
         "name": "efs",
-        "host": {
-          "sourcePath": "/images"
-        },
-        "dockerVolumeConfiguration": null
-      }
-    },
-    {
-      "fsxWindowsFileServerVolumeConfiguration": null,
-      "efsVolumeConfiguration": {
-        "transitEncryptionPort": null,
-        "fileSystemId": "fs-c352a469",
-        "authorizationConfig": {
-          "iam": null,
-          "accessPointId": null
-        },
-        "name": "geo",
-        "host": {
-          "sourcePath": "/geoMappings"
-        },
         "dockerVolumeConfiguration": null
       }
     }
