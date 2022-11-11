@@ -17,7 +17,9 @@
       "command": null,
       "linuxParameters": null,
       "cpu": 0,
-      "environment": [],
+      "environment": [
+
+      ],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
@@ -38,7 +40,9 @@
       "dockerSecurityOptions": null,
       "memory": 500,
       "memoryReservation": null,
-      "volumesFrom": [],
+      "volumesFrom": [
+
+      ],
       "stopTimeout": null,
       "image": "320988285546.dkr.ecr.us-west-2.amazonaws.com/smartcity-web:latest",
       "startTimeout": null,
@@ -60,7 +64,9 @@
       "name": "smartcity-web-container"
     }
   ],
-  "placementConstraints": [],
+  "placementConstraints": [
+
+  ],
   "memory": null,
   "taskRoleArn": null,
   "compatibilities": [
@@ -98,11 +104,12 @@
           "iam": null,
           "accessPointId": null
         },
-      "name": "efs",
-      "host": {
-        "sourcePath": "/images"
-      },
-      "dockerVolumeConfiguration": null
+        "name": "efs",
+        "host": {
+          "sourcePath": "/images"
+        },
+        "dockerVolumeConfiguration": null
+      }
     },
     {
       "fsxWindowsFileServerVolumeConfiguration": null,
@@ -113,11 +120,12 @@
           "iam": null,
           "accessPointId": null
         },
-      "name": "geo",
-      "host": {
-        "sourcePath": "/geoMappings"
-      },
-      "dockerVolumeConfiguration": null
+        "name": "geo",
+        "host": {
+          "sourcePath": "/geoMappings"
+        },
+        "dockerVolumeConfiguration": null
+      }
     }
   ]
 }
