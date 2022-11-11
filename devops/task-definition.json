@@ -97,6 +97,7 @@
   "volumes": [
     {
       "fsxWindowsFileServerVolumeConfiguration": null,
+      "name": "efs",
       "efsVolumeConfiguration": {
         "transitEncryptionPort": null,
         "rootDirectory": "/images",
@@ -104,12 +105,12 @@
         "authorizationConfig": {
           "iam": null,
           "accessPointId": null
-        },
-        "name": "efs"
+        }
       }
     },
     {
       "fsxWindowsFileServerVolumeConfiguration": null,
+      "name": "geo",
       "efsVolumeConfiguration": {
         "transitEncryptionPort": null,
         "rootDirectory": "/geoMappings",
@@ -117,8 +118,7 @@
         "authorizationConfig": {
           "iam": null,
           "accessPointId": null
-        },
-        "name": "geo"
+        }
       }
     }
   ]
