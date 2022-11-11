@@ -115,7 +115,7 @@
           "accessPointId": null
         },
         "transitEncryption": "DISABLED",
-        "rootDirectory": "/efs/images"
+        "rootDirectory": "/images"
       },
       "name": "efs-images",
       "host": null,
