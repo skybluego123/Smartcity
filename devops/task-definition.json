@@ -26,8 +26,13 @@
       "mountPoints": [
         {
           "readOnly": null,
-          "containerPath": "/usr/src/app/src/",
+          "containerPath": "/usr/src/app/src/images",
           "sourceVolume": "efs"
+        },
+        {
+          "readOnly": null,
+          "containerPath": "/usr/src/app/src/geoMappings",
+          "sourceVolume": "geo"
         }
       ],
       "workingDirectory": null,
@@ -68,7 +73,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:320988285546:task-definition/smartcity-web:78",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:320988285546:task-definition/smartcity-web:79",
   "family": "smartcity-web",
   "requiresAttributes": [
     {
@@ -85,20 +90,35 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 78,
+  "revision": 79,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
   "volumes": [
     {
-      "name": "efs",
+      "fsxWindowsFileServerVolumeConfiguration": null,
       "efsVolumeConfiguration": {
         "transitEncryptionPort": null,
+        "rootDirectory": "/images",
         "fileSystemId": "fs-c352a469",
         "authorizationConfig": {
           "iam": null,
           "accessPointId": null
-        }
+        },
+        "name": "efs"
+      }
+    },
+    {
+      "fsxWindowsFileServerVolumeConfiguration": null,
+      "efsVolumeConfiguration": {
+        "transitEncryptionPort": null,
+        "rootDirectory": "/geoMappings",
+        "fileSystemId": "fs-c352a469",
+        "authorizationConfig": {
+          "iam": null,
+          "accessPointId": null
+        },
+        "name": "geo"
       }
     }
   ]
