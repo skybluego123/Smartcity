@@ -24,18 +24,23 @@
       "mountPoints": [
         {
           "readOnly": null,
-          "containerPath": "/usr/src/app/images",
+          "containerPath": "/usr/src/app/src/images",
           "sourceVolume": "efs"
+        },
+        {
+          "readOnly": null,
+          "containerPath": "/usr/src/app/src/geoMappings",
+          "sourceVolume": "geo"
         }
       ],
       "workingDirectory": null,
       "secrets": null,
       "dockerSecurityOptions": null,
-      "memory": 300,
+      "memory": 500,
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "320988285546.dkr.ecr.us-west-2.amazonaws.com/smartcity-application:latest",
+      "image": "320988285546.dkr.ecr.us-west-2.amazonaws.com/smartcity-web:latest",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -52,7 +57,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "smartcity-application-container"
+      "name": "smartcity-web-container"
     }
   ],
   "placementConstraints": [],
@@ -62,46 +67,40 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:320988285546:task-definition/smartcity-application:29",
-  "family": "smartcity-application",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:320988285546:task-definition/smartcity-web:78",
+  "family": "smartcity-web",
   "requiresAttributes": [
     {
       "targetId": null,
       "targetType": null,
       "value": null,
       "name": "com.amazonaws.ecs.capability.ecr-auth"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.efs"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.25"
     }
   ],
   "pidMode": null,
   "requiresCompatibilities": [
     "EC2"
   ],
-  "networkMode": "bridge",
+  "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 29,
+  "revision": 78,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
   "volumes": [
     {
       "fsxWindowsFileServerVolumeConfiguration": null,
-      "efsVolumeConfiguration": null,
+      "efsVolumeConfiguration": {
+        "transitEncryptionPort": null,
+        "fileSystemId": "fs-c352a469",
+        "authorizationConfig": {
+          "iam": null,
+          "accessPointId": null
+        },
       "name": "efs",
       "host": {
-        "sourcePath": "/efs/images"
+        "sourcePath": "/images"
       },
       "dockerVolumeConfiguration": null
     },
@@ -111,14 +110,13 @@
         "transitEncryptionPort": null,
         "fileSystemId": "fs-c352a469",
         "authorizationConfig": {
-          "iam": "DISABLED",
+          "iam": null,
           "accessPointId": null
         },
-        "transitEncryption": "DISABLED",
-        "rootDirectory": "/images"
+      "name": "geo",
+      "host": {
+        "sourcePath": "/geoMappings"
       },
-      "name": "efs-images",
-      "host": null,
       "dockerVolumeConfiguration": null
     }
   ]
