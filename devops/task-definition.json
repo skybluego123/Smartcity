@@ -7,14 +7,14 @@
       "environmentFiles": null,
       "logConfiguration": {
         "logDriver": "awslogs",
+        "secretOptions": null,
         "options": {
-          "awslogs-group": "smart-city-web-container",
+          "awslogs-group": "/ecs/smartcity-web",
           "awslogs-region": "us-west-2",
-          "awslogs-create-group": "true",
-          "awslogs-stream-prefix": "smart-city-web"
+          "awslogs-stream-prefix": "ecs"
         }
       },
-      "entryPoint": null,
+      "entryPoint": [],
       "portMappings": [
         {
           "hostPort": 80,
@@ -22,12 +22,10 @@
           "containerPort": 80
         }
       ],
-      "command": null,
+      "command": [],
       "linuxParameters": null,
       "cpu": 0,
-      "environment": [
-
-      ],
+      "environment": [],
       "resourceRequirements": null,
       "ulimits": null,
       "dnsServers": null,
@@ -48,9 +46,7 @@
       "dockerSecurityOptions": null,
       "memory": 500,
       "memoryReservation": null,
-      "volumesFrom": [
-
-      ],
+      "volumesFrom": [],
       "stopTimeout": null,
       "image": "320988285546.dkr.ecr.us-west-2.amazonaws.com/smartcity-web:latest",
       "startTimeout": null,
@@ -72,23 +68,45 @@
       "name": "smartcity-web-container"
     }
   ],
-  "placementConstraints": [
-
-  ],
+  "placementConstraints": [],
   "memory": null,
   "taskRoleArn": null,
   "compatibilities": [
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:320988285546:task-definition/smartcity-web:79",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:320988285546:task-definition/smartcity-web:81",
   "family": "smartcity-web",
   "requiresAttributes": [
     {
       "targetId": null,
       "targetType": null,
       "value": null,
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
       "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.efs"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.25"
     }
   ],
   "pidMode": null,
@@ -98,36 +116,42 @@
   "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 79,
+  "revision": 81,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
   "volumes": [
     {
       "fsxWindowsFileServerVolumeConfiguration": null,
-      "name": "efs",
       "efsVolumeConfiguration": {
         "transitEncryptionPort": null,
-        "rootDirectory": "/images",
         "fileSystemId": "fs-c352a469",
         "authorizationConfig": {
           "iam": null,
           "accessPointId": null
-        }
-      }
+        },
+        "transitEncryption": null,
+        "rootDirectory": "/images"
+      },
+      "name": "efs",
+      "host": null,
+      "dockerVolumeConfiguration": null
     },
     {
       "fsxWindowsFileServerVolumeConfiguration": null,
-      "name": "geo",
       "efsVolumeConfiguration": {
         "transitEncryptionPort": null,
-        "rootDirectory": "/geoMappings",
         "fileSystemId": "fs-c352a469",
         "authorizationConfig": {
           "iam": null,
           "accessPointId": null
-        }
-      }
+        },
+        "transitEncryption": null,
+        "rootDirectory": "/geoMappings"
+      },
+      "name": "geo",
+      "host": null,
+      "dockerVolumeConfiguration": null
     }
   ]
 }
