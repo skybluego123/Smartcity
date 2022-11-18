@@ -6,13 +6,14 @@
       "dnsSearchDomains": null,
       "environmentFiles": null,
       "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": "smart-city-web-container",
-                    "awslogs-region": "us-west-2",
-                    "awslogs-create-group": "true",
-                    "awslogs-stream-prefix": "smart-city-web"
-                },
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "smart-city-web-container",
+          "awslogs-region": "us-west-2",
+          "awslogs-create-group": "true",
+          "awslogs-stream-prefix": "smart-city-web"
+        }
+      },
       "entryPoint": null,
       "portMappings": [
         {
