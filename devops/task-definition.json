@@ -45,7 +45,7 @@
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": 6144,
-      "memoryReservation": 5120
+      "memoryReservation": 5120,
       "volumesFrom": [],
       "stopTimeout": null,
       "image": "320988285546.dkr.ecr.us-west-2.amazonaws.com/smartcity-web:latest",
