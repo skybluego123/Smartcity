@@ -1162,6 +1162,7 @@ Cesium.when(flood2, function (dataSource) {
 });
 
 flood3.then(function (dataSource) {
+  console.log("In flood 3 !");
   var entities = dataSource.entities.values;
   for (let i = 0; i < entities.length; i++) {
     var entity = entities[i];
