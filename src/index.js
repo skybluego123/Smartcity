@@ -1062,7 +1062,7 @@ Cesium.when(power5, function (dataSource) {
 });
 
 Cesium.when(flood4, function (dataSource) {
-  Console.log("In flood 4 !");
+  console.log("In flood 4 !");
   CheckFloodI.addEventListener('change', function () {
     if (CheckFloodI.checked) {
         var entities = dataSource.entities.values;
@@ -1097,7 +1097,7 @@ Cesium.when(flood5, function (dataSource) {
 
     entity.billboard = undefined;
     entity.point = new Cesium.PointGraphics({
-      color: Cesium.Color.RED,
+      color: Cesium.Color.BLACK,
       pixelSize: 13,
       heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
     });
