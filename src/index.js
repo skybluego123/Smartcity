@@ -760,7 +760,7 @@ function processPoles() {
 var power4 = Cesium.GeoJsonDataSource.load('./geoMappings/powerSub.geojson');
 var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
-var flood2 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5655.geojson');
+var flood2 = Cesium.GeoJsonDataSource.load('./geoMappings/org_dStormInlet_L5655.geojson');
 var flood3 = Cesium.GeoJsonDataSource.load('./geoMappings/dGravityMain_L5655.geojson');
 var flood4 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5655_test.json');
 var flood5 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5655_test2.json');
