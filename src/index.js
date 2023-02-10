@@ -1061,55 +1061,6 @@ Cesium.when(power5, function (dataSource) {
   });
 });
 
-Cesium.when(flood1, function (dataSource) {
-  CheckFloodI.addEventListener('change', function () {
-    if (CheckFloodI.checked) {
-        var entities = dataSource.entities.values;
-  for (let i = 0; i < entities.length; i++) {
-    let entity = entities[i];
-    let Coordinate = "";
-
-    entity.billboard = undefined;
-    entity.point = new Cesium.PointGraphics({
-      color: Cesium.Color.RED,
-      pixelSize: 13,
-      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
-    });
-
-  }
-      viewer.dataSources.add(dataSource);
-
-    } else {
-      viewer.dataSources.remove(dataSource);
-    }
-  });
-});
-
-Cesium.when(flood2, function (dataSource) {
-  CheckFloodI.addEventListener('change', function () {
-    if (CheckFloodI.checked) {
-        var entities = dataSource.entities.values;
-  for (let i = 0; i < entities.length; i++) {
-    let entity = entities[i];
-    let Coordinate = "";
-
-    entity.billboard = undefined;
-    entity.point = new Cesium.PointGraphics({
-      color: Cesium.Color.BLUE,
-      pixelSize: 13,
-      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
-    });
-
-  }
-      viewer.dataSources.add(dataSource);
-
-    } else {
-      viewer.dataSources.remove(dataSource);
-    }
-  });
-});
-
-
 Cesium.when(flood4, function (dataSource) {
   Console.log("In flood 4 !");
   CheckFloodI.addEventListener('change', function () {
@@ -1147,6 +1098,54 @@ Cesium.when(flood5, function (dataSource) {
     entity.billboard = undefined;
     entity.point = new Cesium.PointGraphics({
       color: Cesium.Color.RED,
+      pixelSize: 13,
+      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+    });
+
+  }
+      viewer.dataSources.add(dataSource);
+
+    } else {
+      viewer.dataSources.remove(dataSource);
+    }
+  });
+});
+
+Cesium.when(flood1, function (dataSource) {
+  CheckFloodI.addEventListener('change', function () {
+    if (CheckFloodI.checked) {
+        var entities = dataSource.entities.values;
+  for (let i = 0; i < entities.length; i++) {
+    let entity = entities[i];
+    let Coordinate = "";
+
+    entity.billboard = undefined;
+    entity.point = new Cesium.PointGraphics({
+      color: Cesium.Color.RED,
+      pixelSize: 13,
+      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+    });
+
+  }
+      viewer.dataSources.add(dataSource);
+
+    } else {
+      viewer.dataSources.remove(dataSource);
+    }
+  });
+});
+
+Cesium.when(flood2, function (dataSource) {
+  CheckFloodI.addEventListener('change', function () {
+    if (CheckFloodI.checked) {
+        var entities = dataSource.entities.values;
+  for (let i = 0; i < entities.length; i++) {
+    let entity = entities[i];
+    let Coordinate = "";
+
+    entity.billboard = undefined;
+    entity.point = new Cesium.PointGraphics({
+      color: Cesium.Color.BLUE,
       pixelSize: 13,
       heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
     });
