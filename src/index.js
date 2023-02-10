@@ -1111,6 +1111,7 @@ Cesium.when(flood2, function (dataSource) {
 
 
 Cesium.when(flood4, function (dataSource) {
+  Console.log("In flood 4 !");
   CheckFloodI.addEventListener('change', function () {
     if (CheckFloodI.checked) {
         var entities = dataSource.entities.values;
@@ -1135,6 +1136,7 @@ Cesium.when(flood4, function (dataSource) {
 });
 
 Cesium.when(flood5, function (dataSource) {
+  console.log("In Flood 5 !");
   CheckFloodI.addEventListener('change', function () {
     if (CheckFloodI.checked) {
         var entities = dataSource.entities.values;
