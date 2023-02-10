@@ -1073,7 +1073,7 @@ Cesium.when(flood4, function (dataSource) {
     entity.billboard = undefined;
     entity.point = new Cesium.PointGraphics({
       color: Cesium.Color.GREEN,
-      pixelSize: 33,
+      pixelSize: 23,
       heightReference: Cesium.HeightReference.NONE
     });
 
