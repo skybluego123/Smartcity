@@ -762,6 +762,8 @@ var power5 = Cesium.GeoJsonDataSource.load('./geoMappings/wire.geojson');
 var flood1 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5457_ver3.geojson');
 var flood2 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5655.geojson');
 var flood3 = Cesium.GeoJsonDataSource.load('./geoMappings/dGravityMain_L5655.geojson');
+var flood4 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5655_test.geojson');
+var flood5 = Cesium.GeoJsonDataSource.load('./geoMappings/dStormInlet_L5655_test2.geojson');
 
 var vulnerable_objects;
 var object_indicator;
@@ -1096,6 +1098,55 @@ Cesium.when(flood2, function (dataSource) {
       color: Cesium.Color.BLUE,
       pixelSize: 13,
       heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+    });
+
+  }
+      viewer.dataSources.add(dataSource);
+
+    } else {
+      viewer.dataSources.remove(dataSource);
+    }
+  });
+});
+
+
+Cesium.when(flood4, function (dataSource) {
+  CheckFloodI.addEventListener('change', function () {
+    if (CheckFloodI.checked) {
+        var entities = dataSource.entities.values;
+  for (let i = 0; i < entities.length; i++) {
+    let entity = entities[i];
+    let Coordinate = "";
+
+    entity.billboard = undefined;
+    entity.point = new Cesium.PointGraphics({
+      color: Cesium.Color.GREEN,
+      pixelSize: 13,
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
+    });
+
+  }
+      viewer.dataSources.add(dataSource);
+
+    } else {
+      viewer.dataSources.remove(dataSource);
+    }
+  });
+});
+
+Cesium.when(flood5, function (dataSource) {
+  CheckFloodI.addEventListener('change', function () {
+    if (CheckFloodI.checked) {
+        var entities = dataSource.entities.values;
+  for (let i = 0; i < entities.length; i++) {
+    let entity = entities[i];
+    let Coordinate = "";
+
+    entity.billboard = undefined;
+    entity.point = new Cesium.PointGraphics({
+      color: Cesium.Color.RED,
+      pixelSize: 13,
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
     });
 
   }
