@@ -532,6 +532,8 @@ function img_dialog(img_id) {
 // Move to promise.all
 function initializes_settings(){
   //viewer.scene.globe.depthTestAgainstTerrain = true;
+    viewer.scene.globe.depthTestAgainstTerrain = false;
+    viewer.scene.logarithmicDepthBuffer = false;
 var initialPosition = Cesium.Cartesian3.fromDegrees(-95.38198382732189,29.726144216291395, 953);
 // var initialPosition = Cesium.Cartesian3.fromDegrees(-95.364808777523, 29.736084676987729, 953);
 var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
