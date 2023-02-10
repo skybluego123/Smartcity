@@ -1073,8 +1073,8 @@ Cesium.when(flood4, function (dataSource) {
     entity.billboard = undefined;
     entity.point = new Cesium.PointGraphics({
       color: Cesium.Color.GREEN,
-      pixelSize: 13,
-      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+      pixelSize: 33,
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
     });
 
   }
@@ -1097,9 +1097,9 @@ Cesium.when(flood5, function (dataSource) {
 
     entity.billboard = undefined;
     entity.point = new Cesium.PointGraphics({
-      color: Cesium.Color.BLACK,
-      pixelSize: 13,
-      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+      color: Cesium.Color.RED,
+      pixelSize: 33,
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
     });
 
   }
@@ -1122,7 +1122,7 @@ Cesium.when(flood1, function (dataSource) {
 
     entity.billboard = undefined;
     entity.point = new Cesium.PointGraphics({
-      color: Cesium.Color.RED,
+      color: Cesium.Color.BLUE,
       pixelSize: 13,
       heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
     });
