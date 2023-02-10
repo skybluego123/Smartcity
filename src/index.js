@@ -1195,7 +1195,7 @@ entity.polylineVolume.clampToGround = true;
   }
 });
 
-Cesium.when(flood4, function (dataSource) {
+Cesium.when(flood3, function (dataSource) {
   CheckFloodI.addEventListener('change', function () {
     if (CheckFloodI.checked) {
       viewer.dataSources.add(dataSource);
