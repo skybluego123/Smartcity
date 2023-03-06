@@ -781,10 +781,17 @@ function processLocalizedResults() {
   let objects = vulnerable_objects['objects'];
   vulnerable_objects = objects;
 
-  for (let object of objects) {
+  for (let [index,object] of objects.entries()) {
     let entity = new Cesium.Entity();
     entity.position = Cesium.Cartesian3.fromDegrees(object['cluster_longitude'], object['cluster_latitude'], 35);
-    entity.name = object['cluster_id'];
+    if(index == object['cluster_id']){
+      console.log("index and cluster_id are same!")
+      entity.name = object['cluster_id'];
+    }else{
+      console.log("index and cluster_id are not same!!!!!")
+      entity.name = index;
+    }
+    //entity.name = object['cluster_id'];
 
     let cluster_obj = object['cluster_objects'];
 
