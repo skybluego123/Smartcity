@@ -80,7 +80,7 @@ module.exports = {
     mode: 'development',
     devServer: {
         static:[{directory: path.join(__dirname, "dist")},
-        {directory: path.join(__dirname, "./src/images")},
+        {directory: path.join(__dirname, "./src/images_ui")},
         {directory: path.join(__dirname, "./src/geoMappings")},
         {directory: path.join(__dirname, "./src/css/images")},
         ],
