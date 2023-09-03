@@ -1,3 +1,5 @@
+// Adding a comment to show how to push code to git!
+
 // Create Functions - always write functions - can help in splitting the files
 require('cesium/Widgets/widgets.css');
 require('./css/main.css');
