@@ -858,7 +858,7 @@ function processPoles() {
     let entity = new Cesium.Entity();
     entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 50);
     entity.description=false;
-[O    //entity.description=''
+    //entity.description=''
     entity.billboard = new Cesium.BillboardGraphics();
     entity.billboard.image = pinBuilder.fromUrl(url,Cesium.Color.DARKRED, 48);
     //entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
