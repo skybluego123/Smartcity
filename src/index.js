@@ -15,6 +15,24 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 
 var poles, vulnerable_objects, current_weather;
 
+var viewer = new Cesium.Viewer('cesiumContainer', {
+  requestRenderMode : true,
+  maximumRenderTimeChange : Infinity,
+  terrainProvider: Cesium.createWorldTerrain({
+    requestWaterMask: true,
+    requestVertexNormals : true
+  }),
+  // terrainProvider: new Cesium.CesiumTerrainProvider({
+  //   url: Cesium.IonResource.fromAssetId(1),
+  // }),
+  timeline: true,
+  animation: true,
+  shadows: true,
+  infoBox: true
+});
+
+
+
 $('#select_city').on('change', function() {
   var value = $(this).val();
   console.log(value);
@@ -93,22 +111,6 @@ $('#select_city').on('change', function() {
 
 
 //Creating Cesium Conatiner object where all the visulaizations will be mapped
-var viewer = new Cesium.Viewer('cesiumContainer', {
-  requestRenderMode : true,
-  maximumRenderTimeChange : Infinity,
-  terrainProvider: Cesium.createWorldTerrain({
-    requestWaterMask: true,
-    requestVertexNormals : true
-  }),
-  // terrainProvider: new Cesium.CesiumTerrainProvider({
-  //   url: Cesium.IonResource.fromAssetId(1),
-  // }),
-  timeline: true,
-  animation: true,
-  shadows: true,
-  infoBox: true
-});
-
 //viewer.scene.debugShowFramesPerSecond = true;
 
 const camera = viewer.camera;
