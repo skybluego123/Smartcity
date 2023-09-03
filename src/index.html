@@ -1,244 +1,265 @@
 <html>
 <head>
-  <meta charset="UTF-8">
-    <style>
-   *:focus {
-    outline: 0 !important;
-    }
-
-    #heatmap{
-        width: 90%;
-        height:90%;        
-        }
-
-    #cesiumContainer {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: #000000;
-    }
-    .cesium-viewer{
-    position: absolute;
-    }
-
-    </style>
-
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <script src="https://kit.fontawesome.com/f7a4761a7a.js" crossorigin="anonymous"></script>
     <!-- Make the app on mobile take up the full browser screen and disable user scaling. -->
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>Smart City</title>
     <!-- The Cesium library. -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- weather icons -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
-    <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1vvp_jZXC-ogwJu0xyp4YgxEv6M-OELo&libraries=StreetViewPanorama"></script>  
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1vvp_jZXC-ogwJu0xyp4YgxEv6M-OELo&libraries=StreetViewPanorama"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Roboto:ital,wght@1,300&display=swap" rel="stylesheet">
 </head>
-
-<body>
-
-<div id="cesiumContainer">
-      <div class="panel">
-    <!-- <header> -->
-      <span style="height:100px; width: 800px; top:1px; position: relative;word-wrap: break-word;color:#ffffff">
-        <h3 style="color:#ffffff; font-size: 40px; font-family:Arial">
-      Smart City Digital Twin
-  </h3>
-  </span> 
-     <span id="title_text">
-     <span style="left:0px; bottom:-10px; position: relative; float:">
-     <h4 style="color:#ffffff; font-size: 30px; text-align:right">
-       <a href='https://www.hamresearchgroup.com/home'>Ham Research Group</a></span>
-       </h4>
-       <a href="https://www.tamu.edu"> 
-           <img title="Texas A&M University" src="/images/tamulogo.png" style="left:295px; bottom:65px; position: relative; height:75px; width:75px">
-        </a>
-    <!-- <img class="manImg" src="./images/tamulogo.png"> -->
-   
-       <!--  <div id="biglist"></div> -->
-        <!-- </header> -->
-</div>
-<div class="btn-group" role="group" data-toggle="button" id="button_group" aria-label="Button group with nested dropdown" style="height: 5%; width:41.6%;top:10px">
-  <button type="button"   data-box="div1" class="btn btn-secondary">
-    <i class="fas fa-bars fa-2x" ><span style="top: -0.5px;position: relative;margin-top: 0px; font-size: 18px; font-family:Arial"> Type of Disaster</span></i><br /></button>
-  <button type="button"  data-box="div2" class="btn btn-secondary"> 
-    <i class="fas fa-sliders fa-2x"><span style="top: -0.5px;position: relative;margin-top: 0px; font-size: 18px; font-family:Arial"> Vulnerability</span></i><br /></button>
-  <button type="button"  data-box="div3" class="btn btn-secondary">
-  <i class="fas fa-cloud fa-2x"><span style="top: -0.5px;position: relative;margin-top: 0px; font-size: 18px; font-family:Arial"> Weather</span></i><br /></button>
-
-   <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-wind fa-2x">
-    <span style="top: -0.5px;position: relative;margin-top: 0px; font-size: 18px; font-family:Arial;"> Historical Events</span></i>
-      <br />
-    </button>
-    <div class="dropdown-menu " aria-labelledby="btnGroupDrop1" style="font-size:18px;font-family:Arial; text-align: center">
-      <a class="dropdown-item " id="rita" href="#" style="height: 30px; width: 235px" >Rita</a>
-      <a class="dropdown-item" id="allison" href="#"style="height: 30px; width: 235px" >Allison</a>
-      <a class="dropdown-item" id="harvey" href="#"style="height: 30px; width: 235px" >Harvey</a>
-      <a class="dropdown-item" id="ike" href="#"style="height: 30px; width: 235px" >Ike</a>
-    </div>
-   
-</div>
-
-</div>
-<div id="timeControlsContainer"></div>
-<!-- <div class="cesium-viewer-bottom1" style="left: 5%; bottom: 70px;"><div class="cesium-widget-credits" style="left: 2%; bottom: 13%;"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img title="Cesium ion" src="./images/logo1.png" height="150" width="150"></a>
-            </div></div></div></div>
- -->
-<!-- <div class = "wrapper"> -->
-
-
-
-<!-- <div id="heatmap" display="none"></div> -->
-
-
-<div id="divWrap";>
-    <div class="j hide div1";">
-        <div id="boxWrap">
-        <label class="container_t">
-            <p>Flood</p> 
-            <input type="checkbox"  name="flood object" id="x"/><span class="checkmark"></span>
-        </label>
-
-        <label class="container_t">
-            <p>Extreme Wind</p>
-        <input type="checkbox"  name="power object" id="y"/><span class="checkmark"></span>
-        </label>
+<body style="background-color: rgba(52,53,65,1);">
+    <div id="preloader" style="margin-left:auto;margin-right: auto;text-align: center;align-items: center;z-index:99999;margin-top:200px;">
+        <div class="spinner-border m-5" role="status" style="color:rgb(38, 79, 247);margin:auto;top:100px">
+          </div>
+        <div style="text-align:center;font-family:Arial, Helvetica, sans-serif">
+            <h4 style="color:aliceblue"><b>Please stand by, Loading...</b></h4>
         </div>
-
-             <fieldset class="scheduler-border"> 
-        <!-- <legend class="scheduler-border">Map legend</legend> -->
-             <ul class = "inside" id="legend_list" style="list-style-type:none">            
-                    <i class="fas fa-exclamation-triangle" style="color:#070002; font-size:1.5rem; padding-left: 0.3rem;"></i>
-                    <!-- <img title="Cesium ion" src="./images/reported_object_ver4.png" style="padding-left: 0.3rem; position: static; height:30px; width:30px"></a> -->
-                    <label for="myid1" style="margin-left: 0.5rem;font-size:1.0rem"><span>Reported object</span></label>
-
-                    <!-- <div  data-type='power object' class='hide' style="padding-left: 0.6rem"> -->
-                    <li data-type='power object' class='hide'>
-                    <i class="fas fa-exclamation-triangle" style="color:#DC143C; font-size:1.5rem; padding-left: 0.3rem"></i>
-                    <label for="myid2" style="margin-left: 0.5rem;font-size:1.0rem"> Dangerous Pole</label></li>
-
-                    <li>
-                    <span  data-type='power object' class='hide' style="color:#FFFF00; font-size:1.5rem; padding-left: 0.35rem">&#8213;</span>
-                    <label data-type='power object' class='hide' for="myid2" style="padding-left: 0.5rem;">Power distribution</label></li>
-                    <!-- </div> -->
-
-                    <li data-type='power object' class='hide'>
-                    <i class="fas fa-square-full" style="color:#FFFF00; font-size:1.5rem; padding-left: 0.35rem; opacity: 0.5"></i>
-                    <label for="myid2" style="padding-left: 0.5rem"> Power substation</label></li>
-
-                    <li data-type='power object' class='hide'>
-                    <span style="color:#a77428;padding-left:0.7rem;padding-right:0.12rem; font-size: 1.8rem;">&#8607;</span>
-                    <label for="myid2" style="margin-left: 1.4rem">Wooden pole</label></li>
-                     <li data-type='power object' class='hide'>
-                    <span style="color:#30DA51;padding-left: 0.7rem;;padding-right:0.12rem; font-size: 1.8rem;">&#8607;</span>
-                    <label for="myid2" style="margin-left: 2.2rem">Steel pole</label></li>
-                    <li data-type='flood object' class='hide'>
-                    <span style="color:#FFFFFF; margin-left: 0.7rem">&#8855;</span>
-                    <label for="myid2" style="margin-left: 0.7rem">Inlet</label></li>
-            </ul>
-
-        </fieldset>
-
     </div>
-    <div class="back text-center hide other div3" >
-        <div class="container">       
-        <div class="row">
-            <div class="weather-head">
-                <h8 id="location" class="text-center" sytle="font-size:1.0vw;">Houston, TX, USA</h8>
-                <div class="row">                           
-                    <div id="description" class="description col-6 text-center">
-                        <i id="icon-desc" class="wi wi-owm-200"></i>
-                        <p class="desc">thunderstorm</p>            
+    <main style="display:none" id="main-id">
+        <div id="header">
+            <div><a href="https://www.tamu.edu/"><img src="unv-logo.png" alt="TAMU Logo" id="img-id"/></a></div>
+            <div><h2 id="head">Smart City Digital Twin</h2></div>
+            <div><a href="https://www.hamresearchgroup.com/"><h3 id="tagline">Ham Research Group @TAMU</h3></a></div>
+        </div>
+        <div id="left-nav" class="container">
+            <div class="grid-container" id="control-buttons">
+                <button class="nav-button search-btn" data-box="div0">
+                    <div>
+                        <i class="uil uil-search"></i>  
                     </div>
-                    <div id="temperature" class="col-6 text-center">
-                        <i id="icon-thermometer" class="wi wi-thermometer"></i> 
-                    <p class="temp">60 &nbsp;<nobr>°F</nobr><!-- <span>&#8457;</span> -->
-                    </p>       
+                    <div>
+                        <p>Search</p>
+                    </div>
+                </button>
+                <button class="nav-button anly-btn" data-box="div1">
+                    <div>
+                        <i class="uil uil-analytics"></i>
                     </div>  
+                    <div>
+                        <p>Simulate</p>
+                    </div>
+                </button>
+                <button class="nav-button cloud-btn" data-box="div3">
+                    <div>
+                        <i class="uil uil-clouds"></i>
+                    </div>
+                    <div>
+                        <p>Weather</p>
+                    </div>
+                </button>
+                <button class="nav-button his-btn" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-box="div4">
+                    <div>
+                        <i class="uil uil-cog"></i>
+                    </div>
+                    <div>
+                        <p>Disaster</p>
+                    </div>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="font-size:18px;font-family:Arial;text-align:center;margin-left: 75px;margin-top:-70px;border: 1px solid white">
+                        <a class="dropdown-item " id="rita" href="#" style="height: 30px; width: 235px; " >Rita</a>
+                        <a class="dropdown-item" id="allison" href="#"style="height: 30px; width: 235px" >Allison</a>
+                        <a class="dropdown-item" id="harvey" href="#"style="height: 30px; width: 235px" >Harvey</a>
+                        <a class="dropdown-item" id="ike" href="#"style="height: 30px; width: 235px" >Ike</a>
+                      </div>
+                </button>
+                <!-- <button class="nav-button animator" data-box="div5">
+                    <div>
+                        <i class="uil uil-clock-nine"></i>
+                    </div>
+                    <div>
+                        <p>Animate</p>
+                    </div>
+                </button> -->
+            </div>
+        </div>
+        <div class="menu-func"></div>
+        <div id="cesiumContainer"></div>
+
+        <div id="divWrap";>
+            <div class="div0 hide" id="search1">
+                <div>
+                        <select name="search" id="select_city" class="search">
+                            <option value="none" class="search">None</option>
+                            <option value="houston" class="search">Houston</option>
+                          </select>
                 </div>
-                <div class="weather-body">
-                    <div class="row">
-                        <div class="wind col-4 text-center">
-                            <i class="wi wi-strong-wind"></i><br /><span> Wind</span>
+            </div>
+            <div class="j hide div1 container">
+                <div id="boxWrap">
+                <label class="container_t">
+                    <p>Flood</p> 
+                    <input type="checkbox"  name="flood object" id="x"/><span class="checkmark"></span>
+                </label>
+        
+                <label class="container_t">
+                    <p>Extreme Wind</p>
+                <input type="checkbox"  name="power object" id="y"/><span class="checkmark"></span>
+                </label>
+                </div>        
+                <fieldset class="scheduler-border"> 
+                <!-- <legend class="scheduler-border">Map legend</legend> -->
+                    <ul class = "inside" id="legend_list" style="list-style-type:none">            
+                        <i class="fas fa-exclamation-triangle" style="color:#070002; font-size:1.5rem; padding-left: 0.3rem;"></i>
+                        <!-- <img title="Cesium ion" src="./images/reported_object_ver4.png" style="padding-left: 0.3rem; position: static; height:30px; width:30px"></a> -->
+                        <label for="myid1" style="margin-left: 0.5rem;font-size:1.0rem"><span>Reported object</span></label>
+                            <!-- <div  data-type='power object' class='hide' style="padding-left: 0.6rem"> -->
+                            <li data-type='power object' class='hide'>
+                            <i class="fas fa-exclamation-triangle" style="color:#DC143C; font-size:1.5rem; padding-left: 0.3rem"></i>
+                            <label for="myid2" style="margin-left: 0.5rem;font-size:1.0rem"> Dangerous Pole</label></li>
+        
+                            <li>
+                            <span  data-type='power object' class='hide' style="color:#FFFF00; font-size:1.5rem; padding-left: 0.35rem">&#8213;</span>
+                            <label data-type='power object' class='hide' for="myid2" style="padding-left: 0.5rem;">Power distribution</label>
+                            </li>
+                            <!-- </div> -->
+        
+                            <li data-type='power object' class='hide'>
+                            <i class="fas fa-square-full" style="color:#FFFF00; font-size:1.5rem; padding-left: 0.35rem; opacity: 0.5"></i>
+                            <label for="myid2" style="padding-left: 0.5rem"> Power substation</label></li>
+        
+                            <li data-type='power object' class='hide'>
+                            <span style="color:#a77428;padding-left:0.7rem;padding-right:0.12rem; font-size: 1.8rem;">&#8607;</span>
+                            <label for="myid2" style="margin-left: 1.4rem">Wooden pole</label></li>
+                             <li data-type='power object' class='hide'>
+                            <span style="color:#30DA51;padding-left: 0.7rem;;padding-right:0.12rem; font-size: 1.8rem;">&#8607;</span>
+                            <label for="myid2" style="margin-left: 2.2rem">Steel pole</label></li>
+                            <li data-type='flood object' class='hide'>
+                            <span style="color:#FFFFFF; margin-left: 0.7rem">&#8855;</span>
+                            <label for="myid2" style="margin-left: 0.7rem">Inlet</label></li>
+                    </ul>
+                </fieldset>
+            </div>
+            <div class="back text-center hide other div3" >
+                <div class="container">       
+                <div class="row">
+                    <div class="weather-head">
+                        <h8 id="location" class="text-center" sytle="font-size:1.0vw;">Houston, TX, USA</h8>
+                        <div class="row">                           
+                            <div id="description" class="description col-6 text-center">
+                                <i id="icon-desc" class="wi wi-owm-200"></i>
+                                <p class="desc">thunderstorm</p>            
+                            </div>
+                            <div id="temperature" class="col-6 text-center">
+                                <i id="icon-thermometer" class="wi wi-thermometer"></i> 
+                            <p class="temp">60 &nbsp;<nobr>°F</nobr><!-- <span>&#8457;</span> -->
+                            </p>       
+                            </div>  
                         </div>
-                        <div class="visibility col-4 text-center">
-                            <i class="fa fa-eye"></i><br /><span>Rainfall</span>
-                        </div>  
-                         <div class="humidity col-4 text-center">
-                            <i class="wi wi-raindrop"></i><br /><span> Humidity</span>
-                        </div>            
-                    </div>
-                    <div class="row">
-                        <div id="wind" class="wind-data col-4 text-center">0</div>
-                        <div id="visibility" class="degree-data col-4 text-center">34</div>
-                         <div id="humidity" class="humidity-data col-4 text-center">75&nbsp;</div>
-                    </div>
-                    <div class="row">
-                        <!-- <div id="time" class="humidity-data col-12 text-center"> -->
+                        <div class="weather-body">
+                            <div class="row">
+                                <div class="wind col-4 text-center">
+                                    <i class="wi wi-strong-wind"></i><br /><span> Wind</span>
+                                </div>
+                                <div class="visibility col-4 text-center">
+                                    <i class="fa fa-eye"></i><br /><span>Rainfall</span>
+                                </div>  
+                                 <div class="humidity col-4 text-center">
+                                    <i class="wi wi-raindrop"></i><br /><span> Humidity</span>
+                                </div>            
+                            </div>
+                            <div class="row">
+                                <div id="wind" class="wind-data col-4 text-center">0</div>
+                                <div id="visibility" class="degree-data col-4 text-center">34</div>
+                                 <div id="humidity" class="humidity-data col-4 text-center">75&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <!-- <div id="time" class="humidity-data col-12 text-center"> -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+        
+                </div>
+        
+           <div class="Demage hide div2 container" id="new">
+                <div class ="back hide" id="PowerDemage" >
+                    <div class="slidecontainer">
+                    <h5>Power Grid Vulnerability</h5>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+                    <p> Current Wind Speed: <span id="demo"></span></p>
+                    </div>
+                </div>
+                 <div class ="back hide" id="FloodDemage">
+                    <h5>Current Rainfall</h5>
+                    <div class="slidecontainer">
+                        <input type="range" min="0" max="255" value="0" class="slider" id="myRange1">
+                        <p>Current Rainfall: <span id="demo1"></span></p>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        </div>
-
-   <div class="Demage hide div2">
-        <div class ="back hide" id="PowerDemage" >
-            <div class="slidecontainer">
-            <h5>Power Grid Vulnerability</h5>
-            <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
-            <p> Current Wind Speed: <span id="demo"></span></p>
+        
+          
             </div>
+        
         </div>
-         <div class ="back hide" id="FloodDemage">
-            <h5>Current Rainfall</h5>
-            <div class="slidecontainer">
-                <input type="range" min="0" max="255" value="0" class="slider" id="myRange1">
-                <p>Current Rainfall: <span id="demo1"></span></p>
+        
+        
+        <!-- <button type="button" class="btn btn-default" id="time_default">Return to Start Time</button> -->
+        <div id="heatmap" v-show="false"></div>
+        
+            <div class="dialog" id="dialog1" title="Display all the pictures"></div>
+            <div class="dialog" id="dialog2" title="Google street view">
+                <div id="pano" style="width: 50%; height: 100%;float:left"></div>
+                <div id="canvasMap" style="width: 50%; height: 100%;float:right"></div>
             </div>
-        </div>  
 
-</div>
-
-  
-    </div>
-
-</div>
-
-
-<!-- <button type="button" class="btn btn-default" id="time_default">Return to Start Time</button> -->
-<div id="heatmap" v-show="false"></div>
-
-    <div class="dialog" id="dialog1" title="Display all the pictures"></div>
-    <div class="dialog" id="dialog2" title="Google street view">
-        <div id="pano" style="width: 50%; height: 100%;float:left"></div>
-        <div id="canvasMap" style="width: 50%; height: 100%;float:right"></div>
-    </div>
-
-</body>
-
-</html>
+        
+        </main>
+<!-- </body> -->
 <script>
+// window.onload = () =>{
+//     document.querySelector('#main-content').style.display = 'block';
+// }
+$(document).ready(function(){
+  jQuery(window).load(function () {
+    $("#preloader").addClass("preload");
+    $("#main-id").addClass("main-display");
+  });
+});
 
+$('#select_city option:first').prop('selected',true);
+$('#control-buttons button:not(:first)').prop('disabled', true);
+$('#control-buttons button:not(:first)').css('color', 'grey');
+$('#control-buttons button:not(:first)').css('cursor', 'not-allowed');
 
+$('#select_city').on('change', function() {
+    if ($('#select_city').find('option:selected').val() != 'none') {
+    $('#control-buttons button:not(:first)').prop('disabled', false);
+    $('#control-buttons button:not(:first)').css('color', 'white');
+    $('#control-buttons button:not(:first)').css('cursor', 'pointer');
+}else{
+    $('#control-buttons button:not(:first)').prop('disabled', true);
+    $('#control-buttons button:not(:first)').css('color', 'grey');
+    $('#control-buttons button:not(:first)').css('cursor', 'not-allowed');
+
+}
+
+});
+
+    
 var check = $("#x");
 check.on('click',checkStatus);
+
 function checkStatus(){
     if($(check).is(':checked'))
     {
@@ -249,8 +270,11 @@ function checkStatus(){
 }
 
 var checks = $("#y");
+$(checks).prop('checked', false);
 checks.on('click',checkStatus1);
+
 function checkStatus1(){
+    // $(checks).prop('checked', false);
     if($(checks).is(':checked'))
     {
         $("#x").prop('disabled',true);
@@ -259,8 +283,7 @@ function checkStatus1(){
      $("#x").prop('disabled',false);
 }
 
-
-    $(function(){
+$(function(){
     $('.container_t input:checkbox').on('change',function() {
            var hide = this.name;
            console.log(hide);
@@ -272,47 +295,67 @@ document.getElementById('x').onchange = function () {
         var cart = document.getElementById('FloodDemage');
             if (this.checked) 
                 cart.classList.remove('hide');
-    else 
-        cart.classList.add('hide');
+            else cart.classList.add('hide');
 }
 
-    document.getElementById('y').onchange = function () {
+document.getElementById('y').onchange = function () {
         var cart1 = document.getElementById('PowerDemage');
-        if (this.checked) cart1.classList.remove('hide');
-        else cart1.classList.add('hide');
+        var cart2 = document.getElementById('new');
+        if (this.checked){
+            cart1.classList.remove('hide');
+            cart2.classList.remove('hide');
+        } 
+        else{
+            cart1.classList.add('hide');
+            cart2.classList.add('hide');
+        }
     }
 
-$('#button_group > .btn-secondary').on('click', function () {
-    // console.log($(this).attr('data-box'))
-    var divID = $(this).attr('data-box');
-    // if(divID=="div2")
-  //  console.log(document.getElementsByClassName(divID)[0].classList)
-    // console.log(divId)
-   // document.getElementById(divID).classList.remove('hide');
-    // $('#'+divId).classList.remove('hide');
-    // $(this).classList.remove('hide').siblings().addClass('hide');
-    $('.' + divID).removeClass('hide').siblings().addClass('hide');
-
-});
-$('use.cesium-animation-buttonMain').prop('title', 'your new title');
-//g.cesium-animation-rectButton
-     $("g.cesium-animation-rectButton , g.cesium-animation-buttonToggled").click(function() {
-         console.log("v");
-         // this.title="ffff";
-     });
-
-// document.querySelectorAll(".cesium-viewer-animationContainer").title = 'your new title';
-
-// $(window).on('load resize', function(){
-//     $('.j').width($(this).width()*0.10);
-//      // $('.j').css('top',$(this).height()*0.075+43+'px');
-//      // $('.other').css('top',$(this).height()*0.075+43+'px');
-//      // $('.Demage').css('top',$(this).height()*0.075+43+'px');
-//     // $('.j').height($(this).width()*0.12);
+// $('.anly-btn').on('click', function () {
+//     var divID = $(this).attr('data-box');
+//     if($('.' + divID).length === 1) $('.' + divID).removeClass('hide');
+//     else $('.' + divID).add('hide');
 // });
 
+$('#left-nav > #control-buttons > .nav-button').on('click', function () {
+    var divID = $(this).attr('data-box');
+    //console.log(divID);
+    //$('.' + divID).toggleClass('hide');
+    //console.log($('.' + divID).siblings().hasClass('hide'))
+
+    if($('.' + divID).siblings().hasClass('hide')){
+        $('.' + divID).siblings().addClass('hide');
+        $('.' + divID).toggleClass('hide');
+    }
+
+    // $('.' + divID).toggleClass('hide');
+    // if(!$('.' + divID).hasClass('hide')){
+    //     $('.' + divID).addClass('hide');
+    // }
+    // if($('.' + divID).hasClass('hide')){
+    //     console.log('This element has class hide!')
+    // }
+    // else {
+    //     $('.' + divID).addClass('hide');
+    // }
+
+});
 
 
+
+// $('#left-nav > #control-buttons > .nav-button').on('click', function () {
+//     var divID = $(this).attr('data-box');
+//     if($('.' + divID).hasClass('hide')){
+//         console.log('This element has class hide!')
+//     }
+//     else {
+//         $('.' + divID).addClass('hide');
+//     }
+            
+//     }
+    // $('.' + divID).removeClass('hide').siblings().addClass('hide');
+// });
 </script>
-
+</body>
+</html>
 

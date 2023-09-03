@@ -15,41 +15,23 @@
   "homepage": "https://cesiumjs.org",
   "license": "Apache-2.0",
   "devDependencies": {
-    "cesium": "1.80.0",
-    "compression-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.7",
-    "html-webpack-plugin": "^2.30.1",
-    "http": "0.0.1-security",
-    "https": "^1.0.0",
-    "json-loader": "^0.5.7",
-    "strip-pragma-loader": "^1.0.0",
-    "style-loader": "^0.18.2",
-    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
-    "url-loader": "^0.6.2",
-    "util": "^0.12.3",
-    "webpack": "^3.5.6",
-    "webpack-dev-server": "^2.11.5"
+    "cesium": "^1.98.1",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
   },
   "scripts": {
-    "build": "node_modules/.bin/webpack --config webpack.config.js",
-    "start": "node_modules/.bin/webpack-dev-server --host 0.0.0.0 --config webpack.config.js",
-    "release": "node_modules/.bin/webpack --config webpack.release.config.js",
-    "serve-release": "node_modules/.bin/webpack-dev-server --host 0.0.0.0 --config webpack.release.config.js --content-base /dist"
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --host 0.0.0.0 --config webpack.config.js --open",
+    "release": "webpack --config webpack.release.config.js",
+    "serve-release": "webpack-dev-server --host 0.0.0.0 --config webpack.release.config.js --content-base /dist"
   },
   "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.6",
-    "babel-preset-es2015": "^6.24.1",
-    "cesium-heatmap": "0.0.4",
-    "cesiumjs-heat": "^1.0.2",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "heatmap.js": "^2.0.5",
-    "install": "^0.13.0",
-    "node-fetch": "^2.6.0",
-    "npm": "^6.13.7",
-    "request": "^2.88.2"
+    "cesiumjs-heat": "^1.0.2"
   }
 }
