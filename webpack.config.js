@@ -50,7 +50,6 @@ module.exports = {
             test: /\.js$/,
             enforce: 'pre',
             include: path.resolve(__dirname, cesiumSource),
-	    type: "javascript/esm",
             use: [{
                 loader: 'strip-pragma-loader',
                 options: {

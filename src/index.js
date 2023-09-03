@@ -18,7 +18,7 @@ var poles, vulnerable_objects, current_weather;
 var viewer = new Cesium.Viewer('cesiumContainer', {
   requestRenderMode : true,
   maximumRenderTimeChange : Infinity,
-  terrainProvider: await Cesium.createWorldTerrainAsync({
+  terrainProvider: Cesium.createWorldTerrain({
     requestWaterMask: true,
     requestVertexNormals : true
   }),
