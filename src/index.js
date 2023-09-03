@@ -15,80 +15,80 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 
 var poles, vulnerable_objects, current_weather;
 
-// $('#select_city').on('change', function() {
-//   var value = $(this).val();
-//   console.log(value);
-//   if(value === 'houston'){
+$('#select_city').on('change', function() {
+  var value = $(this).val();
+  console.log(value);
+  if(value === 'houston'){
 
-//     let urls = [
-//       'http://backend.digitaltwincities.info/poles',
-//       'https://function.digitaltwincities.info/lambda/localize',
-//       'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40'
-//     ];
+    let urls = [
+      'http://backend.digitaltwincities.info/poles',
+      'https://function.digitaltwincities.info/lambda/localize',
+      'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40'
+    ];
     
-//     let promises = urls.map(
-//           url => fetch(url)
-//                  .then(y => y.json()
-//                  )
-//           );
+    let promises = urls.map(
+          url => fetch(url)
+                 .then(y => y.json()
+                 )
+          );
     
-//     Promise.all(promises).then(results => {
-//       poles = results[0]
-//       vulnerable_objects = results[1]
-//       current_weather = results[2]
-//       console.log(poles)
-//       viewer.clock.onTick.removeEventListener(applyGlobeSpin);
-//       //console.log(vulnerable_objects)
-//       initializes_settings()
-//       processPoles()
-//       processLocalizedResults()
-//       addListeners()
-//     });
+    Promise.all(promises).then(results => {
+      poles = results[0]
+      vulnerable_objects = results[1]
+      current_weather = results[2]
+      console.log(poles)
+      viewer.clock.onTick.removeEventListener(applyGlobeSpin);
+      //console.log(vulnerable_objects)
+      initializes_settings()
+      processPoles()
+      processLocalizedResults()
+      addListeners()
+    });
     
-//     // viewer.clock.onTick.removeEventListener(applyGlobeSpin);
-//     // initializes_settings();
-//     // processPoles();
-//     // processLocalizedResults();
-//   } else{
-//     var cameraPosition = viewer.camera.positionWC;
-//     viewer.camera.flyTo({
-//       destination: Cesium.Cartesian3.fromDegrees(0.0, 0.0, 40000000.0),
-//       orientation: {
-//           heading: cameraPosition.heading,
-//           pitch: cameraPosition.pitch,
-//           roll: cameraPosition.roll
-//       },
-//       duration: 3 // Set the duration of the flight to 3 seconds
-//     });
-//     viewer.entities.removeAll();
-//     viewer.clock.onTick.addEventListener(applyGlobeSpin);
-//     //$('#select_city').prop('selectedIndex',0);
-//   }
-// });
-
-let urls = [
-  'http://backend.digitaltwincities.info/poles',
-  'https://function.digitaltwincities.info/lambda/localize',
-  'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40'
-];
-
-let promises = urls.map(
-      url => fetch(url)
-             .then(y => y.json()
-             )
-      );
-
-Promise.all(promises).then(results => {
-  poles = results[0]
-  vulnerable_objects = results[1]
-  current_weather = results[2]
-  console.log(poles)
-  console.log(vulnerable_objects)
-  initializes_settings()
-  processPoles()
-  processLocalizedResults()
-  addListeners()
+    // viewer.clock.onTick.removeEventListener(applyGlobeSpin);
+    // initializes_settings();
+    // processPoles();
+    // processLocalizedResults();
+  } else{
+    var cameraPosition = viewer.camera.positionWC;
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(0.0, 0.0, 40000000.0),
+      orientation: {
+          heading: cameraPosition.heading,
+          pitch: cameraPosition.pitch,
+          roll: cameraPosition.roll
+      },
+      duration: 3 // Set the duration of the flight to 3 seconds
+    });
+    viewer.entities.removeAll();
+    viewer.clock.onTick.addEventListener(applyGlobeSpin);
+    //$('#select_city').prop('selectedIndex',0);
+  }
 });
+
+// let urls = [
+//   'http://backend.digitaltwincities.info/poles',
+//   'https://function.digitaltwincities.info/lambda/localize',
+//   'http://api.openweathermap.org/data/2.5/forecast?lat=30.6173014&lon=-96.3403507&units=metric&APPID=49406c4e8b6ee455d1904676a313aa40'
+// ];
+
+// let promises = urls.map(
+//       url => fetch(url)
+//              .then(y => y.json()
+//              )
+//       );
+
+// Promise.all(promises).then(results => {
+//   poles = results[0]
+//   vulnerable_objects = results[1]
+//   current_weather = results[2]
+//   console.log(poles)
+//   console.log(vulnerable_objects)
+//   initializes_settings()
+//   processPoles()
+//   processLocalizedResults()
+//   addListeners()
+// });
 
 
 
@@ -160,23 +160,23 @@ let get_timeline_controller = document.querySelector('.cesium-viewer-timelineCon
 //   }
 // });
 
-animate_btn.addEventListener('click', () => {
-  if(get_animate.style.visibility === 'visible'){
-    get_animate.style.visibility = 'hidden';
-    get_timeline_controller.style.visibility = 'hidden';
-    // animate_btn.style.border = 'none';
-    // animate_btn.style.background = '#500000';
-    // animate_btn.style.color = '';
-    //left_arr.style.marginBottom = '-300px';
-  }else{
-    // animate_btn.style.border = '1px solid black';
-    get_animate.style.visibility = 'visible';
-    get_timeline_controller.style.visibility = 'visible';
-    // animate_btn.style.background = 'white';
-    // animate_btn.style.color = '#500000';
-    //left_arr.style.marginBottom = '-150px';
-  }
-});
+// animate_btn.addEventListener('click', () => {
+//   if(get_animate.style.visibility === 'visible'){
+//     get_animate.style.visibility = 'hidden';
+//     get_timeline_controller.style.visibility = 'hidden';
+//     // animate_btn.style.border = 'none';
+//     // animate_btn.style.background = '#500000';
+//     // animate_btn.style.color = '';
+//     //left_arr.style.marginBottom = '-300px';
+//   }else{
+//     // animate_btn.style.border = '1px solid black';
+//     get_animate.style.visibility = 'visible';
+//     get_timeline_controller.style.visibility = 'visible';
+//     // animate_btn.style.background = 'white';
+//     // animate_btn.style.color = '#500000';
+//     //left_arr.style.marginBottom = '-150px';
+//   }
+// });
 // get_menu.addEventListener('click',()=>{
 //   if(get_menu_func.style.display === 'inline-block'){
 //     get_menu_func.style.display = 'none';
@@ -235,244 +235,341 @@ function localeTimeFormatter(time, viewModel) {
 }
   
 var pinBuilder = new Cesium.PinBuilder();
-var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(50.27879878293835, -50.39390550872461, 5.0916951918898415);
-var initialPosition = Cesium.Cartesian3.fromDegrees(-96.49198382732189, 30.756144216291395, 15000);
- // longitude, latitude, height
- var houstonDowntownMainBuildingPosition = Cesium.Cartesian3.fromDegrees(-95.38198382732189,29.746144216291395, 1);
- var houstonDowntownMainBuildingHeading = Cesium.Math.toRadians(360.0);
- var houstonDowntownMainBuildingPitch = Cesium.Math.toRadians(500.0);
- var houstonDowntownMainBuildingRange = 1200.0;
- var houstonDowntownMainBuildingOrientation = {
-   heading: houstonDowntownMainBuildingHeading,
-   pitch: houstonDowntownMainBuildingPitch,
-   roll: 0.0
- };
-//  var newCameraOrientation = {
-//   heading: Cesium.Math.toRadians(360.0),
-//   pitch: Cesium.Math.toRadians(-100.0),
-//   roll: 0.0
+// var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(50.27879878293835, -50.39390550872461, 5.0916951918898415);
+// var initialPosition = Cesium.Cartesian3.fromDegrees(-96.49198382732189, 30.756144216291395, 15000);
+//  // longitude, latitude, height
+//  var houstonDowntownMainBuildingPosition = Cesium.Cartesian3.fromDegrees(-95.38198382732189,29.746144216291395, 1);
+//  var houstonDowntownMainBuildingHeading = Cesium.Math.toRadians(360.0);
+//  var houstonDowntownMainBuildingPitch = Cesium.Math.toRadians(500.0);
+//  var houstonDowntownMainBuildingRange = 1200.0;
+//  var houstonDowntownMainBuildingOrientation = {
+//    heading: houstonDowntownMainBuildingHeading,
+//    pitch: houstonDowntownMainBuildingPitch,
+//    roll: 0.0
+//  };
+// //  var newCameraOrientation = {
+// //   heading: Cesium.Math.toRadians(360.0),
+// //   pitch: Cesium.Math.toRadians(-100.0),
+// //   roll: 0.0
+// // };
+// var destination = Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 300);
+// var orientation = {
+//     heading: Cesium.Math.toRadians(-30.0),
+//     pitch: Cesium.Math.toRadians(-30.0),
+//     roll: 0.0
 // };
-var destination = Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 300);
-var orientation = {
-    heading: Cesium.Math.toRadians(-30.0),
-    pitch: Cesium.Math.toRadians(-30.0),
-    roll: 0.0
-};
+// function initializes_settings(){
+//   console.log("initializing settings!");
+//   viewer.clock.onTick.removeEventListener(applyGlobeSpin);
+//   viewer.scene.globe.depthTestAgainstTerrain = true;
+//   Promise.resolve(viewer.camera.flyTo({
+//     destination: Cesium.Rectangle.fromDegrees(-130.0, 20.0, -65.0, 155.0),
+//     duration: 10.0,
+//     easingFunction: Cesium.EasingFunction.LINEAR_NONE
+//   })).then(function() {
+//     //Once the camera has finished flying to North America, zoom to Texas
+//     viewer.camera.flyTo({
+//       destination: Cesium.Rectangle.fromDegrees(-107.0, 25.0, -93.0, 37.0),
+//       duration: 10.0,
+//       easingFunction: Cesium.EasingFunction.LINEAR_NONE
+//     })})
+//     .then(function() {
+//       // Once the camera has finished flying to Texas, zoom in to the Houston downtown main building
+//       viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(houstonDowntownMainBuildingPosition, houstonDowntownMainBuildingRange), {
+//         //offset: new Cesium.HeadingPitchRange(houstonDowntownMainBuildingHeading, houstonDowntownMainBuildingPitch, houstonDowntownMainBuildingRange),
+//         duration: 10.0,
+//         easingFunction: Cesium.EasingFunction.LINEAR_NONE,
+//         destination: initialPosition,
+//         orientation: initialOrientation,
+//         //endTransform: Cesium.Matrix4.IDENTITY
+//        });
+//        //camera.zoomIn(100000000);
+//       })//.then(function() {
+//         //Once the camera has finished transitioning to the linear view, update the camera orientation for a better view
+//   // viewer.camera.flyTo({
+//   //       destination: initialPosition,
+//   //       orientation: initialOrientation,
+//   //       duration: 10.0,
+//   //       easingFunction: Cesium.EasingFunction.LINEAR_NONE
+//   //   })
+//   //     });
+//     // Promise.resolve(viewer.camera.flyTo({
+//     //   destination: Cesium.Rectangle.fromDegrees(-107.0, 25.0, -93.0, 37.0),
+//     //   duration: 3.0,
+//     //   easingFunction: Cesium.EasingFunction.LINEAR_NONE
+//     // })).then(function() {
+//     //   // Once the camera has finished flying to Texas, zoom in to the Houston downtown main building
+//     //   var houstonDowntownMainBuildingPosition = Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 0.0);
+//     //   var houstonDowntownMainBuildingHeading = Cesium.Math.toRadians(180.0);
+//     //   var houstonDowntownMainBuildingPitch = Cesium.Math.toRadians(-25.0);
+//     //   var houstonDowntownMainBuildingRange = 950.0;
+//     //   var houstonDowntownMainBuildingOrientation = {
+//     //     heading: houstonDowntownMainBuildingHeading,
+//     //     pitch: houstonDowntownMainBuildingPitch,
+//     //     roll: 0.0
+//     //   };
+      
+//     //   viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(houstonDowntownMainBuildingPosition, houstonDowntownMainBuildingRange), {
+//     //     offset: new Cesium.HeadingPitchRange(houstonDowntownMainBuildingHeading, houstonDowntownMainBuildingPitch, houstonDowntownMainBuildingRange),
+//     //     duration: 3.0,
+//     //     easingFunction: Cesium.EasingFunction.LINEAR_NONE,
+//     //     orientation: houstonDowntownMainBuildingOrientation
+//     //   });
+//     // });
+//     //.then(function (){
+//     //   viewer.camera.flyTo({
+//     //     destination: Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 2000.0),
+//     //     orientation: {
+//     //       heading: Cesium.Math.toRadians(180.0),
+//     //       pitch: Cesium.Math.toRadians(-25.0),
+//     //       roll: 0.0
+//     //     },
+//     //     duration: 3.0,
+//     //     easingFunction: Cesium.EasingFunction.LINEAR_NONE
+//     //   });
+//     // });
+
+//       // Once the camera has finished flying to Texas, zoom to Houston
+//     // viewer.camera.flyTo({
+//     //     destination: initialPosition,
+//     //     orientation: initialOrientation,
+//     //     duration: 3.0,
+//     //     easingFunction: Cesium.EasingFunction.LINEAR_NONE
+//     // });
+
+//   // var texas = Cesium.Rectangle.fromDegrees(-106.6, 25.8, -93.5, 36.5);
+//   // var houston = Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 5000.0); // longitude, latitude, height
+  
+//   // // Set the camera to look at Texas
+//   // viewer.camera.flyTo({
+//   //     destination: texas,
+//   //     orientation: {
+//   //         heading: Cesium.Math.toRadians(0.0), // North
+//   //         pitch: Cesium.Math.toRadians(-30.0), // Downward
+//   //         roll: Cesium.Math.toRadians(0.0) // Level
+//   //     },
+//   //     duration: 5.0 // animation duration in seconds
+//   // }).then(function() {
+//   //     // Once the Texas flyTo animation is complete, fly to Houston downtown
+//   //     viewer.camera.flyTo({
+//   //         destination: houston,
+//   //         orientation: {
+//   //             heading: Cesium.Math.toRadians(10.0), // Slightly to the right
+//   //             pitch: Cesium.Math.toRadians(-60.0), // More downward
+//   //             roll: Cesium.Math.toRadians(0.0) // Level
+//   //         },
+//   //         duration: 3.0 // animation duration in seconds
+//   //     });
+//   // });
+// // Fly to North America
+// //let viewer = new Cesium.Viewer('cesiumContainer');
+// // us_object = {
+// //   destination: Cesium.Rectangle.fromDegrees(-140.0, 10.0, -50.0, 70.0),
+// //   duration: 5.0
+// //  }
+
+// // texas_object = {
+// //   destination: Cesium.Rectangle.fromDegrees(-106.6, 25.8, -93.5, 36.5),
+// //   orientation: {
+// //       heading: Cesium.Math.toRadians(0.0), // North
+// //       pitch: Cesium.Math.toRadians(-30.0), // Downward
+// //       roll: Cesium.Math.toRadians(0.0) // Level
+// //   },
+// //   duration: 2.0
+// // }
+
+// // houston_object = {
+// //   destination: Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 950.0), // longitude, latitude, height
+// //   orientation: {
+// //       heading: Cesium.Math.toRadians(10.0), // Slightly to the right
+// //       pitch: Cesium.Math.toRadians(-60.0), // More downward
+// //       roll: Cesium.Math.toRadians(0.0) // Level
+// //   },
+// //   duration: 1.0
+// // }
+
+// // viewer.camera.setView({
+// //   destination: Cesium.Cartesian3.fromDegrees(-75.0, 45.0, 15000000.0),
+// //   orientation: {
+// //       heading: Cesium.Math.toRadians(180.0),
+// //       pitch: Cesium.Math.toRadians(0.0),
+// //       roll: Cesium.Math.toRadians(0.0)
+// //   }
+// // });
+
+// // // Rotate the globe to North America
+// // viewer.camera.flyTo({
+// //   destination: Cesium.Cartesian3.fromDegrees(-98.0, 38.0, 3000000.0),
+// //   orientation: {
+// //       heading: Cesium.Math.toRadians(0.0),
+// //       pitch: Cesium.Math.toRadians(-20.0),
+// //       roll: Cesium.Math.toRadians(0.0)
+// //   },
+// //   duration: 5 // Duration of the camera animation in seconds
+// // });
+
+// // {
+// //   destination: Cesium.Rectangle.fromDegrees(-140.0, 10.0, -50.0, 70.0),
+// //   duration: 10.0
+// //   }
+
+// // viewer.camera.setView({
+// //   destination: Cesium.Cartesian3.fromDegrees(-75.0, 45.0, 15000000.0),
+// //   orientation: {
+// //       heading: Cesium.Math.toRadians(180.0),
+// //       pitch: Cesium.Math.toRadians(0.0),
+// //       roll: Cesium.Math.toRadians(0.0)
+// //   }
+// // });
+
+// // Promise.resolve(viewer.camera.flyTo({
+// //   destination: Cesium.Cartesian3.fromDegrees(-98.0, 38.0, 3000000.0),
+// //   orientation: {
+// //       heading: Cesium.Math.toRadians(0.0),
+// //       pitch: Cesium.Math.toRadians(-20.0),
+// //       roll: Cesium.Math.toRadians(0.0)
+// //   },
+// //   duration: 5 // Duration of the camera animation in seconds
+// // }));//.then(function() {
+// //   // Fly to Houston
+// //   viewer.camera.flyTo({
+// //       destination: Cesium.Cartesian3.fromDegrees( -95.3676974, 29.7604267, 10000.0),
+// //       orientation: Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0916951918898415),
+// //       duration: 3 // Duration of the camera animation in seconds
+// //   });
+// // }));
+  
+//   // var target = Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 950);
+//   // Set the camera to look at the target location
+//   // viewer.camera.flyTo({
+//   //   destination: target,
+//   //   orientation : initialOrientation,
+//   //   duration: 3 // animation duration in seconds
+//   // });
+//   // viewer.camera.flyTo({
+//   //   destination: initialPosition,
+//   //   orientation : initialOrientation,
+//   //   duration: 3,
+//   // });
+
+
+// // // var initialPosition = Cesium.Cartesian3.fromDegrees(-95.364808777523, 29.736084676987729, 953);
+// // viewer.scene.camera.setView({
+// //   destination: initialPosition,
+// //   orientation: initialOrientation,
+// //   endTransform: Cesium.Matrix4.IDENTITY
+// // });
+
+// // var tileset = new Cesium.Cesium3DTileset({
+// //   url: Cesium.IonResource.fromAssetId(16947),
+// // });
+
+// // tileset.style = new Cesium.Cesium3DTileStyle({
+// //   color: {
+// //     conditions: [
+// //       ["true", "color('red')"],
+// //     ],
+// //   },
+// // });
+
+// // viewer.scene.primitives.add(tileset)
+
+// // var tileset = viewer.scene.primitives.add(
+// //   new Cesium.Cesium3DTileset({
+// //     url: Cesium.IonResource.fromAssetId(16947),
+// //   })
+// // );
+
+
+// // var tileset = viewer.scene.primitives.add(
+// //   new Cesium.Cesium3DTileset({
+// //     url: Cesium.IonResource.fromAssetId(36440)
+// //   })
+// // );
+
+// var tileset  = new Cesium.Cesium3DTileset({
+//   url: Cesium.IonResource.fromAssetId(96188)
+// });
+
+// tileset.style = new Cesium.Cesium3DTileStyle({
+//     color: {
+//       conditions: [
+//         // ["${building} === 'tower'", "color('yellow')"],
+//         // ["${building} === 'office'", "color('dodgeblue')"],
+//         // ["${building} === 'garage'", "color('cornflowerblue')"],
+//         // ["${building} === 'hospital'", "color('forestgreen')"],
+//         // ["${building} === 'apartments'", "color('darkgoldenrod')"],
+//         // ["${building} === 'stadium'", "color('skyblue')"],
+//         // ["${building} === 'commercial'", "color('blue', 0.9)"],
+//         ["true", "color('white', 1)"],
+//       ],
+//     },
+// });
+
+// viewer.scene.primitives.add(tileset);
+
+
+
+// // var tileset = viewer.scene.primitives.add(
+// //   new Cesium.Cesium3DTileset({
+// //     url: Cesium.IonResource.fromAssetId(96188)
+// //   })
+// // );
+// // //replot on mean-sea level
+// // var tileset = viewer.scene.primitives.add(
+// //   new Cesium.Cesium3DTileset({
+// //     url: Cesium.IonResource.fromAssetId(706934),
+// //     maximumScreenSpaceError: 1,
+// //     maximumMemoryUsage: 16384
+// //   })
+// // );
+// // //replot on mean-sea level
+// // var tileset = viewer.scene.primitives.add(
+// //   new Cesium.Cesium3DTileset({
+// //     url: Cesium.IonResource.fromAssetId(706970),
+// //     maximumScreenSpaceError: 1,
+// //     maximumMemoryUsage: 16384
+// //   })
+// // );
+
+
+
+
+// viewer.scene.globe.maximumScreenSpaceError = 16;
+// viewer.clock.shouldAnimate = false;
+// viewer.clock.multiplier = 1500.0;
+// viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
+// viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
+// viewer.animation.viewModel.timeFormatter = localeTimeFormatter
+// viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
+// }
 function initializes_settings(){
-  console.log("initializing settings!");
   viewer.clock.onTick.removeEventListener(applyGlobeSpin);
-  viewer.scene.globe.depthTestAgainstTerrain = true;
+  //viewer.scene.globe.depthTestAgainstTerrain = true;
+  viewer.scene.globe.depthTestAgainstTerrain = false;
+  viewer.scene.logarithmicDepthBuffer = false;
+  var initialPosition = Cesium.Cartesian3.fromDegrees(-95.38198382732189,29.726144216291395, 1500);
+  // var initialPosition = Cesium.Cartesian3.fromDegrees(-95.364808777523, 29.736084676987729, 953);
+  var initialOrientation = new Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0716951918898415);
   Promise.resolve(viewer.camera.flyTo({
     destination: Cesium.Rectangle.fromDegrees(-130.0, 20.0, -65.0, 155.0),
-    duration: 10.0,
+    duration: 5.0,
     easingFunction: Cesium.EasingFunction.LINEAR_NONE
   })).then(function() {
     //Once the camera has finished flying to North America, zoom to Texas
     viewer.camera.flyTo({
       destination: Cesium.Rectangle.fromDegrees(-107.0, 25.0, -93.0, 37.0),
-      duration: 10.0,
+      duration: 5.0,
       easingFunction: Cesium.EasingFunction.LINEAR_NONE
-    })})
-    .then(function() {
-      // Once the camera has finished flying to Texas, zoom in to the Houston downtown main building
-      viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(houstonDowntownMainBuildingPosition, houstonDowntownMainBuildingRange), {
-        //offset: new Cesium.HeadingPitchRange(houstonDowntownMainBuildingHeading, houstonDowntownMainBuildingPitch, houstonDowntownMainBuildingRange),
-        duration: 10.0,
-        easingFunction: Cesium.EasingFunction.LINEAR_NONE,
-        destination: initialPosition,
-        orientation: initialOrientation,
-        //endTransform: Cesium.Matrix4.IDENTITY
-       });
-       //camera.zoomIn(100000000);
-      })//.then(function() {
-        //Once the camera has finished transitioning to the linear view, update the camera orientation for a better view
-  // viewer.camera.flyTo({
-  //       destination: initialPosition,
-  //       orientation: initialOrientation,
-  //       duration: 10.0,
-  //       easingFunction: Cesium.EasingFunction.LINEAR_NONE
-  //   })
-  //     });
-    // Promise.resolve(viewer.camera.flyTo({
-    //   destination: Cesium.Rectangle.fromDegrees(-107.0, 25.0, -93.0, 37.0),
-    //   duration: 3.0,
-    //   easingFunction: Cesium.EasingFunction.LINEAR_NONE
-    // })).then(function() {
-    //   // Once the camera has finished flying to Texas, zoom in to the Houston downtown main building
-    //   var houstonDowntownMainBuildingPosition = Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 0.0);
-    //   var houstonDowntownMainBuildingHeading = Cesium.Math.toRadians(180.0);
-    //   var houstonDowntownMainBuildingPitch = Cesium.Math.toRadians(-25.0);
-    //   var houstonDowntownMainBuildingRange = 950.0;
-    //   var houstonDowntownMainBuildingOrientation = {
-    //     heading: houstonDowntownMainBuildingHeading,
-    //     pitch: houstonDowntownMainBuildingPitch,
-    //     roll: 0.0
-    //   };
-      
-    //   viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(houstonDowntownMainBuildingPosition, houstonDowntownMainBuildingRange), {
-    //     offset: new Cesium.HeadingPitchRange(houstonDowntownMainBuildingHeading, houstonDowntownMainBuildingPitch, houstonDowntownMainBuildingRange),
-    //     duration: 3.0,
-    //     easingFunction: Cesium.EasingFunction.LINEAR_NONE,
-    //     orientation: houstonDowntownMainBuildingOrientation
-    //   });
-    // });
-    //.then(function (){
-    //   viewer.camera.flyTo({
-    //     destination: Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 2000.0),
-    //     orientation: {
-    //       heading: Cesium.Math.toRadians(180.0),
-    //       pitch: Cesium.Math.toRadians(-25.0),
-    //       roll: 0.0
-    //     },
-    //     duration: 3.0,
-    //     easingFunction: Cesium.EasingFunction.LINEAR_NONE
-    //   });
-    // });
-
-      // Once the camera has finished flying to Texas, zoom to Houston
-    // viewer.camera.flyTo({
-    //     destination: initialPosition,
-    //     orientation: initialOrientation,
-    //     duration: 3.0,
-    //     easingFunction: Cesium.EasingFunction.LINEAR_NONE
-    // });
-
-  // var texas = Cesium.Rectangle.fromDegrees(-106.6, 25.8, -93.5, 36.5);
-  // var houston = Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 5000.0); // longitude, latitude, height
-  
-  // // Set the camera to look at Texas
-  // viewer.camera.flyTo({
-  //     destination: texas,
-  //     orientation: {
-  //         heading: Cesium.Math.toRadians(0.0), // North
-  //         pitch: Cesium.Math.toRadians(-30.0), // Downward
-  //         roll: Cesium.Math.toRadians(0.0) // Level
-  //     },
-  //     duration: 5.0 // animation duration in seconds
-  // }).then(function() {
-  //     // Once the Texas flyTo animation is complete, fly to Houston downtown
-  //     viewer.camera.flyTo({
-  //         destination: houston,
-  //         orientation: {
-  //             heading: Cesium.Math.toRadians(10.0), // Slightly to the right
-  //             pitch: Cesium.Math.toRadians(-60.0), // More downward
-  //             roll: Cesium.Math.toRadians(0.0) // Level
-  //         },
-  //         duration: 3.0 // animation duration in seconds
-  //     });
-  // });
-// Fly to North America
-//let viewer = new Cesium.Viewer('cesiumContainer');
-// us_object = {
-//   destination: Cesium.Rectangle.fromDegrees(-140.0, 10.0, -50.0, 70.0),
-//   duration: 5.0
-//  }
-
-// texas_object = {
-//   destination: Cesium.Rectangle.fromDegrees(-106.6, 25.8, -93.5, 36.5),
-//   orientation: {
-//       heading: Cesium.Math.toRadians(0.0), // North
-//       pitch: Cesium.Math.toRadians(-30.0), // Downward
-//       roll: Cesium.Math.toRadians(0.0) // Level
-//   },
-//   duration: 2.0
-// }
-
-// houston_object = {
-//   destination: Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 950.0), // longitude, latitude, height
-//   orientation: {
-//       heading: Cesium.Math.toRadians(10.0), // Slightly to the right
-//       pitch: Cesium.Math.toRadians(-60.0), // More downward
-//       roll: Cesium.Math.toRadians(0.0) // Level
-//   },
-//   duration: 1.0
-// }
-
-// viewer.camera.setView({
-//   destination: Cesium.Cartesian3.fromDegrees(-75.0, 45.0, 15000000.0),
-//   orientation: {
-//       heading: Cesium.Math.toRadians(180.0),
-//       pitch: Cesium.Math.toRadians(0.0),
-//       roll: Cesium.Math.toRadians(0.0)
-//   }
-// });
-
-// // Rotate the globe to North America
-// viewer.camera.flyTo({
-//   destination: Cesium.Cartesian3.fromDegrees(-98.0, 38.0, 3000000.0),
-//   orientation: {
-//       heading: Cesium.Math.toRadians(0.0),
-//       pitch: Cesium.Math.toRadians(-20.0),
-//       roll: Cesium.Math.toRadians(0.0)
-//   },
-//   duration: 5 // Duration of the camera animation in seconds
-// });
-
-// {
-//   destination: Cesium.Rectangle.fromDegrees(-140.0, 10.0, -50.0, 70.0),
-//   duration: 10.0
-//   }
-
-// viewer.camera.setView({
-//   destination: Cesium.Cartesian3.fromDegrees(-75.0, 45.0, 15000000.0),
-//   orientation: {
-//       heading: Cesium.Math.toRadians(180.0),
-//       pitch: Cesium.Math.toRadians(0.0),
-//       roll: Cesium.Math.toRadians(0.0)
-//   }
-// });
-
-// Promise.resolve(viewer.camera.flyTo({
-//   destination: Cesium.Cartesian3.fromDegrees(-98.0, 38.0, 3000000.0),
-//   orientation: {
-//       heading: Cesium.Math.toRadians(0.0),
-//       pitch: Cesium.Math.toRadians(-20.0),
-//       roll: Cesium.Math.toRadians(0.0)
-//   },
-//   duration: 5 // Duration of the camera animation in seconds
-// }));//.then(function() {
-//   // Fly to Houston
-//   viewer.camera.flyTo({
-//       destination: Cesium.Cartesian3.fromDegrees( -95.3676974, 29.7604267, 10000.0),
-//       orientation: Cesium.HeadingPitchRoll.fromDegrees(21.27879878293835, -21.34390550872461, 0.0916951918898415),
-//       duration: 3 // Duration of the camera animation in seconds
-//   });
-// }));
-  
-  // var target = Cesium.Cartesian3.fromDegrees(-95.3698, 29.7604, 950);
-  // Set the camera to look at the target location
-  // viewer.camera.flyTo({
-  //   destination: target,
-  //   orientation : initialOrientation,
-  //   duration: 3 // animation duration in seconds
-  // });
-  // viewer.camera.flyTo({
-  //   destination: initialPosition,
-  //   orientation : initialOrientation,
-  //   duration: 3,
-  // });
-
-
-// // var initialPosition = Cesium.Cartesian3.fromDegrees(-95.364808777523, 29.736084676987729, 953);
-// viewer.scene.camera.setView({
-//   destination: initialPosition,
-//   orientation: initialOrientation,
-//   endTransform: Cesium.Matrix4.IDENTITY
-// });
-
-// var tileset = new Cesium.Cesium3DTileset({
-//   url: Cesium.IonResource.fromAssetId(16947),
-// });
-
-// tileset.style = new Cesium.Cesium3DTileStyle({
-//   color: {
-//     conditions: [
-//       ["true", "color('red')"],
-//     ],
-//   },
-// });
-
-// viewer.scene.primitives.add(tileset)
+    })}).then(function() {
+            viewer.camera.flyTo({
+              destination: initialPosition,
+              orientation: initialOrientation,
+              endTransform: Cesium.Matrix4.IDENTITY,
+              duration: 5.0
+            });
+            // camera.zoomOut(9000000000);
+      })
 
 // var tileset = viewer.scene.primitives.add(
 //   new Cesium.Cesium3DTileset({
@@ -480,59 +577,39 @@ function initializes_settings(){
 //   })
 // );
 
+var tileset = viewer.scene.primitives.add(
+  new Cesium.Cesium3DTileset({
+    url: Cesium.IonResource.fromAssetId(37161)
+  })
+);
 
-// var tileset = viewer.scene.primitives.add(
-//   new Cesium.Cesium3DTileset({
-//     url: Cesium.IonResource.fromAssetId(36440)
-//   })
-// );
+var tileset = viewer.scene.primitives.add(
+  new Cesium.Cesium3DTileset({
+    url: Cesium.IonResource.fromAssetId(36440)
+  })
+);
 
-var tileset  = new Cesium.Cesium3DTileset({
-  url: Cesium.IonResource.fromAssetId(96188)
-});
-
-tileset.style = new Cesium.Cesium3DTileStyle({
-    color: {
-      conditions: [
-        // ["${building} === 'tower'", "color('yellow')"],
-        // ["${building} === 'office'", "color('dodgeblue')"],
-        // ["${building} === 'garage'", "color('cornflowerblue')"],
-        // ["${building} === 'hospital'", "color('forestgreen')"],
-        // ["${building} === 'apartments'", "color('darkgoldenrod')"],
-        // ["${building} === 'stadium'", "color('skyblue')"],
-        // ["${building} === 'commercial'", "color('blue', 0.9)"],
-        ["true", "color('white', 1)"],
-      ],
-    },
-});
-
-viewer.scene.primitives.add(tileset);
-
-
-
-// var tileset = viewer.scene.primitives.add(
-//   new Cesium.Cesium3DTileset({
-//     url: Cesium.IonResource.fromAssetId(96188)
-//   })
-// );
-// //replot on mean-sea level
-// var tileset = viewer.scene.primitives.add(
-//   new Cesium.Cesium3DTileset({
-//     url: Cesium.IonResource.fromAssetId(706934),
-//     maximumScreenSpaceError: 1,
-//     maximumMemoryUsage: 16384
-//   })
-// );
-// //replot on mean-sea level
-// var tileset = viewer.scene.primitives.add(
-//   new Cesium.Cesium3DTileset({
-//     url: Cesium.IonResource.fromAssetId(706970),
-//     maximumScreenSpaceError: 1,
-//     maximumMemoryUsage: 16384
-//   })
-// );
-
-
+var tileset = viewer.scene.primitives.add(
+  new Cesium.Cesium3DTileset({
+    url: Cesium.IonResource.fromAssetId(96188)
+  })
+);
+//replot on mean-sea level
+var tileset = viewer.scene.primitives.add(
+  new Cesium.Cesium3DTileset({
+    url: Cesium.IonResource.fromAssetId(706934),
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 16384
+  })
+);
+//replot on mean-sea level
+var tileset = viewer.scene.primitives.add(
+  new Cesium.Cesium3DTileset({
+    url: Cesium.IonResource.fromAssetId(706970),
+    maximumScreenSpaceError: 1,
+    maximumMemoryUsage: 16384
+  })
+);
 
 
 viewer.scene.globe.maximumScreenSpaceError = 16;
@@ -542,7 +619,9 @@ viewer.timeline.addEventListener('settime', onTimelineScrubfunction, false);
 viewer.animation.viewModel.dateFormatter = localeDateTimeFormatter
 viewer.animation.viewModel.timeFormatter = localeTimeFormatter
 viewer.timeline.makeLabel = function (time) { return localeDateTimeFormatter(time) }
+
 }
+
 
 var object_indicator;
 var url = Cesium.buildModuleUrl('exclaimation.png');
@@ -779,7 +858,7 @@ function processPoles() {
     let entity = new Cesium.Entity();
     entity.position = Cesium.Cartesian3.fromDegrees(object['longitude'], object['latitude'], 50);
     entity.description=false;
-    //entity.description=''
+[O    //entity.description=''
     entity.billboard = new Cesium.BillboardGraphics();
     entity.billboard.image = pinBuilder.fromUrl(url,Cesium.Color.DARKRED, 48);
     //entity.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
@@ -1048,8 +1127,8 @@ $('#myRange').change(function () {
     },
   })
 
-  let wood_arr=new Array(487);
-  for(let i=0;i<487;i++)
+  let wood_arr=new Array(61);
+  for(let i=426;i<487;i++)
       wood_arr[i]=i;
   let wood_set=new Set(wood_arr)
 
@@ -1061,8 +1140,10 @@ $('#myRange').change(function () {
 
   console.log(poles_data.entities.values);
 
+  console.dir("--------------check here--------- : " + poles_data.entities.values[426].values);
+
   for (let x = 0; x < poles_data.entities.values.length; x++) {
-  
+    console.log("x value is : "+ x);  
     if (wood_set.has(x)) {
       poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
     //poles_data.entities.values[x].model.scale=
@@ -1070,8 +1151,8 @@ $('#myRange').change(function () {
       //poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     }
 
-    if (damaged_poles.has(x + 1)) {
-      poles_data.entities.values[x].model.color = Cesium.Color.RED;
+    if (damaged_poles.has(x+1)) {
+      //poles_data.entities.values[x].model.color = Cesium.Color.RED;
       temp_longs.push(pole_tmp[x].long)
       temp_lats.push(pole_tmp[x].lat)
 
@@ -1170,8 +1251,8 @@ function wind_networkanalysis() {
     })
     let damaged_poles = new Set(power_demage['failedpoles']);
     //console.log("damaged poles: " + damaged_poles.size)
-    let wood_arr=new Array(487);
-      for(let i=0;i<487;i++)
+    let wood_arr=new Array(61);
+      for(let i=427;i<487;i++)
         wood_arr[i]=i;
     let wood_set=new Set(wood_arr)
  
@@ -1181,12 +1262,12 @@ function wind_networkanalysis() {
     if (wood_set.has(x+1)) {
       poles_data.entities.values[x].model.color = Cesium.Color.BURLYWOOD;
     }else{
-      poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
+      //poles_data.entities.values[x].model.color = Cesium.Color.GREEN;
     }
 
 
     if (damaged_poles.has(x + 1)) {
-      poles_data.entities.values[x].model.color = Cesium.Color.RED;
+      //poles_data.entities.values[x].model.color = Cesium.Color.RED;
       tmp_longs.push(pole_tmp[x].long)
       tmp_lats.push(pole_tmp[x].lat)
 
@@ -1630,4 +1711,3 @@ jQuery("#ike").click(function (e) {
 extract_weather(weather_ike);
 
 });
-
