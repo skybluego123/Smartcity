@@ -32,6 +32,7 @@
     "serve-release": "webpack-dev-server --host 0.0.0.0 --config webpack.release.config.js --content-base /dist"
   },
   "dependencies": {
-    "cesiumjs-heat": "^1.0.2"
+    "cesiumjs-heat": "^1.0.2",
+    "strip-pragma-loader": "^1.0.1"
   }
 }

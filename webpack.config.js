@@ -44,6 +44,20 @@ module.exports = {
         }, {
             test: /\.(png|gif|jpg|jpeg|svg|xml|json)$/,
             use: [ 'url-loader' ]
+        },
+	{
+            // Remove pragmas
+            test: /\.js$/,
+            enforce: 'pre',
+            include: path.resolve(__dirname, cesiumSource),
+            use: [{
+                loader: 'strip-pragma-loader',
+                options: {
+                    pragmas: {
+                        debug: false
+                    }
+                }
+            }]
         }]
     },
     plugins: [
