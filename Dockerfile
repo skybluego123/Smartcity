@@ -1,7 +1,7 @@
 FROM node:16
 WORKDIR /usr/src/app
 RUN npm install webpack -g
-COPY package*.json ./
+COPY package.json ./
 
 RUN npm install
 COPY . /usr/src/app/
