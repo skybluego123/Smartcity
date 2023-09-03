@@ -71,6 +71,7 @@ module.exports = {
         {directory: path.join(__dirname, "./src/css/images")},
         ],
         port: 80,
-        host: process.env.HOST || '0.0.0.0'
+        host: process.env.HOST || '0.0.0.0',
+	allowedHosts: 'all'
     }
 };
